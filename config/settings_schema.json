@@ -1,0 +1,121 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Sarah Robe",
+    "theme_version": "1.0.0",
+    "theme_author": "Sarah Robe",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Couleurs",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Couleur principale (rose)",
+        "default": "#C28B7C"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_dark",
+        "label": "Couleur principale foncée",
+        "default": "#B07A6B"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Fond général",
+        "default": "#FBF7F1"
+      },
+      {
+        "type": "color",
+        "id": "color_dark",
+        "label": "Texte principal",
+        "default": "#3A3330"
+      },
+      {
+        "type": "color",
+        "id": "color_green",
+        "label": "Vert (bannière & sections)",
+        "default": "#D8E9DF"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Or (parfums)",
+        "default": "#CBA36B"
+      }
+    ]
+  },
+  {
+    "name": "Typographie",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Polices Google Fonts utilisées"
+      },
+      {
+        "type": "paragraph",
+        "content": "Pinyon Script (décorative), Cormorant Garamond (titres), Jost (corps)"
+      }
+    ]
+  },
+  {
+    "name": "Réseaux sociaux",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest"
+      },
+      {
+        "type": "url",
+        "id": "social_whatsapp",
+        "label": "WhatsApp (wa.me/...)"
+      },
+      {
+        "type": "url",
+        "id": "social_snapchat",
+        "label": "Snapchat"
+      }
+    ]
+  },
+  {
+    "name": "Panier",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_ajax",
+        "label": "Panier AJAX (drawer)",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_free_shipping_threshold",
+        "label": "Seuil livraison offerte (€)",
+        "default": "69"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  }
+]

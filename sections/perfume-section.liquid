@@ -1,0 +1,112 @@
+<!-- ============================================================
+   PARFUMS — Section parfums d'été
+   ============================================================ -->
+<section style="padding:114px 80px 80px;text-align:center">
+  <span class="sr-section-script">{{ section.settings.script | default: "parfum" }}</span>
+  <h2 class="sr-section-h2">{{ section.settings.heading | default: "Les parfums d'été" }}</h2>
+  <p class="sr-section-desc">{{ section.settings.description | default: "Des senteurs fraîches, solaires et élégantes." }}</p>
+
+  <div class="sr-products-grid sr-products-grid--4col">
+    {%- if section.settings.collection != blank -%}
+      {%- for product in collections[section.settings.collection].products limit: 4 -%}
+        <article class="sr-card sr-card--parfum">
+          <a href="{{ product.url }}" class="sr-card__media"
+             style="background:radial-gradient(circle at 50% 38%,#F6E7CC,#E8CFA0)">
+            {%- if product.featured_image != blank -%}
+              <img src="{{ product.featured_image | image_url: width: 400 }}"
+                   alt="{{ product.title | escape }}"
+                   class="sr-card__img"
+                   loading="lazy">
+            {%- else -%}
+              <div class="sr-card__placeholder"
+                   style="position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,#F6E7CC,#E8CFA0);display:flex;align-items:center;justify-content:center;color:rgba(120,90,55,.5);font-size:11px;letter-spacing:.1em;text-transform:uppercase">
+                flacon parfum
+              </div>
+            {%- endif -%}
+          </a>
+          <div class="sr-card__footer">
+            <a href="{{ product.url }}" class="sr-card__title" style="font-size:20px;color:inherit">{{ product.title }}</a>
+            <span class="sr-card__price" style="font-size:14px">{{ product.price | money }}</span>
+          </div>
+          <button class="sr-card__atc sr-card__atc--gold"
+                  data-sr-atc="{{ product.selected_or_first_available_variant.id }}"
+                  data-sr-atc-label="Ajouter au panier">
+            Ajouter au panier
+          </button>
+        </article>
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <article class="sr-card sr-card--parfum">
+            <div class="sr-card__media" style="background:radial-gradient(circle at 50% 38%,#F6E7CC,#E8CFA0)">
+              <div class="sr-card__placeholder" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,#F6E7CC,#E8CFA0);display:flex;align-items:center;justify-content:center;color:rgba(120,90,55,.5);font-size:11px;letter-spacing:.1em;text-transform:uppercase">flacon parfum</div>
+            </div>
+            <div class="sr-card__footer">
+              <span class="sr-card__title" style="font-size:20px">Parfum {{ i }}</span>
+              <span class="sr-card__price" style="font-size:14px">– €</span>
+            </div>
+            <button class="sr-card__atc sr-card__atc--gold">Ajouter au panier</button>
+          </article>
+        {%- endfor -%}
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Placeholders éditeur de thème -->
+      {%- assign parfums = "Soleil Blanc|65,Brume d'Été|45,Fleur de Sel|72,Ambre Doré|88" | split: "," -%}
+      {%- for parfum in parfums -%}
+        {%- assign parts = parfum | split: "|" -%}
+        <article class="sr-card sr-card--parfum">
+          <div class="sr-card__media">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,#F6E7CC,#E8CFA0);display:flex;align-items:center;justify-content:center;color:rgba(120,90,55,.5);font-size:11px;letter-spacing:.1em;text-transform:uppercase">flacon</div>
+          </div>
+          <div class="sr-card__footer">
+            <span class="sr-card__title" style="font-size:20px">{{ parts[0] }}</span>
+            <span class="sr-card__price" style="font-size:14px">{{ parts[1] }} €</span>
+          </div>
+          <button class="sr-card__atc sr-card__atc--gold">Ajouter au panier</button>
+        </article>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+@media (max-width:768px) {
+  .sr-card--parfum { padding: 9px; border-radius: 20px; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Parfums",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "script",
+      "label": "Label cursive",
+      "default": "parfum"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Les parfums d'été"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Des senteurs fraîches, solaires et élégantes."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection parfums"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Parfums"
+    }
+  ]
+}
+{% endschema %}

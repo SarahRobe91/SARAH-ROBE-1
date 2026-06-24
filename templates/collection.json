@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main-collection-sarah": {
+      "type": "main-collection-sarah",
+      "disabled": false,
+      "settings": {
+        "script_title": "Collection Été 2026",
+        "products_per_page": 12,
+        "editorial_script": "l'esprit collection",
+        "editorial_heading": "L'élégance solaire, pensée pour durer tout l'été",
+        "editorial_desc": "Matières fluides, teintes douces et coupes ajustées : chaque pièce de la collection est imaginée pour accompagner vos journées lumineuses et vos soirées tièdes avec une grâce naturelle.",
+        "editorial_cta": "Découvrir l'histoire"
+      }
+    }
+  },
+  "order": ["main-collection-sarah"]
+}

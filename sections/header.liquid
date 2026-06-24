@@ -1,0 +1,114 @@
+<!-- ============================================================
+   HEADER — Desktop & Mobile
+   ============================================================ -->
+
+<!-- Desktop Header -->
+<header class="sr-header sr-header--desktop" role="banner">
+  <div class="sr-header__inner">
+    <a href="/" class="sr-header__logo" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 148 }}"
+             alt="{{ shop.name }}"
+             class="sr-header__logo-img"
+             width="74" height="74" loading="eager">
+      {%- else -%}
+        <img src="{{ 'logo.jpeg' | asset_url }}"
+             alt="{{ shop.name }}"
+             class="sr-header__logo-img"
+             width="74" height="74" loading="eager">
+      {%- endif -%}
+    </a>
+
+    <nav class="sr-header__nav" aria-label="Navigation principale">
+      {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
+        {%- for link in linklists[section.settings.menu].links -%}
+          <a href="{{ link.url }}"
+             {% if link.active %}class="is-active"{% endif %}>
+            {{ link.title }}
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="/" {% if request.path == '/' %}class="is-active"{% endif %}>Accueil</a>
+        <a href="/collections/robes">Robes</a>
+        <a href="/collections/tenues-ete">Tenues d'été</a>
+        <a href="/collections/parfums">Parfums</a>
+        <a href="/collections/nouveautes">Nouveautés</a>
+        <a href="/pages/contact">Contact</a>
+      {%- endif -%}
+    </nav>
+  </div>
+
+  <div class="sr-header__icons">
+    <button class="sr-header__icon-btn" data-sr-open="search" aria-label="Recherche">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+    </button>
+    <button class="sr-header__icon-btn" data-sr-open="account" aria-label="Mon compte">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+    </button>
+    <div style="position:relative">
+      <button class="sr-header__icon-btn" data-sr-open="cart" aria-label="Panier">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="sr-header__cart-badge" data-sr-cart-count style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Header -->
+<header class="sr-header sr-header--mobile" role="banner">
+  <div class="sr-header__mobile-inner">
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="sr-header__hamburger" id="sr-mobile-nav-open" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="sr-header__icon-btn" data-sr-open="search" aria-label="Recherche">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3A3330" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      </button>
+    </div>
+
+    <a href="/" class="sr-header__logo-m" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 92 }}"
+             alt="{{ shop.name }}"
+             style="width:46px;height:46px;border-radius:50%;object-fit:cover"
+             width="46" height="46" loading="eager">
+      {%- else -%}
+        <img src="{{ 'logo.jpeg' | asset_url }}"
+             alt="{{ shop.name }}"
+             style="width:46px;height:46px;border-radius:50%;object-fit:cover"
+             width="46" height="46" loading="eager">
+      {%- endif -%}
+    </a>
+
+    <div class="sr-header__mobile-icons">
+      <button class="sr-header__icon-btn" data-sr-open="account" aria-label="Mon compte">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3A3330" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </button>
+      <div class="sr-header__cart-wrap">
+        <button class="sr-header__icon-btn" data-sr-open="cart" aria-label="Panier">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3A3330" stroke-width="1.4"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <span class="sr-header__cart-badge--m" data-sr-cart-count style="display:none">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (photo ronde)"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu principal",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

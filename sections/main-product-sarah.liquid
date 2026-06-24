@@ -1,0 +1,499 @@
+<!-- ============================================================
+   MAIN PRODUCT — Template produit dynamique Shopify
+   ============================================================ -->
+
+<!-- Breadcrumb -->
+<nav class="sr-product-breadcrumb" aria-label="Fil d'Ariane">
+  <a href="/">Accueil</a>
+  <span class="sr-breadcrumb__sep" style="margin:0 9px;color:#cfc5ba">/</span>
+  {%- if collection -%}
+    <a href="{{ collection.url }}">{{ collection.title }}</a>
+    <span class="sr-breadcrumb__sep" style="margin:0 9px;color:#cfc5ba">/</span>
+  {%- else -%}
+    <a href="/collections">Collections</a>
+    <span class="sr-breadcrumb__sep" style="margin:0 9px;color:#cfc5ba">/</span>
+  {%- endif -%}
+  <span style="color:#3A3330">{{ product.title }}</span>
+</nav>
+
+<!-- Main product area -->
+<div class="sr-product-main">
+
+  <!-- Gallery -->
+  <div class="sr-product-gallery">
+    <div class="sr-product-gallery__main" id="sr-gallery-main">
+      {%- if product.featured_image != blank -%}
+        <img id="sr-gallery-main-img"
+             src="{{ product.featured_image | image_url: width: 800 }}"
+             alt="{{ product.featured_image.alt | escape | default: product.title }}"
+             class="sr-product-gallery__main-img"
+             width="{{ product.featured_image.width }}"
+             height="{{ product.featured_image.height }}"
+             loading="eager">
+      {%- else -%}
+        <div id="sr-gallery-main-img" style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#F2DCD6,#F2DCD6 16px,#F8E7E2 16px,#F8E7E2 32px)"></div>
+      {%- endif -%}
+
+      {%- assign badge_text = '' -%}
+      {%- assign badge_class = 'sr-card__badge--rose' -%}
+      {%- if product.tags contains 'best-seller' -%}
+        {%- assign badge_text = 'Best-seller' -%}
+      {%- elsif product.tags contains 'nouveaute' -%}
+        {%- assign badge_text = 'Nouveau' -%}
+        {%- assign badge_class = 'sr-card__badge--vert' -%}
+      {%- endif -%}
+      {%- if badge_text != '' -%}
+        <span class="sr-card__badge {{ badge_class }}" style="position:absolute;top:18px;left:18px;font-size:11px;padding:6px 14px">{{ badge_text }}</span>
+      {%- endif -%}
+    </div>
+
+    <!-- Thumbnails -->
+    {%- if product.images.size > 1 -%}
+      <div class="sr-product-gallery__thumbs">
+        {%- for image in product.images limit: 4 -%}
+          <div class="sr-product-gallery__thumb {% if forloop.first %}is-active{% endif %}"
+               data-full="{{ image | image_url: width: 800 }}"
+               data-index="{{ forloop.index0 }}">
+            <img src="{{ image | image_url: width: 200 }}"
+                 alt="{{ image.alt | escape }}"
+                 loading="lazy">
+          </div>
+        {%- endfor -%}
+        {%- if product.images.size < 4 -%}
+          {%- assign grads = "repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 10px,#DEEBF1 10px,#DEEBF1 20px),repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 10px,#F4E9D5 10px,#F4E9D5 20px),repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 10px,#E6F0EA 10px,#E6F0EA 20px)" | split: "," -%}
+          {%- for i in (product.images.size..3) -%}
+            <div class="sr-product-gallery__thumb" style="background:{{ grads[forloop.index0] }}"></div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <!-- 4 placeholders si pas assez d'images -->
+      <div class="sr-product-gallery__thumbs">
+        {%- for grad in "repeating-linear-gradient(135deg,#F2DCD6,#F2DCD6 10px,#F8E7E2 10px,#F8E7E2 20px)|repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 10px,#DEEBF1 10px,#DEEBF1 20px)|repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 10px,#F4E9D5 10px,#F4E9D5 20px)|repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 10px,#E6F0EA 10px,#E6F0EA 20px)" | split: "|" -%}
+          <div class="sr-product-gallery__thumb {% if forloop.first %}is-active{% endif %}"
+               style="background:{{ grad }}"></div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Product info -->
+  <div class="sr-product-info">
+    <span class="sr-product-info__tagline">
+      {%- if product.metafields.custom.tagline != blank -%}
+        {{ product.metafields.custom.tagline }}
+      {%- else -%}
+        {{ section.settings.default_tagline | default: "Summer Essential" }}
+      {%- endif -%}
+    </span>
+
+    <h1 class="sr-product-info__h1">{{ product.title }}</h1>
+
+    <div class="sr-product-info__rating">
+      <span class="sr-rating-stars" style="font-size:15px">★★★★★</span>
+      <span class="sr-product-info__review-count">
+        {%- if product.metafields.custom.review_count != blank -%}
+          {{ product.metafields.custom.review_count }} avis
+        {%- else -%}
+          {{ section.settings.default_review_count | default: "128" }} avis
+        {%- endif -%}
+      </span>
+    </div>
+
+    {%- if product.metafields.custom.social_proof != blank -%}
+      <div class="sr-product-info__proof">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C28B7C" stroke-width="1.5"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>
+        {{ product.metafields.custom.social_proof }}
+      </div>
+    {%- elsif section.settings.default_social_proof != blank -%}
+      <div class="sr-product-info__proof">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C28B7C" stroke-width="1.5"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>
+        {{ section.settings.default_social_proof }}
+      </div>
+    {%- endif -%}
+
+    <!-- Price -->
+    <div class="sr-product-info__price" id="sr-product-price">
+      {%- if product.compare_at_price > product.price -%}
+        <span style="color:#bbb;text-decoration:line-through;font-size:20px;margin-right:10px">
+          {{ product.compare_at_price | money }}
+        </span>
+      {%- endif -%}
+      {{ product.price | money }}
+    </div>
+
+    <!-- Description -->
+    {%- if product.description != blank -%}
+      <div class="sr-product-info__desc">{{ product.description | strip_html | truncatewords: 40 }}</div>
+    {%- else -%}
+      <p class="sr-product-info__desc">Robe légère en voile fluide, taille fluide et bretelles ajustables. Une coupe solaire qui accompagne aussi bien les journées de plage que les soirées d'été.</p>
+    {%- endif -%}
+
+    <!-- Form -->
+    <form id="sr-product-form" action="/cart/add">
+      <input type="hidden" name="id" id="sr-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+      <input type="hidden" name="quantity" id="sr-qty-input" value="1">
+
+      <!-- Données variants pour JS -->
+      <script id="sr-variants-json" type="application/json">
+        {{ product.variants | json }}
+      </script>
+
+      <!-- Size options -->
+      {%- assign size_option = nil -%}
+      {%- for option in product.options_with_values -%}
+        {%- if option.name == 'Taille' or option.name == 'Size' or option.name == 'taille' -%}
+          {%- assign size_option = option -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if size_option -%}
+        <div class="sr-size-selector">
+          <div class="sr-size-selector__header">
+            <span class="sr-size-selector__label">Taille</span>
+            <span class="sr-size-selector__guide">Guide des tailles</span>
+          </div>
+          <div class="sr-size-selector__options">
+            {%- for value in size_option.values -%}
+              <button type="button"
+                      class="sr-size-btn {% if forloop.first %}is-selected{% endif %}"
+                      data-size="{{ value | escape }}">
+                {{ value }}
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Color options -->
+      {%- assign color_option = nil -%}
+      {%- for option in product.options_with_values -%}
+        {%- if option.name == 'Couleur' or option.name == 'Color' or option.name == 'couleur' -%}
+          {%- assign color_option = option -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if color_option -%}
+        {%- assign color_map = "Rose poudré:#E7C4BC,Bleu pastel:#CFE2EC,Vert doux:#D8E9DF,Beige clair:#EBDCC2,Rose:#F2DCD6,Bleu:#CFE2EC,Vert:#D8E9DF,Beige:#EBDCC2" | split: "," -%}
+        <div class="sr-color-selector">
+          <div class="sr-color-selector__label">
+            Couleur · <span id="sr-color-label">{{ color_option.values.first }}</span>
+          </div>
+          <div class="sr-color-selector__swatches">
+            {%- for value in color_option.values -%}
+              {%- assign hex = '#E7C4BC' -%}
+              {%- for pair in color_map -%}
+                {%- assign p = pair | split: ":" -%}
+                {%- if p[0] == value -%}{%- assign hex = p[1] -%}{%- endif -%}
+              {%- endfor -%}
+              <button type="button"
+                      class="sr-color-swatch {% if forloop.first %}is-selected{% endif %}"
+                      style="background:{{ hex }}"
+                      data-color-value="{{ value | escape }}"
+                      data-color-name="{{ value | escape }}"
+                      aria-label="{{ value }}">
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Quantity + Add to cart -->
+      <div class="sr-product-atc-row">
+        <div class="sr-quantity">
+          <button type="button" class="sr-quantity__btn" id="sr-qty-dec" aria-label="Diminuer">−</button>
+          <span class="sr-quantity__val" id="sr-qty-val">1</span>
+          <button type="button" class="sr-quantity__btn" id="sr-qty-inc" aria-label="Augmenter">+</button>
+        </div>
+        <button type="button" class="sr-product-atc" id="sr-atc-btn">
+          {%- if product.available -%}
+            Ajouter au panier
+          {%- else -%}
+            Épuisé
+          {%- endif -%}
+        </button>
+      </div>
+
+      {%- if product.available -%}
+        <button type="button" class="sr-product-buy-now" id="sr-buy-now-btn">
+          Acheter maintenant
+        </button>
+      {%- endif -%}
+    </form>
+
+    <!-- Reassurance -->
+    <div class="sr-reassurance">
+      <div class="sr-reassurance-item">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C28B7C" stroke-width="1.5"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+        Livraison offerte dès 69€
+      </div>
+      <div class="sr-reassurance-item">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C28B7C" stroke-width="1.5"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        Paiement 100% sécurisé
+      </div>
+      <div class="sr-reassurance-item">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C28B7C" stroke-width="1.5"><path d="M3 11a9 9 0 0 1 15-6l3 3"/><path d="M21 5v4h-4"/><path d="M21 13a9 9 0 0 1-15 6l-3-3"/><path d="M3 19v-4h4"/></svg>
+        Retour possible sous 30 jours
+      </div>
+    </div>
+
+    <!-- Accordion -->
+    <div class="sr-accordion">
+      {%- assign accordion_items = "Description,Composition,Conseils d'entretien,Livraison & retours" | split: "," -%}
+      {%- for item in accordion_items -%}
+        <div class="sr-accordion__item">
+          <button class="sr-accordion__trigger" type="button">
+            <span class="sr-accordion__title">{{ item }}</span>
+            <span class="sr-accordion__icon">+</span>
+          </button>
+          <div class="sr-accordion__body">
+            {%- case item -%}
+              {%- when 'Description' -%}
+                {%- if product.description != blank -%}
+                  {{ product.description }}
+                {%- else -%}
+                  Robe d'été en voile de viscose fluide, coupe portefeuille et bretelles fines ajustables. Une pièce intemporelle, pensée pour les journées lumineuses comme pour les soirées douces.
+                {%- endif -%}
+              {%- when 'Composition' -%}
+                {%- if product.metafields.custom.composition != blank -%}
+                  {{ product.metafields.custom.composition }}
+                {%- else -%}
+                  100% viscose LENZING™ ECOVERO™. Doublure 100% coton. Fabriquée dans un atelier européen.
+                {%- endif -%}
+              {%- when "Conseils d'entretien" -%}
+                {%- if product.metafields.custom.care != blank -%}
+                  {{ product.metafields.custom.care }}
+                {%- else -%}
+                  Lavage à 30°C sur l'envers, programme délicat. Ne pas utiliser de sèche-linge. Repassage doux. Éviter le séchage en plein soleil pour préserver les couleurs.
+                {%- endif -%}
+              {%- when 'Livraison & retours' -%}
+                Livraison offerte dès 69€ d'achat, expédition sous 24-48h. Retours gratuits sous 30 jours. Paiement 100% sécurisé.
+            {%- endcase -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<!-- Pourquoi on l'aime -->
+<div class="sr-why-love">
+  <!-- Wave top -->
+  <svg class="sr-wave-top" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 C320,72 760,-8 1080,28 C1260,48 1360,56 1440,30 L1440,0 L0,0 Z" fill="#FBF7F1"/>
+  </svg>
+
+  <span class="sr-section-script">on l'adore</span>
+  <h2 class="sr-section-h2">Pourquoi on l'aime</h2>
+
+  <div class="sr-why-love__grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'why_item' -%}
+        <div class="sr-why-item" {{ block.shopify_attributes }}>
+          <div class="sr-why-item__icon sr-why-item__icon--{{ block.settings.icon_color | default: 'rose' }}">
+            {%- case block.settings.icon -%}
+              {%- when 'fabric' -%}
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B07A6B" stroke-width="1.4"><path d="M3 8c5-3 9 3 14 0"/><path d="M3 13c5-3 9 3 14 0"/><path d="M3 18c5-3 9 3 14 0"/></svg>
+              {%- when 'silhouette' -%}
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4f6258" stroke-width="1.4"><path d="M7 3c3 4 3 6 0 9-3 3-3 6 0 9"/><path d="M17 3c-3 4-3 6 0 9 3 3 3 6 0 9"/></svg>
+              {%- else -%}
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#CBA36B" stroke-width="1.4"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+            {%- endcase -%}
+          </div>
+          <span class="sr-why-item__name">{{ block.settings.name }}</span>
+          <p class="sr-why-item__desc">{{ block.settings.desc }}</p>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="sr-why-item">
+        <div class="sr-why-item__icon sr-why-item__icon--rose">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B07A6B" stroke-width="1.4"><path d="M3 8c5-3 9 3 14 0"/><path d="M3 13c5-3 9 3 14 0"/><path d="M3 18c5-3 9 3 14 0"/></svg>
+        </div>
+        <span class="sr-why-item__name">Matière légère</span>
+        <p class="sr-why-item__desc">Un voile fluide et respirant, pensé pour les fortes chaleurs.</p>
+      </div>
+      <div class="sr-why-item">
+        <div class="sr-why-item__icon sr-why-item__icon--blue">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4f6258" stroke-width="1.4"><path d="M7 3c3 4 3 6 0 9-3 3-3 6 0 9"/><path d="M17 3c-3 4-3 6 0 9 3 3 3 6 0 9"/></svg>
+        </div>
+        <span class="sr-why-item__name">Coupe flatteuse</span>
+        <p class="sr-why-item__desc">Une silhouette ajustée qui sublime toutes les morphologies.</p>
+      </div>
+      <div class="sr-why-item">
+        <div class="sr-why-item__icon sr-why-item__icon--gold">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#CBA36B" stroke-width="1.4"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        </div>
+        <span class="sr-why-item__name">Parfait pour l'été</span>
+        <p class="sr-why-item__desc">De la plage aux soirées douces, elle accompagne chaque instant.</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<!-- Avis produit -->
+<div class="sr-product-reviews">
+  <span class="sr-section-script">elles adorent</span>
+  <h2 class="sr-section-h2">Ce qu'elles pensent de {{ product.title }}</h2>
+  <div class="sr-product-reviews__rating">
+    <span class="sr-product-reviews__avg">4,9</span>
+    <span style="color:#CBA36B;letter-spacing:2px;font-size:16px">★★★★★</span>
+    <span>· 128 avis vérifiés</span>
+  </div>
+
+  <div class="sr-reviews__grid">
+    <div class="sr-review-card">
+      <div class="sr-review-card__stars">★★★★★</div>
+      <p class="sr-review-card__text">"Coupe parfaite et tissu ultra léger, je ne la quitte plus de l'été."</p>
+      <span class="sr-review-card__author">Camille L.</span>
+    </div>
+    <div class="sr-review-card">
+      <div class="sr-review-card__stars">★★★★★</div>
+      <p class="sr-review-card__text">"Très flatteuse, la taille tombe parfaitement. Reçue en 2 jours."</p>
+      <span class="sr-review-card__author">Inès B.</span>
+    </div>
+    <div class="sr-review-card">
+      <div class="sr-review-card__stars">★★★★★</div>
+      <p class="sr-review-card__text">"La couleur est exactement comme sur les photos, je recommande."</p>
+      <span class="sr-review-card__author">Sofia M.</span>
+    </div>
+  </div>
+</div>
+
+<!-- À porter avec (produits recommandés) -->
+<div class="sr-related">
+  <!-- Wave top -->
+  <svg class="sr-wave-top" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,32 C280,-6 620,68 920,38 C1140,16 1320,10 1440,34 L1440,0 L0,0 Z" fill="#FBF3EC"/>
+  </svg>
+
+  <span class="sr-section-script">complétez le look</span>
+  <h2 class="sr-section-h2">À porter avec</h2>
+
+  <div class="sr-related__grid">
+    {%- if recommendations.products_count > 0 -%}
+      {%- for rec in recommendations.products limit: 4 -%}
+        {%- render 'product-card-sarah', product: rec -%}
+      {%- endfor -%}
+    {%- elsif section.settings.related_collection != blank -%}
+      {%- for rec in collections[section.settings.related_collection].products limit: 4 -%}
+        {%- render 'product-card-sarah', product: rec -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..4) -%}
+        {%- assign grads = "repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 14px,#F4E9D5 14px,#F4E9D5 28px),radial-gradient(circle at 50% 38%,#F6E7CC,#E8CFA0),repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 14px,#DEEBF1 14px,#DEEBF1 28px),repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 14px,#E6F0EA 14px,#E6F0EA 28px)" | split: "," -%}
+        <article class="sr-card" style="text-decoration:none">
+          <div class="sr-card__media" style="background:{{ grads[forloop.index0] }}"></div>
+          <div class="sr-card__footer">
+            <span class="sr-card__title">Accessoire {{ i }}</span>
+            <span class="sr-card__price">– €</span>
+          </div>
+          <button class="sr-card__atc">Ajouter au panier</button>
+        </article>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+<!-- Newsletter -->
+<section class="sr-newsletter" style="background:#CFE2EC">
+  <svg class="sr-wave-top" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,34 C360,76 720,-6 1080,32 C1260,50 1360,56 1440,32 L1440,0 L0,0 Z" fill="#FBF7F1"/>
+  </svg>
+  <div class="sr-newsletter__deco"></div>
+  <div class="sr-newsletter__inner">
+    <span class="sr-newsletter__script">rejoins-nous</span>
+    <h2 class="sr-newsletter__h2">Rejoins l'univers Sarah Robe</h2>
+    <p class="sr-newsletter__desc">Découvre nos nouveautés, offres privées et inspirations d'été.</p>
+    {%- form 'customer' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="sr-newsletter__form">
+        <input type="email" name="contact[email]" class="sr-newsletter__input" placeholder="Votre adresse e-mail" required>
+        <button type="submit" class="sr-btn sr-btn--primary" style="padding:13px 30px">S'inscrire</button>
+      </div>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Produit principal",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "default_tagline",
+      "label": "Tagline par défaut",
+      "default": "Summer Essential"
+    },
+    {
+      "type": "text",
+      "id": "default_social_proof",
+      "label": "Social proof par défaut",
+      "default": "Notre robe la plus vendue cet été"
+    },
+    {
+      "type": "text",
+      "id": "default_review_count",
+      "label": "Nb avis par défaut",
+      "default": "128"
+    },
+    {
+      "type": "collection",
+      "id": "related_collection",
+      "label": "Collection \"À porter avec\""
+    }
+  ],
+  "blocks": [
+    {
+      "type": "why_item",
+      "name": "Point fort",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Titre",
+          "default": "Matière légère"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description",
+          "default": "Un voile fluide et respirant, pensé pour les fortes chaleurs."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icône",
+          "options": [
+            { "value": "fabric",     "label": "Tissu / matière" },
+            { "value": "silhouette", "label": "Silhouette" },
+            { "value": "sun",        "label": "Soleil / été" }
+          ],
+          "default": "fabric"
+        },
+        {
+          "type": "select",
+          "id": "icon_color",
+          "label": "Couleur icône",
+          "options": [
+            { "value": "rose", "label": "Rose" },
+            { "value": "blue", "label": "Bleu" },
+            { "value": "gold", "label": "Or" }
+          ],
+          "default": "rose"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produit principal",
+      "blocks": [
+        { "type": "why_item", "settings": { "name": "Matière légère",    "icon": "fabric",     "icon_color": "rose" } },
+        { "type": "why_item", "settings": { "name": "Coupe flatteuse",   "icon": "silhouette", "icon_color": "blue" } },
+        { "type": "why_item", "settings": { "name": "Parfait pour l'été","icon": "sun",        "icon_color": "gold" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,97 @@
+<!-- ============================================================
+   AVIS CLIENTES
+   ============================================================ -->
+<section class="sr-reviews">
+  <!-- Wave top -->
+  <svg class="sr-wave-top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,34 C210,58 420,54 650,28 C875,4 1110,20 1440,50 L1440,0 L0,0 Z"
+          fill="{{ section.settings.wave_color | default: '#FBF7F1' }}"/>
+  </svg>
+
+  <span class="sr-section-script">{{ section.settings.script | default: "elles adorent" }}</span>
+  <h2 class="sr-section-h2" style="margin-bottom:44px">{{ section.settings.heading | default: "Avis clientes" }}</h2>
+
+  <div class="sr-reviews__grid">
+    {%- for block in section.blocks -%}
+      <div class="sr-review-card" {{ block.shopify_attributes }}>
+        <div class="sr-review-card__stars">★★★★★</div>
+        <p class="sr-review-card__text">"{{ block.settings.text }}"</p>
+        <span class="sr-review-card__author">{{ block.settings.author }}</span>
+      </div>
+    {%- else -%}
+      <div class="sr-review-card">
+        <div class="sr-review-card__stars">★★★★★</div>
+        <p class="sr-review-card__text">"Robe magnifique, légère et parfaite pour l'été."</p>
+        <span class="sr-review-card__author">Camille L.</span>
+      </div>
+      <div class="sr-review-card">
+        <div class="sr-review-card__stars">★★★★★</div>
+        <p class="sr-review-card__text">"Le parfum tient super bien et sent vraiment les vacances."</p>
+        <span class="sr-review-card__author">Inès B.</span>
+      </div>
+      <div class="sr-review-card">
+        <div class="sr-review-card__stars">★★★★★</div>
+        <p class="sr-review-card__text">"Commande reçue rapidement, emballage très propre."</p>
+        <span class="sr-review-card__author">Sofia M.</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Avis clientes",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "script",
+      "label": "Label cursive",
+      "default": "elles adorent"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Avis clientes"
+    },
+    {
+      "type": "color",
+      "id": "wave_color",
+      "label": "Couleur de la vague du dessus",
+      "default": "#FBF7F1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Avis",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texte de l'avis",
+          "default": "Robe magnifique, légère et parfaite pour l'été."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Auteur",
+          "default": "Camille L."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Avis clientes",
+      "blocks": [
+        { "type": "review", "settings": { "text": "Robe magnifique, légère et parfaite pour l'été.", "author": "Camille L." } },
+        { "type": "review", "settings": { "text": "Le parfum tient super bien et sent vraiment les vacances.", "author": "Inès B." } },
+        { "type": "review", "settings": { "text": "Commande reçue rapidement, emballage très propre.", "author": "Sofia M." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

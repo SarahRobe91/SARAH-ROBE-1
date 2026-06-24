@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FBF7F1">
+  <title>
+    {%- if page_title == shop.name -%}
+      {{ shop.name }}
+    {%- else -%}
+      {{ page_title }} – {{ shop.name }}
+    {%- endif -%}
+  </title>
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+  {{ 'sarah-robe.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body class="sr-body">
+
+  {%- section 'header' -%}
+
+  <main id="main-content" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {%- section 'footer' -%}
+
+  <!-- ============ CART DRAWER ============ -->
+  <div id="sr-cart-overlay" class="sr-overlay" aria-hidden="true"></div>
+  <div id="sr-cart-drawer" class="sr-drawer" aria-hidden="true" role="dialog" aria-label="Votre panier">
+    <div class="sr-drawer__header">
+      <span class="sr-drawer__title">Votre panier</span>
+      <button class="sr-drawer__close" id="sr-cart-close" aria-label="Fermer">×</button>
+    </div>
+    <div class="sr-drawer__body" id="sr-cart-body">
+      <div class="sr-cart-empty">
+        Votre panier est vide.<br>
+        <span style="font-size:13px">Ajoutez vos pièces d'été préférées ✦</span>
+      </div>
+    </div>
+    <div class="sr-drawer__footer" id="sr-cart-footer" style="display:none">
+      <div class="sr-cart-total">
+        <span class="sr-cart-total__label">Total</span>
+        <span class="sr-cart-total__value" id="sr-cart-total-value">0 €</span>
+      </div>
+      <a href="/cart" class="sr-btn sr-btn--primary sr-btn--full">Passer la commande</a>
+      <p class="sr-cart-reassurance">Livraison offerte dès 69€ ✦ Paiement sécurisé</p>
+    </div>
+  </div>
+
+  <!-- ============ SEARCH DRAWER ============ -->
+  <div id="sr-search-overlay" class="sr-overlay" aria-hidden="true"></div>
+  <div id="sr-search-drawer" class="sr-drawer" aria-hidden="true" role="dialog" aria-label="Recherche">
+    <div class="sr-drawer__header">
+      <span class="sr-drawer__title">Recherche</span>
+      <button class="sr-drawer__close" id="sr-search-close" aria-label="Fermer">×</button>
+    </div>
+    <div class="sr-search-body">
+      <form action="/search" method="get" class="sr-search-form">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B07A6B" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input type="search" name="q" placeholder="Rechercher une robe, un parfum…" autocomplete="off" class="sr-search-input">
+        <button type="submit" class="sr-btn sr-btn--primary sr-btn--small">OK</button>
+      </form>
+      <div>
+        <div class="sr-label-xs" style="margin-bottom:14px">Suggestions</div>
+        <div class="sr-search-links">
+          <a href="/search?q=robes+d%27été" class="sr-search-link">
+            <span class="sr-search-link__swatch sr-swatch--rose"></span>
+            <span class="sr-search-link__text">Robes d'été</span>
+            <span class="sr-search-link__arrow">›</span>
+          </a>
+          <a href="/search?q=parfums" class="sr-search-link">
+            <span class="sr-search-link__swatch sr-swatch--bleu"></span>
+            <span class="sr-search-link__text">Parfums</span>
+            <span class="sr-search-link__arrow">›</span>
+          </a>
+          <a href="/search?q=ensembles+légers" class="sr-search-link">
+            <span class="sr-search-link__swatch sr-swatch--dore"></span>
+            <span class="sr-search-link__text">Ensembles légers</span>
+            <span class="sr-search-link__arrow">›</span>
+          </a>
+          <a href="/search?q=accessoires+solaires" class="sr-search-link">
+            <span class="sr-search-link__swatch sr-swatch--vert"></span>
+            <span class="sr-search-link__text">Accessoires solaires</span>
+            <span class="sr-search-link__arrow">›</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ACCOUNT DRAWER ============ -->
+  <div id="sr-account-overlay" class="sr-overlay" aria-hidden="true"></div>
+  <div id="sr-account-drawer" class="sr-drawer" aria-hidden="true" role="dialog" aria-label="Mon compte">
+    <div class="sr-drawer__header">
+      <span class="sr-drawer__title">Mon compte</span>
+      <button class="sr-drawer__close" id="sr-account-close" aria-label="Fermer">×</button>
+    </div>
+    <div class="sr-account-body">
+      <div class="sr-account-icon">
+        <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#B07A6B" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </div>
+      <div class="sr-account-welcome">Bienvenue chez Sarah Robe</div>
+      <p class="sr-account-desc">Suivez vos commandes, gérez vos informations et retrouvez vos favoris.</p>
+      {%- if customer -%}
+        <a href="/account" class="sr-btn sr-btn--primary sr-btn--full">Mon compte</a>
+        <a href="/account/logout" class="sr-btn sr-btn--outline sr-btn--full">Se déconnecter</a>
+      {%- else -%}
+        <a href="/account/login" class="sr-btn sr-btn--primary sr-btn--full">Se connecter</a>
+        <a href="/account/register" class="sr-btn sr-btn--outline sr-btn--full">Créer un compte</a>
+      {%- endif -%}
+      <p class="sr-account-secure">Paiement &amp; données sécurisés ✦</p>
+    </div>
+  </div>
+
+  <!-- ============ MOBILE NAV ============ -->
+  <nav id="sr-mobile-nav" class="sr-mobile-nav" aria-label="Navigation mobile">
+    <div id="sr-mobile-nav-overlay" class="sr-mobile-nav__overlay"></div>
+    <div class="sr-mobile-nav__panel">
+      <button class="sr-mobile-nav__close" id="sr-mobile-nav-close" aria-label="Fermer">×</button>
+      <div class="sr-mobile-nav__links">
+        {%- for link in linklists.main-menu.links -%}
+          <a href="{{ link.url }}" {% if link.active %}style="color:#C28B7C"{% endif %}>{{ link.title }}</a>
+        {%- else -%}
+          <a href="/">Accueil</a>
+          <a href="/collections/robes">Robes</a>
+          <a href="/collections/tenues-ete">Tenues d'été</a>
+          <a href="/collections/parfums">Parfums</a>
+          <a href="/collections/nouveautes">Nouveautés</a>
+          <a href="/pages/contact">Contact</a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </nav>
+
+  {{ 'sarah-robe.js' | asset_url | script_tag }}
+</body>
+</html>

@@ -1,0 +1,97 @@
+{
+  "general": {
+    "currency": {
+      "format": "{{amount}} €"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Ajouter au panier",
+      "sold_out": "Épuisé",
+      "unavailable": "Indisponible",
+      "coming_soon": "Bientôt de retour",
+      "buy_now": "Acheter maintenant",
+      "quantity": "Quantité",
+      "sku": "Référence",
+      "regular_price": "Prix normal",
+      "sale_price": "Prix soldé",
+      "unit_price": "Prix unitaire"
+    },
+    "general": {
+      "sale_badge_html": "Promo"
+    }
+  },
+  "collection": {
+    "sorting": {
+      "featured": "Sélection",
+      "best_selling": "Popularité",
+      "title_ascending": "A-Z",
+      "title_descending": "Z-A",
+      "price_ascending": "Prix croissant",
+      "price_descending": "Prix décroissant",
+      "created_ascending": "Plus ancien",
+      "created_descending": "Nouveautés"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Votre panier",
+      "empty": "Votre panier est vide.",
+      "subtotal": "Sous-total",
+      "checkout": "Passer la commande",
+      "item_count": {
+        "one": "{{ count }} article",
+        "other": "{{ count }} articles"
+      },
+      "remove": "Retirer"
+    }
+  },
+  "customer": {
+    "login": {
+      "title": "Se connecter",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "forgot_password": "Mot de passe oublié ?"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Créer mon compte"
+    }
+  },
+  "newsletter": {
+    "label": "Email",
+    "placeholder": "Votre adresse e-mail",
+    "submit": "S'inscrire",
+    "success": "Merci ! Vous êtes inscrit(e) à notre newsletter."
+  },
+  "contact": {
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "subject": "Sujet",
+      "message": "Message",
+      "submit": "Envoyer le message",
+      "success": "Merci ! Votre message a bien été envoyé — nous vous répondons sous 24h à 48h."
+    }
+  },
+  "search": {
+    "heading": "Recherche",
+    "placeholder": "Rechercher une robe, un parfum…",
+    "no_results": "Aucun résultat pour",
+    "results_with_count": {
+      "one": "{{ count }} résultat pour",
+      "other": "{{ count }} résultats pour"
+    },
+    "submit": "Rechercher"
+  },
+  "pagination": {
+    "next": "Suivant",
+    "previous": "Précédent",
+    "current_page": "Page {{ page }} sur {{ total }}"
+  }
+}

@@ -1,0 +1,140 @@
+<!-- ============================================================
+   FOOTER
+   ============================================================ -->
+<footer class="sr-footer" role="contentinfo">
+  <div class="sr-footer__grid">
+
+    <!-- Brand column -->
+    <div>
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 148 }}"
+             alt="{{ shop.name }}"
+             class="sr-footer__logo-img"
+             width="74" height="74" loading="lazy">
+      {%- else -%}
+        <div class="sr-footer__logo-text">
+          <span class="sr-footer__logo-name">Sarah</span>
+          <span class="sr-footer__logo-sub">robe</span>
+        </div>
+      {%- endif -%}
+      <p class="sr-footer__tagline">{{ section.settings.tagline | default: "Vêtements d'été de marque et parfums solaires. L'élégance accessible, toute la saison." }}</p>
+    </div>
+
+    <!-- Boutique column -->
+    <div class="sr-footer__col">
+      <div class="sr-footer__col-title">Boutique</div>
+      <div class="sr-footer__links">
+        {%- if section.settings.menu_shop != blank and linklists[section.settings.menu_shop].links.size > 0 -%}
+          {%- for link in linklists[section.settings.menu_shop].links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="/collections/robes">Robes</a>
+          <a href="/collections/tenues-ete">Tenues d'été</a>
+          <a href="/collections/parfums">Parfums</a>
+          <a href="/collections/nouveautes">Nouveautés</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Aide column -->
+    <div class="sr-footer__col">
+      <div class="sr-footer__col-title">Aide</div>
+      <div class="sr-footer__links">
+        {%- if section.settings.menu_help != blank and linklists[section.settings.menu_help].links.size > 0 -%}
+          {%- for link in linklists[section.settings.menu_help].links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="/pages/livraison">Livraison</a>
+          <a href="/pages/retours">Retours</a>
+          <a href="/pages/contact">Contact</a>
+          <a href="/pages/cgv">CGV</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Réseaux column -->
+    <div class="sr-footer__col">
+      <div class="sr-footer__col-title">Suivez-nous</div>
+      <div class="sr-footer__links">
+        {%- if section.settings.instagram_url != blank -%}
+          <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">Instagram</a>
+        {%- endif -%}
+        {%- if section.settings.tiktok_url != blank -%}
+          <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener">TikTok</a>
+        {%- endif -%}
+        {%- if section.settings.pinterest_url != blank -%}
+          <a href="{{ section.settings.pinterest_url }}" target="_blank" rel="noopener">Pinterest</a>
+        {%- endif -%}
+        {%- if section.settings.instagram_url == blank and section.settings.tiktok_url == blank -%}
+          <span>Instagram</span>
+          <span>TikTok</span>
+          <span>Pinterest</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Mobile footer links (visible on mobile, replaces full columns) -->
+  <div class="sr-footer__mobile-links">
+    <a href="/collections/all" style="color:#b5aca3">Boutique</a>
+    <a href="/pages/livraison" style="color:#b5aca3">Livraison</a>
+    <a href="/pages/retours" style="color:#b5aca3">Retours</a>
+    <a href="/pages/cgv" style="color:#b5aca3">CGV</a>
+  </div>
+
+  <div class="sr-footer__bottom">
+    <span>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }} — Tous droits réservés</span>
+    <span>
+      <a href="/pages/confidentialite" style="color:inherit">Politique de confidentialité</a>
+      &nbsp;·&nbsp;
+      <a href="/pages/mentions-legales" style="color:inherit">Mentions légales</a>
+    </span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (photo ronde)"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Vêtements d'été de marque et parfums solaires. L'élégance accessible, toute la saison."
+    },
+    {
+      "type": "link_list",
+      "id": "menu_shop",
+      "label": "Menu Boutique"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_help",
+      "label": "Menu Aide"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "URL Instagram"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "URL TikTok"
+    },
+    {
+      "type": "url",
+      "id": "pinterest_url",
+      "label": "URL Pinterest"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,328 @@
+<!-- ============================================================
+   MAIN COLLECTION — Template collection dynamique Shopify
+   ============================================================ -->
+
+<!-- Hero collection -->
+<div class="sr-collection-hero">
+  <div class="sr-collection-hero__texture"></div>
+  <div class="sr-collection-hero__deco1"></div>
+  <div class="sr-collection-hero__deco2"></div>
+
+  <div class="sr-collection-hero__content">
+    <!-- Breadcrumb -->
+    <nav class="sr-breadcrumb" aria-label="Fil d'Ariane">
+      <a href="/">Accueil</a>
+      <span class="sr-breadcrumb__sep">/</span>
+      <a href="/collections">Collections</a>
+      <span class="sr-breadcrumb__sep">/</span>
+      <span style="color:#3A3330">{{ collection.title }}</span>
+    </nav>
+
+    <span class="sr-collection-hero__script">{{ section.settings.script_title | default: "Collection Été 2026" }}</span>
+    <h1 class="sr-collection-hero__h1">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p class="sr-collection-hero__desc">{{ collection.description }}</p>
+    {%- else -%}
+      <p class="sr-collection-hero__desc">Des pièces légères pensées pour accompagner les journées ensoleillées et les soirées d'été.</p>
+    {%- endif -%}
+
+    <div class="sr-collection-hero__rating">
+      <span class="sr-rating-stars">★★★★★</span>
+      <span class="sr-rating-value">4,8<span>/5</span></span>
+      <span class="sr-rating-sep"></span>
+      <span class="sr-rating-proof">Déjà adoptée par plus de <span>2 500 clientes</span></span>
+    </div>
+  </div>
+
+  <!-- Wave bottom -->
+  <svg style="position:absolute;bottom:-1px;left:0;width:100%;height:74px;display:block" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,52 C300,108 620,4 920,40 C1140,67 1300,78 1440,44 L1440,90 L0,90 Z" fill="#FBF7F1"/>
+  </svg>
+</div>
+
+<!-- Filter bar -->
+{%- paginate collection.products by section.settings.products_per_page -%}
+
+<div class="sr-filter-bar" id="sr-filter-bar">
+  <!-- Desktop filter bar -->
+  <div class="sr-filter-bar__inner">
+    <span class="sr-filter-count">{{ collection.products_count }} pièces</span>
+    <div class="sr-filter-controls">
+
+      <!-- Prix -->
+      <div style="position:relative">
+        <button class="sr-filter-pill" data-sr-filter-toggle="sr-dd-price" type="button">
+          Prix
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="sr-filter-dropdown" id="sr-dd-price">
+          <a href="{{ collection.url }}?sort_by={{ current_sort_by }}" class="sr-filter-dropdown__option" data-sr-sort="">Tous les prix</a>
+          <div class="sr-filter-dropdown__option" data-sr-price="lt80">Moins de 80 €</div>
+          <div class="sr-filter-dropdown__option" data-sr-price="mid">80 € – 110 €</div>
+          <div class="sr-filter-dropdown__option" data-sr-price="gt110">Plus de 110 €</div>
+        </div>
+      </div>
+
+      <!-- Taille -->
+      <div style="position:relative">
+        <button class="sr-filter-pill" data-sr-filter-toggle="sr-dd-size" type="button">
+          Taille
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="sr-filter-dropdown" id="sr-dd-size">
+          <div class="sr-label-xs" style="padding:16px 16px 12px">Sélectionner une taille</div>
+          <div class="sr-filter-dropdown__sizes">
+            {%- for size in "XS,S,M,L,XL" | split: "," -%}
+              <button class="sr-filter-size" data-sr-size="{{ size }}" type="button">{{ size }}</button>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+
+      <!-- Disponibilité -->
+      <button class="sr-filter-pill" id="sr-filter-avail" type="button"
+              {%- if current_tags contains 'en-stock' -%}style="background:#F2DCD6;border-color:#C28B7C;color:#B07A6B"{%- endif -%}>
+        {%- if current_tags contains 'en-stock' -%}En stock ✓{%- else -%}Disponibilité{%- endif -%}
+      </button>
+
+      <div class="sr-filter-sep"></div>
+
+      <!-- Trier par -->
+      <div style="position:relative">
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <button class="sr-filter-pill" data-sr-filter-toggle="sr-dd-sort" type="button">
+          Trier ·
+          {%- case sort_by -%}
+            {%- when 'best-selling' -%} Popularité
+            {%- when 'created-descending' -%} Nouveautés
+            {%- when 'price-ascending' -%} Prix croissant
+            {%- when 'price-descending' -%} Prix décroissant
+            {%- else -%} Popularité
+          {%- endcase -%}
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="sr-filter-dropdown sr-filter-dropdown--right" id="sr-dd-sort">
+          {%- assign sort_options = "best-selling:Popularité,created-descending:Nouveautés,price-ascending:Prix croissant,price-descending:Prix décroissant" | split: "," -%}
+          {%- for opt in sort_options -%}
+            {%- assign opt_parts = opt | split: ":" -%}
+            <div class="sr-filter-dropdown__option" data-sr-sort="{{ opt_parts[0] }}">
+              {{ opt_parts[1] }}
+              {%- if sort_by == opt_parts[0] -%}<span class="sr-filter-dropdown__check">✓</span>{%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile filter pills (horizontal scroll) -->
+  <div style="display:none" class="sr-filter-bar--mobile">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;padding:0 4px">
+      <span class="sr-filter-count">{{ collection.products_count }} pièces</span>
+    </div>
+    <div class="sr-filter-pills-scroll">
+      <button class="sr-filter-pill sr-filter-pill-m" data-sr-filter-toggle="sr-dd-sort-m" type="button">
+        Trier
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <button class="sr-filter-pill sr-filter-pill-m" data-sr-filter-toggle="sr-dd-price-m" type="button">
+        Prix
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <button class="sr-filter-pill sr-filter-pill-m" data-sr-filter-toggle="sr-dd-size-m" type="button">
+        Taille
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <button class="sr-filter-pill sr-filter-pill-m" id="sr-filter-avail-m" type="button">
+        Disponibilité
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Product grid -->
+<div class="sr-collection-grid-section">
+  <div class="sr-collection-grid-header">
+    <div class="sr-collection-grid-script">les favorites de nos clientes</div>
+    <p class="sr-collection-grid-sub">Une sélection estivale pensée pour les journées ensoleillées.</p>
+  </div>
+
+  {%- if collection.products.size > 0 -%}
+    <div class="sr-collection-grid">
+      {%- for product in collection.products -%}
+        {%- render 'product-card-sarah', product: product -%}
+      {%- endfor -%}
+    </div>
+
+    <!-- Pagination / Voir plus -->
+    {%- if paginate.pages > 1 -%}
+      <div class="sr-load-more">
+        <span class="sr-load-more__text">
+          Vous avez vu {{ paginate.current_offset | plus: collection.products.size }} pièces sur {{ collection.products_count }}
+        </span>
+        <div class="sr-progress-bar">
+          <div class="sr-progress-bar__fill"
+               style="width:{{ paginate.current_offset | plus: collection.products.size | times: 100 | divided_by: collection.products_count }}%">
+          </div>
+        </div>
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="sr-btn sr-btn--ghost" style="margin-top:8px;padding:15px 42px">
+            Voir plus de pièces
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  {%- else -%}
+    <div class="sr-empty-state">
+      <span class="sr-empty-state__script">oups</span>
+      <h3 class="sr-empty-state__h3">Aucune pièce ne correspond</h3>
+      <p class="sr-empty-state__desc">Essayez d'élargir votre recherche pour découvrir davantage de pièces.</p>
+      <a href="{{ collection.url }}" class="sr-btn sr-btn--primary" style="padding:14px 34px">
+        Voir tous les produits
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+{%- endpaginate -%}
+
+<!-- Section éditoriale (green section) -->
+<div class="sr-editorial">
+  <svg class="sr-wave-top" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 C320,72 760,-8 1080,28 C1260,48 1360,56 1440,30 L1440,0 L0,0 Z" fill="#FBF7F1"/>
+  </svg>
+
+  <div class="sr-editorial__inner">
+    <div class="sr-editorial__visual">
+      <div class="sr-editorial__blob">
+        {%- if section.settings.editorial_image != blank -%}
+          <img src="{{ section.settings.editorial_image | image_url: width: 860 }}"
+               alt="{{ section.settings.editorial_image.alt | escape }}"
+               loading="lazy">
+        {%- else -%}
+          photo éditoriale organique
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="sr-editorial__text">
+      <span class="sr-editorial__script">{{ section.settings.editorial_script | default: "l'esprit collection" }}</span>
+      <h2 class="sr-editorial__h2">{{ section.settings.editorial_heading | default: "L'élégance solaire, pensée pour durer tout l'été" }}</h2>
+      <p class="sr-editorial__desc">{{ section.settings.editorial_desc | default: "Matières fluides, teintes douces et coupes ajustées : chaque pièce de la collection est imaginée pour accompagner vos journées lumineuses et vos soirées tièdes avec une grâce naturelle." }}</p>
+      <a href="{{ section.settings.editorial_url | default: '/pages/notre-histoire' }}"
+         class="sr-btn sr-btn--primary"
+         style="margin-top:30px;display:inline-block">
+        {{ section.settings.editorial_cta | default: "Découvrir l'histoire" }}
+      </a>
+    </div>
+  </div>
+
+  <svg class="sr-wave-bottom" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,40 C320,-8 760,72 1080,36 C1260,18 1360,10 1440,40 L1440,70 L0,70 Z" fill="#FBF7F1"/>
+  </svg>
+</div>
+
+<!-- Vous aimerez également -->
+{%- if section.settings.related_collection != blank -%}
+  <div style="padding:112px 80px 88px;text-align:center">
+    <span class="sr-section-script">complétez votre sélection</span>
+    <h2 class="sr-section-h2">Vous aimerez également</h2>
+    <p class="sr-section-desc">Nos pièces favorites pour sublimer votre tenue d'été.</p>
+    <div class="sr-products-grid sr-products-grid--4col">
+      {%- for product in collections[section.settings.related_collection].products limit: 4 -%}
+        {%- render 'product-card-sarah', product: product -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<!-- Newsletter -->
+<section class="sr-newsletter" style="background:#CFE2EC">
+  <svg class="sr-wave-top" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,34 C360,76 720,-6 1080,32 C1260,50 1360,56 1440,32 L1440,0 L0,0 Z" fill="#FBF7F1"/>
+  </svg>
+  <div class="sr-newsletter__deco"></div>
+  <div class="sr-newsletter__inner">
+    <span class="sr-newsletter__script">rejoins-nous</span>
+    <h2 class="sr-newsletter__h2">Rejoins l'univers Sarah Robe</h2>
+    <p class="sr-newsletter__desc">Découvre nos nouveautés, offres privées et inspirations d'été.</p>
+    {%- form 'customer' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="sr-newsletter__form">
+        <input type="email" name="contact[email]" class="sr-newsletter__input" placeholder="Votre adresse e-mail" required>
+        <button type="submit" class="sr-btn sr-btn--primary" style="padding:13px 30px">S'inscrire</button>
+      </div>
+    {%- endform -%}
+  </div>
+</section>
+
+<style>
+@media (max-width:768px) {
+  .sr-filter-bar__inner  { display: none !important; }
+  .sr-filter-bar--mobile { display: block !important; }
+  .sr-editorial__inner { flex-direction: column; padding: 62px 24px; text-align: center; }
+  .sr-editorial__blob  { width: 100%; height: 230px; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Collection principale",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "script_title",
+      "label": "Sous-titre cursive (hero)",
+      "default": "Collection Été 2026"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Produits par page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "image_picker",
+      "id": "editorial_image",
+      "label": "Image éditoriale (section verte)"
+    },
+    {
+      "type": "text",
+      "id": "editorial_script",
+      "label": "Section éditoriale – label cursive",
+      "default": "l'esprit collection"
+    },
+    {
+      "type": "text",
+      "id": "editorial_heading",
+      "label": "Section éditoriale – titre",
+      "default": "L'élégance solaire, pensée pour durer tout l'été"
+    },
+    {
+      "type": "textarea",
+      "id": "editorial_desc",
+      "label": "Section éditoriale – description"
+    },
+    {
+      "type": "text",
+      "id": "editorial_cta",
+      "label": "Section éditoriale – bouton",
+      "default": "Découvrir l'histoire"
+    },
+    {
+      "type": "url",
+      "id": "editorial_url",
+      "label": "Section éditoriale – lien"
+    },
+    {
+      "type": "collection",
+      "id": "related_collection",
+      "label": "Collection \"Vous aimerez également\""
+    }
+  ]
+}
+{% endschema %}

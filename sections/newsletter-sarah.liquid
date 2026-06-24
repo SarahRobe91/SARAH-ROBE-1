@@ -1,0 +1,87 @@
+<!-- ============================================================
+   NEWSLETTER — Inscription email
+   ============================================================ -->
+<section class="sr-newsletter">
+  <!-- Wave top -->
+  <svg class="sr-wave-top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,56 C170,18 340,20 510,48 C700,82 870,78 1015,40 C1165,2 1305,18 1440,62 L1440,0 L0,0 Z"
+          fill="{{ section.settings.wave_color | default: '#F7E6E0' }}"/>
+  </svg>
+
+  <div class="sr-newsletter__deco"></div>
+
+  <div class="sr-newsletter__inner">
+    <span class="sr-newsletter__script">{{ section.settings.script | default: "rejoins-nous" }}</span>
+    <h2 class="sr-newsletter__h2">{{ section.settings.heading | default: "Rejoins l'univers Sarah Robe" }}</h2>
+    <p class="sr-newsletter__desc">{{ section.settings.description | default: "Découvre nos nouveautés, offres privées et inspirations d'été." }}</p>
+
+    {%- form 'customer', id: 'sr-newsletter-form' -%}
+      {%- if form.posted_successfully? -%}
+        <p style="background:rgba(255,255,255,.7);border-radius:14px;padding:14px 16px;font-size:13px;color:#3f6b4f;margin-bottom:16px">
+          Merci ! Vous êtes inscrit(e) à notre newsletter.
+        </p>
+      {%- endif -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="sr-newsletter__form">
+        <input type="email"
+               name="contact[email]"
+               class="sr-newsletter__input"
+               placeholder="{{ section.settings.placeholder | default: 'Votre adresse e-mail' }}"
+               required>
+        <button type="submit" class="sr-btn sr-btn--primary" style="padding:13px 30px;font-size:12px">
+          {{ section.settings.button | default: "S'inscrire" }}
+        </button>
+      </div>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "script",
+      "label": "Label cursive",
+      "default": "rejoins-nous"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Rejoins l'univers Sarah Robe"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Découvre nos nouveautés, offres privées et inspirations d'été."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder email",
+      "default": "Votre adresse e-mail"
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "label": "Texte bouton",
+      "default": "S'inscrire"
+    },
+    {
+      "type": "color",
+      "id": "wave_color",
+      "label": "Couleur vague du dessus",
+      "default": "#F7E6E0"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

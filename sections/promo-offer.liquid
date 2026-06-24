@@ -1,0 +1,87 @@
+<!-- ============================================================
+   OFFRE PROMOTIONNELLE — Bannière promo d'été
+   ============================================================ -->
+<section class="sr-promo">
+  <div class="sr-promo__inner">
+    <div class="sr-promo__deco"></div>
+
+    <div class="sr-promo__text">
+      <span class="sr-promo__script">{{ section.settings.script | default: "offre spéciale été" }}</span>
+      <h2 class="sr-promo__h2">
+        {{ section.settings.heading | default: "Jusqu'à" }}
+        <em>{{ section.settings.discount | default: "-30%" }}</em><br>
+        {{ section.settings.heading_suffix | default: "sur une sélection de robes &amp; parfums" }}
+      </h2>
+      <a href="{{ section.settings.cta_url | default: '/collections/soldes' }}"
+         class="sr-btn sr-btn--dark"
+         style="padding:16px 36px">
+        {{ section.settings.cta_label | default: "Voir les offres" }}
+      </a>
+    </div>
+
+    <div class="sr-promo__visual">
+      {%- if section.settings.promo_image != blank -%}
+        <img src="{{ section.settings.promo_image | image_url: width: 600 }}"
+             alt="{{ section.settings.promo_image.alt | escape }}"
+             style="width:100%;height:100%;object-fit:cover"
+             loading="lazy">
+      {%- else -%}
+        photo produit
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Offre promotionnelle",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "script",
+      "label": "Label cursive",
+      "default": "offre spéciale été"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Début du titre",
+      "default": "Jusqu'à"
+    },
+    {
+      "type": "text",
+      "id": "discount",
+      "label": "Réduction (ex: -30%)",
+      "default": "-30%"
+    },
+    {
+      "type": "text",
+      "id": "heading_suffix",
+      "label": "Suite du titre",
+      "default": "sur une sélection de robes & parfums"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Bouton – texte",
+      "default": "Voir les offres"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Bouton – lien"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Image produit"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Offre promotionnelle"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+<!-- ============================================================
+   ANNOUNCEMENT WAVE — Bannière verte ondulée (homepage seulement)
+   ============================================================ -->
+
+<!-- Desktop wave -->
+<div class="sr-wave-banner sr-wave-banner--desktop">
+  <svg viewBox="0 -25 1440 150" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <path id="srWaveLineD" d="M-2880,40 C-2580,102 -2260,-16 -1880,36 C-1660,66 -1540,76 -1440,38 C-1140,100 -820,-18 -440,34 C-220,64 -100,74 0,36 C300,98 620,-20 1000,32 C1220,62 1340,72 1440,34 C1740,96 2060,-22 2440,30 C2660,60 2780,70 2880,32"/>
+    </defs>
+    <!-- FBF7F1 fill over hero -->
+    <path d="M0,60 C300,122 620,4 1000,56 C1220,86 1340,96 1440,58 L1440,150 L0,150 Z" fill="#FBF7F1"/>
+    <!-- Green wave stroke -->
+    <path d="M0,40 C300,102 620,-16 1000,36 C1220,66 1340,76 1440,38" fill="none" stroke="#D8E9DF" stroke-width="40"/>
+    <!-- Animated text on wave -->
+    <text fill="#4f6258" font-family="Jost, sans-serif" font-size="16" font-weight="600" letter-spacing="2.5" word-spacing="4" dominant-baseline="middle" dy="6">
+      <textPath href="#srWaveLineD" startOffset="0" textLength="6240" lengthAdjust="spacing">
+        {{ section.settings.text | default: "LIVRAISON OFFERTE DÈS 69€" }} <tspan fill="#C28B7C">•</tspan> PARFUMS &amp; ROBES D'ÉTÉ <tspan fill="#C28B7C">•</tspan> NOUVELLE COLLECTION <tspan fill="#C28B7C">•</tspan> {{ section.settings.text | default: "LIVRAISON OFFERTE DÈS 69€" }} <tspan fill="#C28B7C">•</tspan> PARFUMS &amp; ROBES D'ÉTÉ <tspan fill="#C28B7C">•</tspan> NOUVELLE COLLECTION <tspan fill="#C28B7C">•</tspan> {{ section.settings.text | default: "LIVRAISON OFFERTE DÈS 69€" }} <tspan fill="#C28B7C">•</tspan> PARFUMS &amp; ROBES D'ÉTÉ <tspan fill="#C28B7C">•</tspan> NOUVELLE COLLECTION <tspan fill="#C28B7C">•</tspan> {{ section.settings.text | default: "LIVRAISON OFFERTE DÈS 69€" }} <tspan fill="#C28B7C">•</tspan> PARFUMS &amp; ROBES D'ÉTÉ <tspan fill="#C28B7C">•</tspan> NOUVELLE COLLECTION <tspan fill="#C28B7C">•</tspan> {{ section.settings.text | default: "LIVRAISON OFFERTE DÈS 69€" }} <tspan fill="#C28B7C">•</tspan> PARFUMS &amp; ROBES D'ÉTÉ <tspan fill="#C28B7C">•</tspan> NOUVELLE COLLECTION <tspan fill="#C28B7C">•</tspan>
+        <animate attributeName="startOffset" from="0" to="-780" dur="9s" repeatCount="indefinite" calcMode="linear"/>
+      </textPath>
+    </text>
+  </svg>
+</div>
+
+<!-- Mobile wave -->
+<div class="sr-wave-banner sr-wave-banner--mobile">
+  <svg viewBox="0 -10 390 90" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <path id="srWaveLineM" d="M-780,34 C-680,70 -550,0 -390,32 C-290,68 -160,-2 0,30 C100,66 230,-4 390,28 C490,64 620,-6 780,26 C880,62 1010,-8 1170,24"/>
+    </defs>
+    <path d="M0,34 C100,70 230,0 390,32" fill="none" stroke="#D8E9DF" stroke-width="30"/>
+    <text fill="#4f6258" font-family="Jost, sans-serif" font-size="12" font-weight="600" letter-spacing="2" word-spacing="3" dominant-baseline="middle" dy="5">
+      <textPath href="#srWaveLineM" startOffset="0" textLength="3180" lengthAdjust="spacing">
+        {{ section.settings.text | default: "LIVRAISON OFFERTE DÈS 69€" }} <tspan fill="#C28B7C">•</tspan> PARFUMS &amp; ROBES D'ÉTÉ <tspan fill="#C28B7C">•</tspan> NOUVELLE COLLECTION <tspan fill="#C28B7C">•</tspan> {{ section.settings.text | default: "LIVRAISON OFFERTE DÈS 69€" }} <tspan fill="#C28B7C">•</tspan> PARFUMS &amp; ROBES D'ÉTÉ <tspan fill="#C28B7C">•</tspan> NOUVELLE COLLECTION <tspan fill="#C28B7C">•</tspan> {{ section.settings.text | default: "LIVRAISON OFFERTE DÈS 69€" }} <tspan fill="#C28B7C">•</tspan> PARFUMS &amp; ROBES D'ÉTÉ <tspan fill="#C28B7C">•</tspan> NOUVELLE COLLECTION <tspan fill="#C28B7C">•</tspan>
+        <animate attributeName="startOffset" from="0" to="-530" dur="6s" repeatCount="indefinite" calcMode="linear"/>
+      </textPath>
+    </text>
+  </svg>
+</div>
+
+<style>
+.sr-wave-banner--desktop { display:block; }
+.sr-wave-banner--mobile  { display:none; }
+@media (max-width:768px) {
+  .sr-wave-banner--desktop { display:none; }
+  .sr-wave-banner--mobile  { display:block; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Bannière vague verte",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texte de la bannière",
+      "default": "LIVRAISON OFFERTE DÈS 69€"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bannière vague verte"
+    }
+  ]
+}
+{% endschema %}
