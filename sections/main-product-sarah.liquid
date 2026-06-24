@@ -60,7 +60,7 @@
           </div>
         {%- endfor -%}
         {%- if product.images.size < 4 -%}
-          {%- assign grads = "repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 10px,#DEEBF1 10px,#DEEBF1 20px),repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 10px,#F4E9D5 10px,#F4E9D5 20px),repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 10px,#E6F0EA 10px,#E6F0EA 20px)" | split: "," -%}
+          {%- assign grads = "repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 10px,#DEEBF1 10px,#DEEBF1 20px)|repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 10px,#F4E9D5 10px,#F4E9D5 20px)|repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 10px,#E6F0EA 10px,#E6F0EA 20px)" | split: "|" -%}
           {%- for i in (product.images.size..3) -%}
             <div class="sr-product-gallery__thumb" style="background:{{ grads[forloop.index0] }}"></div>
           {%- endfor -%}
@@ -69,7 +69,8 @@
     {%- else -%}
       <!-- 4 placeholders si pas assez d'images -->
       <div class="sr-product-gallery__thumbs">
-        {%- for grad in "repeating-linear-gradient(135deg,#F2DCD6,#F2DCD6 10px,#F8E7E2 10px,#F8E7E2 20px)|repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 10px,#DEEBF1 10px,#DEEBF1 20px)|repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 10px,#F4E9D5 10px,#F4E9D5 20px)|repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 10px,#E6F0EA 10px,#E6F0EA 20px)" | split: "|" -%}
+        {%- assign gradients = "repeating-linear-gradient(135deg,#F2DCD6,#F2DCD6 10px,#F8E7E2 10px,#F8E7E2 20px)|repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 10px,#DEEBF1 10px,#DEEBF1 20px)|repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 10px,#F4E9D5 10px,#F4E9D5 20px)|repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 10px,#E6F0EA 10px,#E6F0EA 20px)" | split: "|" -%}
+        {%- for grad in gradients -%}
           <div class="sr-product-gallery__thumb {% if forloop.first %}is-active{% endif %}"
                style="background:{{ grad }}"></div>
         {%- endfor -%}
@@ -380,7 +381,7 @@
       {%- endfor -%}
     {%- else -%}
       {%- for i in (1..4) -%}
-        {%- assign grads = "repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 14px,#F4E9D5 14px,#F4E9D5 28px),radial-gradient(circle at 50% 38%,#F6E7CC,#E8CFA0),repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 14px,#DEEBF1 14px,#DEEBF1 28px),repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 14px,#E6F0EA 14px,#E6F0EA 28px)" | split: "," -%}
+        {%- assign grads = "repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 14px,#F4E9D5 14px,#F4E9D5 28px)|radial-gradient(circle at 50% 38%,#F6E7CC,#E8CFA0)|repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 14px,#DEEBF1 14px,#DEEBF1 28px)|repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 14px,#E6F0EA 14px,#E6F0EA 28px)" | split: "|" -%}
         <article class="sr-card" style="text-decoration:none">
           <div class="sr-card__media" style="background:{{ grads[forloop.index0] }}"></div>
           <div class="sr-card__footer">
