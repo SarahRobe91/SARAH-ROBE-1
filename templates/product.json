@@ -1,13 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main-product-sarah": {
       "type": "main-product-sarah",
-      "disabled": false,
-      "settings": {
-        "default_tagline": "Summer Essential",
-        "default_social_proof": "Notre robe la plus vendue cet été",
-        "default_review_count": "128"
-      },
       "blocks": {
         "why-1": {
           "type": "why_item",
@@ -37,8 +40,14 @@
           }
         }
       },
-      "blocks_order": ["why-1", "why-2", "why-3"]
+      "settings": {
+        "default_tagline": "Summer Essential",
+        "default_social_proof": "Notre robe la plus vendue cet été",
+        "default_review_count": "128"
+      }
     }
   },
-  "order": ["main-product-sarah"]
+  "order": [
+    "main-product-sarah"
+  ]
 }
