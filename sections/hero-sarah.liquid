@@ -4,13 +4,24 @@
 <section class="sr-hero">
   <div class="sr-hero__texture"></div>
 
-  {%- if section.settings.hero_image != blank -%}
-    <img src="{{ section.settings.hero_image | image_url: width: 1920 }}"
-         alt="{{ section.settings.hero_image.alt | escape }}"
-         class="sr-hero__img"
-         width="{{ section.settings.hero_image.width }}"
-         height="{{ section.settings.hero_image.height }}"
-         loading="eager">
+  {%- assign desktop_img = section.settings.hero_image -%}
+  {%- assign mobile_img  = section.settings.hero_image_mobile -%}
+
+  {%- if desktop_img != blank or mobile_img != blank -%}
+    {%- assign main_img = desktop_img | default: mobile_img -%}
+    <picture>
+      {%- if mobile_img != blank -%}
+        <source media="(max-width: 749px)"
+                srcset="{{ mobile_img | image_url: width: 900 }}">
+      {%- endif -%}
+      <img src="{{ main_img | image_url: width: 2200 }}"
+           alt="{{ main_img.alt | escape | default: section.settings.heading | escape }}"
+           class="sr-hero__img"
+           width="{{ main_img.width }}"
+           height="{{ main_img.height }}"
+           loading="eager"
+           fetchpriority="high">
+    </picture>
   {%- else -%}
     <span class="sr-hero__img-placeholder">[ photo lifestyle · plage soleil robe légère ]</span>
   {%- endif -%}
@@ -43,7 +54,12 @@
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Image hero (lifestyle)"
+      "label": "Image hero PC (paysage)"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_mobile",
+      "label": "Image hero téléphone (portrait)"
     },
     {
       "type": "text",
