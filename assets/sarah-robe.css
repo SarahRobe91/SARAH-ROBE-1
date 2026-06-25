@@ -2110,16 +2110,61 @@ input, textarea { font-family: var(--sr-font-sans); }
   margin-bottom: 8px;
 }
 
-/* --- Desktop : galerie produit plus compacte -------------- */
+/* --- Desktop : page produit compacte et premium ----------- */
 @media (min-width: 990px) {
+
+  /* Breadcrumb aligné sur le container produit */
+  .sr-product-breadcrumb {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 40px 0;
+    font-size: 13px;
+  }
+
+  /* Container centré, limité, équilibré */
   .sr-product-main {
-    grid-template-columns: 0.72fr 1.28fr;
-    gap: 44px;
-    padding: 26px 60px 36px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 40px 28px;
+    grid-template-columns: 400px 1fr;
+    gap: 40px;
   }
-  .sr-product-gallery__main {
-    aspect-ratio: 3/4;
-  }
+
+  /* Galerie : image moins haute */
+  .sr-product-gallery__main { aspect-ratio: 4/5; }
+  .sr-product-gallery__thumbs { gap: 10px; }
+
+  /* Typographie info produit */
+  .sr-product-info__h1    { font-size: 34px; }
+  .sr-product-info__price { font-size: 24px; margin-bottom: 14px; }
+  .sr-product-info__proof { margin-bottom: 12px; }
+  .sr-product-info__rating { margin-bottom: 8px; }
+
+  /* Quantité + boutons */
+  .sr-product-atc-row  { gap: 10px; margin-bottom: 10px; }
+  .sr-product-atc      { padding: 10px 18px; }
+  .sr-product-buy-now  { padding: 10px 18px; margin-bottom: 14px; }
+
+  /* Sélecteurs taille / couleur */
+  .sr-size-selector  { margin-bottom: 18px; }
+  .sr-color-selector { margin-bottom: 18px; }
+
+  /* Réassurance */
+  .sr-reassurance { margin-bottom: 18px; gap: 8px; }
+
+  /* Section "Pourquoi on l'aime" */
+  .sr-why-love { padding: 50px 40px; }
+  .sr-why-love__grid { max-width: 1020px; margin-left: auto; margin-right: auto; }
+  .sr-why-item__name { font-size: 20px; }
+  .sr-why-item__icon { width: 60px; height: 60px; }
+
+  /* Avis produit */
+  .sr-product-reviews { padding: 50px 40px; }
+  .sr-product-reviews .sr-reviews__grid { max-width: 1020px; margin: 30px auto 0; }
+
+  /* Produits recommandés */
+  .sr-related { padding: 48px 40px; }
+  .sr-related__grid { max-width: 1020px; margin-left: auto; margin-right: auto; }
 }
 
 /* --- Desktop : Best sellers = 4 colonnes (comme les parfums) --- */
