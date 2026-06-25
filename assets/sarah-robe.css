@@ -2170,10 +2170,10 @@ input, textarea { font-family: var(--sr-font-sans); }
   .sr-why-item__desc { text-align: center; margin-left: auto; margin-right: auto; }
 
   /* Avis produit — equal height cards */
-  .sr-product-reviews { padding: 50px 40px; }
+  /* Avis produit alignés sur la section homepage "Avis clientes" */
+  .sr-product-reviews { padding: 112px 80px 78px; }
   .sr-product-reviews .sr-reviews__grid {
-    max-width: 1020px;
-    margin: 30px auto 0;
+    grid-template-columns: repeat(3, 1fr);
     align-items: stretch;
   }
   .sr-product-reviews .sr-review-card { height: 100%; display: flex; flex-direction: column; }
@@ -2229,9 +2229,23 @@ input, textarea { font-family: var(--sr-font-sans); }
   }
 }
 
-/* --- Mobile : Parfums alignés sur les cartes Best seller --- */
-@media (max-width: 768px) {
-  .sr-products-grid--4col .sr-card--parfum {
+/* --- Mobile : Parfums — mêmes proportions que Best sellers --- */
+@media (max-width: 749px) {
+  /* Override inline padding de la section parfums pour libérer la largeur */
+  .sr-perfume-section {
+    padding-top: 34px !important;
+    padding-bottom: 34px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  /* La grille parfums suit le même comportement que best-sellers mobile */
+  .sr-perfume-section .sr-products-grid--4col {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .sr-perfume-section .sr-card--parfum {
+    padding: 9px;
+    border-radius: 20px;
     gap: 0;
   }
 }
