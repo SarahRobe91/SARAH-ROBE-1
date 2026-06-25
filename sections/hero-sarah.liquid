@@ -25,11 +25,11 @@
       {{ section.settings.description | default: "Robes légères, tenues solaires et parfums d'été pour sublimer chaque moment." }}
     </p>
     <div class="sr-hero__ctas">
-      <a href="{{ section.settings.cta1_url | default: '/collections/all' }}" class="sr-btn sr-btn--primary">
-        {{ section.settings.cta1_label | default: "Découvrir la collection" }}
+      <a href="{{ section.settings.cta1_url | default: '/collections' }}" class="sr-btn sr-btn--primary">
+        {{ section.settings.cta1_label | default: "Nos collections" }}
       </a>
-      <a href="{{ section.settings.cta2_url | default: '/collections/parfums' }}" class="sr-btn sr-btn--outline">
-        {{ section.settings.cta2_label | default: "Voir les parfums" }}
+      <a href="{{ section.settings.cta2_url | default: '/collections/all' }}" class="sr-btn sr-btn--outline">
+        {{ section.settings.cta2_label | default: "Tous nos produits" }}
       </a>
     </div>
   </div>
@@ -73,7 +73,7 @@
       "type": "text",
       "id": "cta1_label",
       "label": "Bouton 1 – texte",
-      "default": "Découvrir la collection"
+      "default": "Nos collections"
     },
     {
       "type": "url",
@@ -84,7 +84,7 @@
       "type": "text",
       "id": "cta2_label",
       "label": "Bouton 2 – texte",
-      "default": "Voir les parfums"
+      "default": "Tous nos produits"
     },
     {
       "type": "url",

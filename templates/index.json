@@ -16,8 +16,10 @@
         "heading": "L'été commence avec",
         "brand_em": "Sarah Robe",
         "description": "Robes légères, tenues solaires et parfums d'été pour sublimer chaque moment.",
-        "cta1_label": "Découvrir la collection",
-        "cta2_label": "Voir les parfums"
+        "cta1_label": "Nos collections",
+        "cta1_url": "/collections",
+        "cta2_label": "Tous nos produits",
+        "cta2_url": "/collections/all"
       }
     },
     "announcement-wave": {
