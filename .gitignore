@@ -1,8 +1,0 @@
-# Fichiers temporaires éditeur / Shopify
-*.tmp
-*.tmp.*
-*.bak
-*.swp
-*.swo
-.DS_Store
-Thumbs.db
