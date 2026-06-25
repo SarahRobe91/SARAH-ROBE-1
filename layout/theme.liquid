@@ -125,7 +125,9 @@
       <button class="sr-mobile-nav__close" id="sr-mobile-nav-close" aria-label="Fermer">×</button>
       <div class="sr-mobile-nav__links">
         {%- for link in linklists.main-menu.links -%}
-          <a href="{{ link.url }}" {% if link.active %}style="color:#C28B7C"{% endif %}>{{ link.title }}</a>
+          {%- assign _mob_url = link.url -%}
+          {%- if _mob_url == '/collections/all' -%}{%- assign _mob_url = '/collections' -%}{%- endif -%}
+          <a href="{{ _mob_url }}" {% if link.active %}style="color:#C28B7C"{% endif %}>{{ link.title }}</a>
         {%- else -%}
           <a href="/">Accueil</a>
           <a href="/collections/robes">Robes</a>

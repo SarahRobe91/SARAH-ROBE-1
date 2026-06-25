@@ -22,7 +22,9 @@
     <nav class="sr-header__nav" aria-label="Navigation principale">
       {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
         {%- for link in linklists[section.settings.menu].links -%}
-          <a href="{{ link.url }}"
+          {%- assign _link_url = link.url -%}
+          {%- if _link_url == '/collections/all' -%}{%- assign _link_url = '/collections' -%}{%- endif -%}
+          <a href="{{ _link_url }}"
              {% if link.active and link.url != '/' %}class="is-active"{% endif %}>
             {{ link.title }}
           </a>
