@@ -13,6 +13,7 @@
       "type": "hero-sarah",
       "settings": {
         "hero_image": "shopify://shop_images/ChatGPT_Image_25_juin_2026_13_58_04_1.png",
+        "hero_image_mobile": "shopify://shop_images/ChatGPT_Image_25_juin_2026_13_58_57.png",
         "script_label": "summer",
         "heading": "L'été commence avec",
         "brand_em": "Sarah Robe",
