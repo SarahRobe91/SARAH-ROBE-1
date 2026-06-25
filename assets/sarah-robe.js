@@ -420,3 +420,164 @@ document.addEventListener('DOMContentLoaded', () => {
   // Cart link in drawer footer clicks
   document.querySelector('#sr-cart-footer a')?.addEventListener('click', () => {});
 });
+
+/* ============================================================
+   SR ANIMATIONS ENGINE
+   Scroll reveals · stagger · parallax · Shopify editor support
+   ============================================================ */
+const SRAnimations = (() => {
+  'use strict';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- IntersectionObserver -------------------------------- */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in-view');
+      io.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.07 });
+
+  function watch(el) {
+    if (!el || el.dataset.srW) return;
+    el.dataset.srW = '1';
+    io.observe(el);
+  }
+
+  function reveal(el, cls) {
+    if (!el || el.dataset.srW) return;
+    el.classList.add(cls);
+    watch(el);
+  }
+
+  /* --- Stagger setup --------------------------------------- */
+  function stagger(container) {
+    if (!container || container.dataset.srW) return;
+    container.classList.add('sr-stagger');
+    [...container.children].forEach((child, i) => {
+      child.style.setProperty('--sr-i', i);
+      // Remove stagger delay after reveal so hover is instant
+      child.addEventListener('transitionend', e => {
+        if (e.propertyName === 'opacity') child.style.transitionDelay = '0s';
+      }, { once: true });
+    });
+    watch(container);
+  }
+
+  /* --- Section headers (auto-detect by class) -------------- */
+  function initHeaders() {
+    const sel = [
+      '.sr-section-script', '.sr-section-h2', '.sr-section-desc',
+      '.sr-summer-mood__script', '.sr-summer-mood__h2', '.sr-summer-mood__desc',
+      '.sr-promo__script', '.sr-promo__h2',
+      '.sr-contact__script', '.sr-contact__h2', '.sr-contact__intro',
+      '.sr-newsletter__script', '.sr-newsletter__h2', '.sr-newsletter__desc',
+      '.sr-collection-hero__desc', '.sr-collection-hero__rating',
+      '.sr-editorial__script', '.sr-editorial__h2', '.sr-editorial__desc',
+      '.sr-why-love h2', '.sr-product-reviews h2',
+    ].join(',');
+    document.querySelectorAll(sel).forEach(el => reveal(el, 'sr-reveal-up'));
+  }
+
+  /* --- Grids & cards (stagger cascade) --------------------- */
+  function initGrids() {
+    // Homepage best-sellers + parfums
+    document.querySelectorAll('.sr-products-grid').forEach(g => stagger(g));
+    // Categories circles
+    stagger(document.querySelector('.sr-categories__grid'));
+    // Homepage reviews
+    stagger(document.querySelector('.sr-reviews .sr-reviews__grid'));
+    // Collection product grid
+    stagger(document.querySelector('.sr-collection-grid'));
+    // Product page reviews & related
+    document.querySelectorAll('.sr-product-reviews .sr-reviews__grid').forEach(g => stagger(g));
+    document.querySelectorAll('.sr-recommended .sr-products-grid, .sr-related .sr-products-grid').forEach(g => stagger(g));
+  }
+
+  /* --- Summer Mood ----------------------------------------- */
+  function initSummerMood() {
+    reveal(document.querySelector('.sr-summer-mood__text'),   'sr-reveal-left');
+    reveal(document.querySelector('.sr-summer-mood__visual'), 'sr-reveal-right');
+  }
+
+  /* --- Promo ----------------------------------------------- */
+  function initPromo() {
+    reveal(document.querySelector('.sr-promo__text'),   'sr-reveal-left');
+    reveal(document.querySelector('.sr-promo__visual'), 'sr-reveal-right');
+  }
+
+  /* --- Contact --------------------------------------------- */
+  function initContact() {
+    reveal(document.querySelector('.sr-contact__info'),      'sr-reveal-left');
+    reveal(document.querySelector('.sr-contact__form-wrap'), 'sr-reveal-right');
+    stagger(document.querySelector('.sr-contact__socials-grid'));
+    stagger(document.querySelector('.sr-contact__checks'));
+  }
+
+  /* --- Newsletter ------------------------------------------ */
+  function initNewsletter() {
+    reveal(document.querySelector('.sr-newsletter__inner'), 'sr-reveal-scale');
+  }
+
+  /* --- Collection page ------------------------------------- */
+  function initCollection() {
+    reveal(document.querySelector('.sr-filter-bar'),          'sr-reveal-up');
+    reveal(document.querySelector('.sr-editorial__visual'),   'sr-reveal-left');
+    reveal(document.querySelector('.sr-editorial__text'),     'sr-reveal-right');
+  }
+
+  /* --- Product page ---------------------------------------- */
+  function initProduct() {
+    // Gallery & info handled by CSS [data-template="product"] rules
+    stagger(document.querySelector('.sr-why-love__grid'));
+    stagger(document.querySelector('.sr-reassurance'));
+  }
+
+  /* --- Parallax (desktop only) ----------------------------- */
+  let pEls = [];
+
+  function initParallax() {
+    const blob = document.querySelector('.sr-summer-mood__blob');
+    if (blob) { blob.classList.add('sr-parallax'); blob.dataset.srSpeed = '0.11'; pEls.push(blob); }
+    const editBlob = document.querySelector('.sr-editorial__blob');
+    if (editBlob) { editBlob.classList.add('sr-parallax'); editBlob.dataset.srSpeed = '0.09'; pEls.push(editBlob); }
+    document.querySelectorAll('[data-sr-parallax]').forEach(el => { if (!pEls.includes(el)) pEls.push(el); });
+  }
+
+  let rafId = false;
+  function updateParallax() {
+    if (window.innerWidth <= 768 || reduced || rafId) return;
+    rafId = true;
+    requestAnimationFrame(() => {
+      rafId = false;
+      pEls.forEach(el => {
+        const r = el.getBoundingClientRect();
+        const speed = parseFloat(el.dataset.srSpeed || el.dataset.srParallax || 0.11);
+        el.style.transform = `translateY(${(r.top + r.height / 2 - window.innerHeight / 2) * speed}px)`;
+      });
+    });
+  }
+
+  /* --- Master init ----------------------------------------- */
+  function init() {
+    if (reduced) return;
+    initHeaders();
+    initGrids();
+    initSummerMood();
+    initPromo();
+    initContact();
+    initNewsletter();
+    initCollection();
+    initProduct();
+    initParallax();
+  }
+
+  return { init, updateParallax };
+})();
+
+/* --- Bootstrap -------------------------------------------- */
+document.addEventListener('DOMContentLoaded', () => SRAnimations.init());
+window.addEventListener('scroll', () => SRAnimations.updateParallax(), { passive: true });
+// Shopify Theme Editor: re-init after section reload
+document.addEventListener('shopify:section:load', () => setTimeout(() => SRAnimations.init(), 100));

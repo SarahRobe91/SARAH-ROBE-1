@@ -1832,6 +1832,112 @@ input, textarea { font-family: var(--sr-font-sans); }
   .sr-footer { padding: 34px 24px; text-align: center; }
   .sr-footer__grid { grid-template-columns: 1fr; gap: 0; }
   .sr-footer__col:not(:first-child) { display: none; }
+}
+
+/* ============================================================
+   SR — ANIMATION SYSTEM (scroll reveals · stagger · parallax)
+   ============================================================ */
+
+/* --- Keyframes --------------------------------------------- */
+@keyframes srRevealUp    { from { opacity:0; transform:translateY(32px) } to { opacity:1; transform:translateY(0) } }
+@keyframes srRevealLeft  { from { opacity:0; transform:translateX(-44px) } to { opacity:1; transform:translateX(0) } }
+@keyframes srRevealRight { from { opacity:0; transform:translateX(44px)  } to { opacity:1; transform:translateX(0) } }
+@keyframes srRevealScale { from { opacity:0; transform:scale(.91) } to { opacity:1; transform:scale(1) } }
+@keyframes srKenBurns    { from { transform:scale(1) } to { transform:scale(1.08) } }
+
+/* --- Reveal: initial hidden states ------------------------- */
+.sr-reveal-up    { opacity:0; transform:translateY(32px); }
+.sr-reveal-left  { opacity:0; transform:translateX(-44px); }
+.sr-reveal-right { opacity:0; transform:translateX(44px); }
+.sr-reveal-scale { opacity:0; transform:scale(.91); }
+.sr-reveal-blur  { opacity:0; filter:blur(9px); transform:translateY(16px); }
+
+.sr-reveal-up, .sr-reveal-left, .sr-reveal-right,
+.sr-reveal-scale, .sr-reveal-blur {
+  transition:
+    opacity  .75s cubic-bezier(.22,1,.36,1),
+    transform .75s cubic-bezier(.22,1,.36,1),
+    filter   .65s ease;
+  will-change: opacity, transform;
+}
+
+/* --- Reveal: in-view states -------------------------------- */
+.sr-reveal-up.in-view    { opacity:1; transform:translateY(0); }
+.sr-reveal-left.in-view  { opacity:1; transform:translateX(0); }
+.sr-reveal-right.in-view { opacity:1; transform:translateX(0); }
+.sr-reveal-scale.in-view { opacity:1; transform:scale(1); }
+.sr-reveal-blur.in-view  { opacity:1; filter:blur(0); transform:translateY(0); }
+
+/* --- Stagger container ------------------------------------- */
+.sr-stagger > * {
+  animation: none !important;
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity   .5s cubic-bezier(.2,.7,.2,1),
+    transform .5s cubic-bezier(.2,.7,.2,1),
+    box-shadow .5s ease;
+  transition-delay: calc(var(--sr-i, 0) * 80ms);
+}
+.sr-stagger.in-view > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Hero: CSS-only load animations (no scroll needed) ----- */
+.sr-hero__script { animation: srRevealUp .7s  cubic-bezier(.22,1,.36,1) .05s both; }
+.sr-hero__h1     { animation: srRevealUp .85s cubic-bezier(.22,1,.36,1) .18s both; }
+.sr-hero__desc   { animation: srRevealUp .7s  cubic-bezier(.22,1,.36,1) .34s both; }
+.sr-hero__ctas   { animation: srRevealUp .7s  cubic-bezier(.22,1,.36,1) .50s both; }
+.sr-hero__img    { animation: srKenBurns 15s ease-in-out alternate infinite; transform-origin: center center; }
+
+/* --- Product page: above-fold CSS animations --------------- */
+[data-template="product"] .sr-product-gallery { animation: srRevealLeft  .75s cubic-bezier(.22,1,.36,1) .06s both; }
+[data-template="product"] .sr-product-info    { animation: srRevealRight .8s  cubic-bezier(.22,1,.36,1) .18s both; }
+
+/* --- Collection hero: above-fold -------------------------  */
+[data-template="collection"] .sr-collection-hero__content { animation: srRevealUp .8s cubic-bezier(.22,1,.36,1) .1s both; }
+
+/* --- Parallax ---------------------------------------------- */
+.sr-parallax { will-change: transform; }
+
+/* --- Mobile: animations plus légères ----------------------- */
+@media (max-width: 768px) {
+  .sr-reveal-left,
+  .sr-reveal-right { transform: translateY(22px); }
+  .sr-reveal-left.in-view,
+  .sr-reveal-right.in-view { transform: translateY(0); }
+  .sr-parallax { transform: none !important; will-change: auto; }
+  [data-template="product"] .sr-product-gallery,
+  [data-template="product"] .sr-product-info { animation-name: srRevealUp; }
+  .sr-hero__img { animation-duration: 20s; }
+}
+
+/* --- prefers-reduced-motion -------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .sr-reveal-up, .sr-reveal-left, .sr-reveal-right,
+  .sr-reveal-scale, .sr-reveal-blur {
+    transition: none !important;
+    animation:  none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .sr-stagger > * {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .sr-hero__script, .sr-hero__h1, .sr-hero__desc,
+  .sr-hero__ctas, .sr-hero__img,
+  [data-template="product"] .sr-product-gallery,
+  [data-template="product"] .sr-product-info,
+  [data-template="collection"] .sr-collection-hero__content {
+    animation: none !important;
+  }
+  .sr-parallax { will-change: auto; transform: none !important; }
+}
   .sr-footer__logo-img { margin: 0 auto 14px; }
   .sr-footer__mobile-links { display: flex; justify-content: center; gap: 18px; font-size: 12px; color: #b5aca3; margin-bottom: 16px; }
   .sr-footer__bottom { flex-direction: column; align-items: center; gap: 6px; font-size: 10px; }

@@ -9,20 +9,55 @@
 
   <div class="sr-categories__grid">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.url | default: '/collections/all' }}"
+
+      {%- comment -%} Résolution URL {%- endcomment -%}
+      {%- assign _coll = block.settings.collection -%}
+      {%- if _coll != blank -%}
+        {%- assign _url = _coll.url -%}
+      {%- elsif block.settings.url != blank -%}
+        {%- assign _url = block.settings.url -%}
+      {%- else -%}
+        {%- assign _url = '/collections/all' -%}
+      {%- endif -%}
+
+      {%- comment -%} Résolution titre {%- endcomment -%}
+      {%- if block.settings.title != blank -%}
+        {%- assign _title = block.settings.title -%}
+      {%- elsif block.settings.name != blank -%}
+        {%- assign _title = block.settings.name -%}
+      {%- elsif _coll != blank -%}
+        {%- assign _title = _coll.title -%}
+      {%- else -%}
+        {%- assign _title = 'Collection' -%}
+      {%- endif -%}
+
+      {%- comment -%} Résolution image {%- endcomment -%}
+      {%- if block.settings.image != blank -%}
+        {%- assign _img = block.settings.image -%}
+      {%- elsif _coll != blank and _coll.image != blank -%}
+        {%- assign _img = _coll.image -%}
+      {%- else -%}
+        {%- assign _img = blank -%}
+      {%- endif -%}
+
+      <a href="{{ _url }}"
          class="sr-category-item"
          {{ block.shopify_attributes }}>
         <div class="sr-category-item__circle sr-category-item__circle--{{ block.settings.color | default: 'rose' }}">
-          {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 430 }}"
-                 alt="{{ block.settings.name }}"
+          {%- if _img != blank -%}
+            <img src="{{ _img | image_url: width: 430 }}"
+                 alt="{{ _title | escape }}"
                  style="width:100%;height:100%;object-fit:cover;border-radius:50%"
                  loading="lazy">
           {%- endif -%}
         </div>
-        <span class="sr-category-item__name">{{ block.settings.name }}</span>
+        <span class="sr-category-item__name">{{ _title }}</span>
+        {%- if block.settings.subtitle != blank -%}
+          <span class="sr-category-item__subtitle">{{ block.settings.subtitle }}</span>
+        {%- endif -%}
         <span class="sr-category-item__link">Voir la sélection →</span>
       </a>
+
     {%- else -%}
       <a href="/collections/robes" class="sr-category-item">
         <div class="sr-category-item__circle sr-category-item__circle--rose"></div>
@@ -48,6 +83,16 @@
   </div>
 </section>
 
+<style>
+.sr-category-item__subtitle {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sr-muted);
+  display: block;
+}
+</style>
+
 {% schema %}
 {
   "name": "Catégories été",
@@ -72,25 +117,29 @@
       "name": "Catégorie",
       "settings": [
         {
-          "type": "text",
-          "id": "name",
-          "label": "Nom",
-          "default": "Robes d'été"
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection Shopify"
         },
         {
-          "type": "url",
-          "id": "url",
-          "label": "Lien"
+          "type": "text",
+          "id": "title",
+          "label": "Titre personnalisé (remplace le nom de la collection)"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sous-titre / label optionnel"
         },
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "Image personnalisée (remplace l'image de la collection)"
         },
         {
           "type": "select",
           "id": "color",
-          "label": "Couleur de fond",
+          "label": "Couleur de fond du cercle",
           "options": [
             { "value": "rose",  "label": "Rose poudré" },
             { "value": "bleu",  "label": "Bleu pastel" },
@@ -98,6 +147,16 @@
             { "value": "vert",  "label": "Vert doux" }
           ],
           "default": "rose"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nom (champ existant — remplacé par Titre si renseigné)"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Lien manuel (si aucune collection sélectionnée)"
         }
       ]
     }
@@ -107,10 +166,10 @@
     {
       "name": "Catégories été",
       "blocks": [
-        { "type": "category", "settings": { "name": "Robes d'été",        "color": "rose" } },
-        { "type": "category", "settings": { "name": "Ensembles légers",   "color": "bleu" } },
-        { "type": "category", "settings": { "name": "Accessoires solaires","color": "dore" } },
-        { "type": "category", "settings": { "name": "Parfums",            "color": "vert" } }
+        { "type": "category", "settings": { "name": "Robes d'été",          "color": "rose" } },
+        { "type": "category", "settings": { "name": "Ensembles légers",     "color": "bleu" } },
+        { "type": "category", "settings": { "name": "Accessoires solaires", "color": "dore" } },
+        { "type": "category", "settings": { "name": "Parfums",              "color": "vert" } }
       ]
     }
   ]

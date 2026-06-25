@@ -23,12 +23,12 @@
       {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
         {%- for link in linklists[section.settings.menu].links -%}
           <a href="{{ link.url }}"
-             {% if link.active %}class="is-active"{% endif %}>
+             {% if link.active and link.url != '/' %}class="is-active"{% endif %}>
             {{ link.title }}
           </a>
         {%- endfor -%}
       {%- else -%}
-        <a href="/" {% if request.path == '/' %}class="is-active"{% endif %}>Accueil</a>
+        <a href="/">Accueil</a>
         <a href="/collections/robes">Robes</a>
         <a href="/collections/tenues-ete">Tenues d'été</a>
         <a href="/collections/parfums">Parfums</a>
