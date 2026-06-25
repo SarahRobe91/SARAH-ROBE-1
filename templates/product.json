@@ -56,37 +56,6 @@
         "cta_label": "Voir les offres"
       }
     },
-    "reviews-sarah": {
-      "type": "reviews-sarah",
-      "blocks": {
-        "rev-1": {
-          "type": "review",
-          "settings": {
-            "text": "Robe magnifique, légère et parfaite pour l'été.",
-            "author": "Camille L."
-          }
-        },
-        "rev-2": {
-          "type": "review",
-          "settings": {
-            "text": "Le parfum tient super bien et sent vraiment les vacances.",
-            "author": "Inès B."
-          }
-        },
-        "rev-3": {
-          "type": "review",
-          "settings": {
-            "text": "Commande reçue rapidement, emballage très propre.",
-            "author": "Sofia M."
-          }
-        }
-      },
-      "settings": {
-        "script": "elles adorent",
-        "heading": "Avis clientes",
-        "wave_color": "#FBF7F1"
-      }
-    },
     "contact-sarah": {
       "type": "contact-sarah",
       "settings": {
@@ -111,7 +80,6 @@
   "order": [
     "main-product-sarah",
     "promo-offer",
-    "reviews-sarah",
     "contact-sarah",
     "newsletter-sarah"
   ]

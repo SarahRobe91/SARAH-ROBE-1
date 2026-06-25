@@ -2125,11 +2125,11 @@ input, textarea { font-family: var(--sr-font-sans); }
 
   /* Container centré, limité, équilibré */
   .sr-product-main {
-    max-width: 1100px;
+    max-width: 1140px;
     margin: 0 auto;
     padding: 16px 40px 28px;
-    grid-template-columns: 400px 1fr;
-    gap: 40px;
+    grid-template-columns: 450px 1fr;
+    gap: 44px;
   }
 
   /* Galerie : image moins haute */
@@ -2154,15 +2154,29 @@ input, textarea { font-family: var(--sr-font-sans); }
   /* Réassurance */
   .sr-reassurance { margin-bottom: 18px; gap: 8px; }
 
-  /* Section "Pourquoi on l'aime" */
+  /* Section "Pourquoi on l'aime" — centrage complet */
   .sr-why-love { padding: 50px 40px; }
-  .sr-why-love__grid { max-width: 1020px; margin-left: auto; margin-right: auto; }
+  .sr-why-love__grid {
+    max-width: 1020px;
+    margin: 44px auto 0;
+    justify-items: center;
+  }
+  .sr-why-item {
+    text-align: center;
+    align-items: center;
+  }
   .sr-why-item__name { font-size: 20px; }
   .sr-why-item__icon { width: 60px; height: 60px; }
+  .sr-why-item__desc { text-align: center; margin-left: auto; margin-right: auto; }
 
-  /* Avis produit */
+  /* Avis produit — equal height cards */
   .sr-product-reviews { padding: 50px 40px; }
-  .sr-product-reviews .sr-reviews__grid { max-width: 1020px; margin: 30px auto 0; }
+  .sr-product-reviews .sr-reviews__grid {
+    max-width: 1020px;
+    margin: 30px auto 0;
+    align-items: stretch;
+  }
+  .sr-product-reviews .sr-review-card { height: 100%; display: flex; flex-direction: column; }
 
   /* Produits recommandés "Complétez le look" — grille équilibrée */
   .sr-related {
@@ -2190,10 +2204,10 @@ input, textarea { font-family: var(--sr-font-sans); }
     pointer-events: none;
   }
   .sr-related__grid {
-    max-width: 960px;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    gap: 22px;
+    gap: 16px;
     position: relative;
     z-index: 1;
   }
