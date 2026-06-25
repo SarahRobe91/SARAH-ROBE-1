@@ -1,15 +1,12 @@
-<!-- ============================================================
-   PRODUCT CARD SNIPPET
-   Usage: {% render 'product-card-sarah', product: product %}
-   ============================================================ -->
+{%- if product != blank -%}
 
 {%- liquid
-  assign product = product
   assign card_class = card_class | default: 'sr-card'
   assign show_atc = show_atc | default: true
 
   assign badge_text = ''
   assign badge_class = 'sr-card__badge--rose'
+
   if product.metafields.custom.badge != blank
     assign badge_text = product.metafields.custom.badge
   elsif product.tags contains 'best-seller'
@@ -23,10 +20,12 @@
   assign compare_price = product.compare_at_price
   assign current_price = product.price
   assign on_sale = false
-  if compare_price > current_price
+
+  if compare_price > current_price and compare_price > 0
     assign on_sale = true
     if badge_text == ''
-      assign badge_text = '-' | append: product.variants.first.compare_at_price | minus: product.price | times: 100 | divided_by: product.variants.first.compare_at_price | round | append: '%'
+      assign discount_pct = compare_price | minus: current_price | times: 100 | divided_by: compare_price | round
+      assign badge_text = '-' | append: discount_pct | append: '%'
       assign badge_class = 'sr-card__badge--gold'
     endif
   endif
@@ -37,7 +36,7 @@
   endif
 -%}
 
-<article class="{{ card_class }}" style="text-decoration:none">
+<article class="{{ card_class }}">
   <a href="{{ product.url }}" class="sr-card__media" style="display:block">
     {%- if product.featured_image != blank -%}
       <img src="{{ product.featured_image | image_url: width: 600 }}"
@@ -78,3 +77,5 @@
     {%- endif -%}
   {%- endif -%}
 </article>
+
+{%- endif -%}

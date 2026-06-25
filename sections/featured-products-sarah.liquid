@@ -1,34 +1,32 @@
-<section class="sr-products-section">
+<section class="sr-products-section" id="section-{{ section.id }}">
   <span class="sr-section-script">{{ section.settings.script | default: "best-sellers" }}</span>
   <h2 class="sr-section-h2">{{ section.settings.heading | default: "Les indispensables de l'été" }}</h2>
   <p class="sr-section-desc">{{ section.settings.description | default: "Nos pièces les plus aimées pour une saison lumineuse." }}</p>
 
-  <div class="sr-products-grid">
-    {%- assign featured_collection = section.settings.collection -%}
+  {%- liquid
+    assign featured_collection = section.settings.collection
+    assign products_count = section.settings.products_count | default: 6
+  -%}
 
+  <div class="sr-products-grid">
     {%- if featured_collection != blank and featured_collection.products_count > 0 -%}
-      {%- for product in featured_collection.products limit: section.settings.products_count -%}
+      {%- for product in featured_collection.products limit: products_count -%}
         {%- render 'product-card-sarah', product: product -%}
       {%- endfor -%}
 
-    {%- elsif featured_collection != blank -%}
-      {%- if request.design_mode -%}
-        <p style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#9a8f86;font-size:13px;letter-spacing:.04em">
-          Cette collection ne contient aucun produit.
-        </p>
-      {%- endif -%}
-
-    {%- else -%}
-      {%- if request.design_mode -%}
-        <p style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#9a8f86;font-size:13px;letter-spacing:.04em">
+    {%- elsif request.design_mode -%}
+      <p class="sr-products-empty">
+        {%- if featured_collection != blank -%}
+          Cette collection ne contient aucun produit disponible.
+        {%- else -%}
           Sélectionne une collection dans le panneau de droite pour afficher les produits.
-        </p>
-      {%- endif -%}
+        {%- endif -%}
+      </p>
     {%- endif -%}
   </div>
 
   {%- if section.settings.cta_url != blank -%}
-    <div style="text-align:center;margin-top:42px">
+    <div class="sr-products-cta">
       <a href="{{ section.settings.cta_url }}" class="sr-btn sr-btn--ghost">
         {{ section.settings.cta_label | default: "Voir tous les produits" }}
       </a>
