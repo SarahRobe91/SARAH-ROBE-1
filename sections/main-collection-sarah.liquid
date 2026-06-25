@@ -247,26 +247,6 @@
   </div>
 {%- endif -%}
 
-<!-- Newsletter -->
-<section class="sr-newsletter" style="background:#CFE2EC">
-  <svg class="sr-wave-top" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,34 C360,76 720,-6 1080,32 C1260,50 1360,56 1440,32 L1440,0 L0,0 Z" fill="#FBF7F1"/>
-  </svg>
-  <div class="sr-newsletter__deco"></div>
-  <div class="sr-newsletter__inner">
-    <span class="sr-newsletter__script">rejoins-nous</span>
-    <h2 class="sr-newsletter__h2">Rejoins l'univers Sarah Robe</h2>
-    <p class="sr-newsletter__desc">Découvre nos nouveautés, offres privées et inspirations d'été.</p>
-    {%- form 'customer' -%}
-      <input type="hidden" name="contact[tags]" value="newsletter">
-      <div class="sr-newsletter__form">
-        <input type="email" name="contact[email]" class="sr-newsletter__input" placeholder="Votre adresse e-mail" required>
-        <button type="submit" class="sr-btn sr-btn--primary" style="padding:13px 30px">S'inscrire</button>
-      </div>
-    {%- endform -%}
-  </div>
-</section>
-
 <style>
 @media (max-width:768px) {
   .sr-filter-bar__inner  { display: none !important; }
