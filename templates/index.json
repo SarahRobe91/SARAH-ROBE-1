@@ -32,6 +32,58 @@
     },
     "categories-summer": {
       "type": "categories-summer",
+      "blocks": {
+        "category_WyxVJU": {
+          "type": "category",
+          "settings": {
+            "collection": "accessoires-solaires",
+            "title": "",
+            "subtitle": "",
+            "color": "rose",
+            "url": "",
+            "name": ""
+          }
+        },
+        "category_xwLccx": {
+          "type": "category",
+          "settings": {
+            "collection": "ensembles-legers",
+            "title": "",
+            "subtitle": "",
+            "color": "rose",
+            "url": "",
+            "name": ""
+          }
+        },
+        "category_PLJYhT": {
+          "type": "category",
+          "settings": {
+            "collection": "parfum",
+            "title": "",
+            "subtitle": "",
+            "color": "rose",
+            "url": "",
+            "name": ""
+          }
+        },
+        "category_MDDtfW": {
+          "type": "category",
+          "settings": {
+            "collection": "robes-dete",
+            "title": "",
+            "subtitle": "",
+            "color": "rose",
+            "url": "",
+            "name": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_WyxVJU",
+        "category_xwLccx",
+        "category_PLJYhT",
+        "category_MDDtfW"
+      ],
       "settings": {
         "script": "explorez",
         "heading": "Nos univers d'été"
@@ -43,7 +95,7 @@
         "script": "best-sellers",
         "heading": "Les indispensables de l'été",
         "description": "Nos pièces les plus aimées pour une saison lumineuse.",
-        "collection": "",
+        "collection": "best-sellers",
         "products_count": 6,
         "cta_label": "Voir tous les produits",
         "cta_url": ""
