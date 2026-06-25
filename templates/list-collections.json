@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main-list-collections-sarah": {
+      "type": "main-list-collections-sarah",
+      "disabled": false,
+      "settings": {
+        "script": "explorez",
+        "heading": "Toutes nos collections",
+        "description": "Explorez les univers Sarah Robe : robes d'été, ensembles légers, accessoires solaires et parfums lumineux.",
+        "max_collections": 12,
+        "hide_empty": true,
+        "show_count": true,
+        "btn_text": "Voir la sélection →"
+      }
+    }
+  },
+  "order": ["main-list-collections-sarah"]
+}
