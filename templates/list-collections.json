@@ -14,5 +14,7 @@
       }
     }
   },
-  "order": ["main-list-collections-sarah"]
+  "order": [
+    "main-list-collections-sarah"
+  ]
 }

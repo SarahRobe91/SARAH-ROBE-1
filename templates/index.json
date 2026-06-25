@@ -1,8 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-sarah": {
       "type": "hero-sarah",
-      "disabled": false,
       "settings": {
         "script_label": "summer",
         "heading": "L'été commence avec",
@@ -14,18 +22,12 @@
     },
     "announcement-wave": {
       "type": "announcement-wave",
-      "disabled": false,
       "settings": {
         "text": "LIVRAISON OFFERTE DÈS 69€"
       }
     },
     "categories-summer": {
       "type": "categories-summer",
-      "disabled": false,
-      "settings": {
-        "script": "explorez",
-        "heading": "Nos univers d'été"
-      },
       "blocks": {
         "cat-1": {
           "type": "category",
@@ -56,11 +58,13 @@
           }
         }
       },
-      "blocks_order": ["cat-1", "cat-2", "cat-3", "cat-4"]
+      "settings": {
+        "script": "explorez",
+        "heading": "Nos univers d'été"
+      }
     },
     "featured-products-sarah": {
       "type": "featured-products-sarah",
-      "disabled": false,
       "settings": {
         "script": "best-sellers",
         "heading": "Les indispensables de l'été",
@@ -70,7 +74,6 @@
     },
     "summer-mood": {
       "type": "summer-mood",
-      "disabled": false,
       "settings": {
         "script": "summer mood",
         "heading": "Des pièces pensées pour les journées ensoleillées",
@@ -80,7 +83,6 @@
     },
     "perfume-section": {
       "type": "perfume-section",
-      "disabled": false,
       "settings": {
         "script": "parfum",
         "heading": "Les parfums d'été",
@@ -89,7 +91,6 @@
     },
     "promo-offer": {
       "type": "promo-offer",
-      "disabled": false,
       "settings": {
         "script": "offre spéciale été",
         "heading": "Jusqu'à",
@@ -100,12 +101,6 @@
     },
     "reviews-sarah": {
       "type": "reviews-sarah",
-      "disabled": false,
-      "settings": {
-        "script": "elles adorent",
-        "heading": "Avis clientes",
-        "wave_color": "#FBF7F1"
-      },
       "blocks": {
         "rev-1": {
           "type": "review",
@@ -129,11 +124,14 @@
           }
         }
       },
-      "blocks_order": ["rev-1", "rev-2", "rev-3"]
+      "settings": {
+        "script": "elles adorent",
+        "heading": "Avis clientes",
+        "wave_color": "#FBF7F1"
+      }
     },
     "contact-sarah": {
       "type": "contact-sarah",
-      "disabled": false,
       "settings": {
         "script": "une question ?",
         "heading": "Contactez Sarah Robe",
@@ -145,7 +143,6 @@
     },
     "newsletter-sarah": {
       "type": "newsletter-sarah",
-      "disabled": false,
       "settings": {
         "script": "rejoins-nous",
         "heading": "Rejoins l'univers Sarah Robe",
