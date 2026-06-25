@@ -21,6 +21,13 @@
 
   <!-- Gallery -->
   <div class="sr-product-gallery">
+    <span class="sr-product-gallery__tagline">
+      {%- if product.metafields.custom.tagline != blank -%}
+        {{ product.metafields.custom.tagline }}
+      {%- else -%}
+        {{ section.settings.default_tagline | default: "Summer Essential" }}
+      {%- endif -%}
+    </span>
     <div class="sr-product-gallery__main" id="sr-gallery-main">
       {%- if product.featured_image != blank -%}
         <img id="sr-gallery-main-img"
@@ -80,14 +87,6 @@
 
   <!-- Product info -->
   <div class="sr-product-info">
-    <span class="sr-product-info__tagline">
-      {%- if product.metafields.custom.tagline != blank -%}
-        {{ product.metafields.custom.tagline }}
-      {%- else -%}
-        {{ section.settings.default_tagline | default: "Summer Essential" }}
-      {%- endif -%}
-    </span>
-
     <h1 class="sr-product-info__h1">{{ product.title }}</h1>
 
     <div class="sr-product-info__rating">
@@ -122,13 +121,6 @@
       {%- endif -%}
       {{ product.price | money }}
     </div>
-
-    <!-- Description -->
-    {%- if product.description != blank -%}
-      <div class="sr-product-info__desc">{{ product.description | strip_html | truncatewords: 40 }}</div>
-    {%- else -%}
-      <p class="sr-product-info__desc">Robe légère en voile fluide, taille fluide et bretelles ajustables. Une coupe solaire qui accompagne aussi bien les journées de plage que les soirées d'été.</p>
-    {%- endif -%}
 
     <!-- Form -->
     <form id="sr-product-form" action="/cart/add">

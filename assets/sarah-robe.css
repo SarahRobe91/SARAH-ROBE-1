@@ -1703,7 +1703,7 @@ input, textarea { font-family: var(--sr-font-sans); }
   color: #FFF8F2;
   border: none;
   border-radius: var(--sr-radius-pill);
-  padding: 16px;
+  padding: 12px 20px;
   font-size: 12px;
   letter-spacing: .16em;
   text-transform: uppercase;
@@ -1718,7 +1718,7 @@ input, textarea { font-family: var(--sr-font-sans); }
   color: var(--sr-bg);
   border: none;
   border-radius: var(--sr-radius-pill);
-  padding: 16px;
+  padding: 12px 20px;
   font-size: 12px;
   letter-spacing: .16em;
   text-transform: uppercase;
@@ -1730,8 +1730,8 @@ input, textarea { font-family: var(--sr-font-sans); }
 .sr-product-buy-now:hover { background: #000; }
 
 /* Reassurance */
-.sr-reassurance { display: flex; flex-direction: column; gap: 11px; font-size: 13px; color: #6a605a; margin-bottom: 30px; }
-.sr-reassurance-item { display: flex; align-items: center; gap: 11px; }
+.sr-reassurance { display: flex; flex-direction: column; gap: 11px; font-size: 13px; color: #6a605a; margin-bottom: 30px; align-items: center; }
+.sr-reassurance-item { display: flex; align-items: center; gap: 11px; justify-content: center; }
 
 /* Accordion */
 .sr-accordion { border-top: 1px solid var(--sr-border); }
@@ -2094,4 +2094,45 @@ input, textarea { font-family: var(--sr-font-sans); }
 .sr-products-cta {
   text-align: center;
   margin-top: 42px;
+}
+
+/* ============================================================
+   PRODUITS — Ajustements visuels premium
+   ============================================================ */
+
+/* --- Tagline au-dessus de l'image produit ------------------ */
+.sr-product-gallery__tagline {
+  font-family: var(--sr-font-script);
+  font-size: 28px;
+  color: var(--sr-rose);
+  display: block;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+/* --- Desktop : galerie produit plus compacte -------------- */
+@media (min-width: 990px) {
+  .sr-product-main {
+    grid-template-columns: 0.72fr 1.28fr;
+    gap: 44px;
+    padding: 26px 60px 36px;
+  }
+  .sr-product-gallery__main {
+    aspect-ratio: 3/4;
+  }
+}
+
+/* --- Desktop : Best sellers = 4 colonnes (comme les parfums) --- */
+@media (min-width: 990px) {
+  .sr-products-section .sr-products-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+/* --- Mobile : Parfums alignés sur les cartes Best seller --- */
+@media (max-width: 768px) {
+  .sr-products-grid--4col .sr-card--parfum {
+    gap: 0;
+  }
 }
