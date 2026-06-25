@@ -28,7 +28,7 @@
       {%- elsif _coll != blank -%}
         {%- assign _title = _coll.title -%}
       {%- else -%}
-        {%- assign _title = 'Collection' -%}
+        {%- assign _title = 'Catégorie' -%}
       {%- endif -%}
 
       {%- comment -%} Résolution image {%- endcomment -%}
@@ -59,26 +59,15 @@
       </a>
 
     {%- else -%}
-      <a href="/collections/robes" class="sr-category-item">
-        <div class="sr-category-item__circle sr-category-item__circle--rose"></div>
-        <span class="sr-category-item__name">Robes d'été</span>
-        <span class="sr-category-item__link">Voir la sélection →</span>
-      </a>
-      <a href="/collections/ensembles" class="sr-category-item">
-        <div class="sr-category-item__circle sr-category-item__circle--bleu"></div>
-        <span class="sr-category-item__name">Ensembles légers</span>
-        <span class="sr-category-item__link">Voir la sélection →</span>
-      </a>
-      <a href="/collections/accessoires" class="sr-category-item">
-        <div class="sr-category-item__circle sr-category-item__circle--dore"></div>
-        <span class="sr-category-item__name">Accessoires solaires</span>
-        <span class="sr-category-item__link">Voir la sélection →</span>
-      </a>
-      <a href="/collections/parfums" class="sr-category-item">
-        <div class="sr-category-item__circle sr-category-item__circle--vert"></div>
-        <span class="sr-category-item__name">Parfums</span>
-        <span class="sr-category-item__link">Voir la sélection →</span>
-      </a>
+      {%- comment -%}
+        Aucun bloc défini : on affiche un message uniquement dans l'éditeur.
+        Ne jamais afficher de cartes hardcodées ici — elles seraient non-éditables.
+      {%- endcomment -%}
+      {%- if request.design_mode -%}
+        <p style="grid-column:1/-1;text-align:center;padding:40px 20px;color:#9a8f86;font-size:13px;letter-spacing:.05em">
+          Cliquez sur « Ajouter un bloc » dans le panneau de gauche pour ajouter des catégories.
+        </p>
+      {%- endif -%}
     {%- endfor -%}
   </div>
 </section>
@@ -149,14 +138,14 @@
           "default": "rose"
         },
         {
-          "type": "text",
-          "id": "name",
-          "label": "Nom (champ existant — remplacé par Titre si renseigné)"
-        },
-        {
           "type": "url",
           "id": "url",
           "label": "Lien manuel (si aucune collection sélectionnée)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nom (champ hérité — préférer Titre)"
         }
       ]
     }
@@ -166,10 +155,10 @@
     {
       "name": "Catégories été",
       "blocks": [
-        { "type": "category", "settings": { "name": "Robes d'été",          "color": "rose" } },
-        { "type": "category", "settings": { "name": "Ensembles légers",     "color": "bleu" } },
-        { "type": "category", "settings": { "name": "Accessoires solaires", "color": "dore" } },
-        { "type": "category", "settings": { "name": "Parfums",              "color": "vert" } }
+        { "type": "category", "settings": { "title": "Robes d'été",          "color": "rose" } },
+        { "type": "category", "settings": { "title": "Ensembles légers",     "color": "bleu" } },
+        { "type": "category", "settings": { "title": "Accessoires solaires", "color": "dore" } },
+        { "type": "category", "settings": { "title": "Parfums",              "color": "vert" } }
       ]
     }
   ]

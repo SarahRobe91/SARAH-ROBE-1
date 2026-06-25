@@ -30,28 +30,28 @@
         "cat-1": {
           "type": "category",
           "settings": {
-            "name": "Robes d'été",
+            "title": "Robes d'été",
             "color": "rose"
           }
         },
         "cat-2": {
           "type": "category",
           "settings": {
-            "name": "Ensembles légers",
+            "title": "Ensembles légers",
             "color": "bleu"
           }
         },
         "cat-3": {
           "type": "category",
           "settings": {
-            "name": "Accessoires solaires",
+            "title": "Accessoires solaires",
             "color": "dore"
           }
         },
         "cat-4": {
           "type": "category",
           "settings": {
-            "name": "Parfums",
+            "title": "Parfums",
             "color": "vert"
           }
         }
