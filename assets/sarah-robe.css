@@ -2162,18 +2162,43 @@ input, textarea { font-family: var(--sr-font-sans); }
   .sr-product-reviews { padding: 50px 40px; }
   .sr-product-reviews .sr-reviews__grid { max-width: 1020px; margin: 30px auto 0; }
 
-  /* Produits recommandés "Complétez le look" — cartes compactes */
-  .sr-related { padding: 48px 40px; }
+  /* Produits recommandés "Complétez le look" — grille équilibrée */
+  .sr-related {
+    padding: 56px 80px 64px;
+    background: linear-gradient(180deg, #FBF7F1 0%, #FDF4EE 100%);
+  }
+  .sr-related::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: -40px;
+    transform: translateY(-50%);
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(242,220,214,.4) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .sr-related::after {
+    content: '';
+    position: absolute;
+    top: 45%; right: -40px;
+    transform: translateY(-50%);
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(207,226,236,.35) 0%, transparent 68%);
+    pointer-events: none;
+  }
   .sr-related__grid {
-    max-width: 720px;
+    max-width: 960px;
     margin-left: auto;
     margin-right: auto;
-    gap: 16px;
+    gap: 22px;
+    position: relative;
+    z-index: 1;
   }
   .sr-related__grid .sr-card {
-    padding: 9px;
+    padding: 10px;
     border-radius: 20px;
-    gap: 8px;
+    gap: 10px;
   }
   .sr-related__grid .sr-card__media {
     border-radius: 14px;
