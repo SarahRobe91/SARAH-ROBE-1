@@ -1,0 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main-list-collections-sarah": {
+      "type": "main-list-collections-sarah",
+      "settings": {
+        "script": "explorez",
+        "heading": "Toutes nos collections",
+        "description": "Explorez les univers Sarah Robe : robes d'été, ensembles légers, accessoires solaires et parfums lumineux.",
+        "max_collections": 12,
+        "hide_empty": true,
+        "show_count": true,
+        "btn_text": "Voir la sélection →"
+      }
+    }
+  },
+  "order": [
+    "main-list-collections-sarah"
+  ]
+}

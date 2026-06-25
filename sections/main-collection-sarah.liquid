@@ -9,18 +9,27 @@
   <div class="sr-collection-hero__deco2"></div>
 
   <div class="sr-collection-hero__content">
-    <!-- Breadcrumb -->
     <nav class="sr-breadcrumb" aria-label="Fil d'Ariane">
       <a href="/">Accueil</a>
       <span class="sr-breadcrumb__sep">/</span>
-      <a href="/collections">Collections</a>
-      <span class="sr-breadcrumb__sep">/</span>
-      <span style="color:#3A3330">{{ collection.title }}</span>
+      {%- if collection.handle == 'all' -%}
+        <span style="color:#3A3330">Catalogue</span>
+      {%- else -%}
+        <a href="/collections">Collections</a>
+        <span class="sr-breadcrumb__sep">/</span>
+        <span style="color:#3A3330">{{ collection.title }}</span>
+      {%- endif -%}
     </nav>
 
-    <span class="sr-collection-hero__script">{{ section.settings.script_title | default: "Collection Été 2026" }}</span>
-    <h1 class="sr-collection-hero__h1">{{ collection.title }}</h1>
-    {%- if collection.description != blank -%}
+    <span class="sr-collection-hero__script">
+      {%- if collection.handle == 'all' -%}catalogue{%- else -%}{{ section.settings.script_title | default: "Collection Été 2026" }}{%- endif -%}
+    </span>
+    <h1 class="sr-collection-hero__h1">
+      {%- if collection.handle == 'all' -%}Toutes les pièces Sarah Robe{%- else -%}{{ collection.title }}{%- endif -%}
+    </h1>
+    {%- if collection.handle == 'all' -%}
+      <p class="sr-collection-hero__desc">Robes légères, ensembles solaires, accessoires et parfums pour composer une saison lumineuse.</p>
+    {%- elsif collection.description != blank -%}
       <p class="sr-collection-hero__desc">{{ collection.description }}</p>
     {%- else -%}
       <p class="sr-collection-hero__desc">Des pièces légères pensées pour accompagner les journées ensoleillées et les soirées d'été.</p>
@@ -224,13 +233,14 @@
 </div>
 
 <!-- Vous aimerez également -->
-{%- if section.settings.related_collection != blank -%}
+{%- assign _related = section.settings.related_collection -%}
+{%- if _related != blank -%}
   <div style="padding:112px 80px 88px;text-align:center">
     <span class="sr-section-script">complétez votre sélection</span>
     <h2 class="sr-section-h2">Vous aimerez également</h2>
     <p class="sr-section-desc">Nos pièces favorites pour sublimer votre tenue d'été.</p>
     <div class="sr-products-grid sr-products-grid--4col">
-      {%- for product in collections[section.settings.related_collection].products limit: 4 -%}
+      {%- for product in _related.products limit: 4 -%}
         {%- render 'product-card-sarah', product: product -%}
       {%- endfor -%}
     </div>
