@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main-product-sarah": {
@@ -40,14 +31,81 @@
           }
         }
       },
+      "blocks_order": ["why-1", "why-2", "why-3"],
       "settings": {
         "default_tagline": "Summer Essential",
         "default_social_proof": "Notre robe la plus vendue cet été",
         "default_review_count": "128"
       }
+    },
+    "promo-offer": {
+      "type": "promo-offer",
+      "settings": {
+        "script": "offre spéciale été",
+        "heading": "Jusqu'à",
+        "discount": "-30%",
+        "heading_suffix": "sur une sélection de robes & parfums",
+        "cta_label": "Voir les offres"
+      }
+    },
+    "reviews-sarah": {
+      "type": "reviews-sarah",
+      "blocks": {
+        "rev-1": {
+          "type": "review",
+          "settings": {
+            "text": "Robe magnifique, légère et parfaite pour l'été.",
+            "author": "Camille L."
+          }
+        },
+        "rev-2": {
+          "type": "review",
+          "settings": {
+            "text": "Le parfum tient super bien et sent vraiment les vacances.",
+            "author": "Inès B."
+          }
+        },
+        "rev-3": {
+          "type": "review",
+          "settings": {
+            "text": "Commande reçue rapidement, emballage très propre.",
+            "author": "Sofia M."
+          }
+        }
+      },
+      "blocks_order": ["rev-1", "rev-2", "rev-3"],
+      "settings": {
+        "script": "elles adorent",
+        "heading": "Avis clientes",
+        "wave_color": "#FBF7F1"
+      }
+    },
+    "contact-sarah": {
+      "type": "contact-sarah",
+      "settings": {
+        "script": "une question ?",
+        "heading": "Contactez Sarah Robe",
+        "intro": "Besoin d'un conseil sur une robe, un parfum ou une commande ? Écrivez-nous, notre équipe vous répond avec plaisir.",
+        "phone": "06 00 00 00 00",
+        "email": "contact@sarahrobe.fr",
+        "availability": "Réponse sous 24h à 48h"
+      }
+    },
+    "newsletter-sarah": {
+      "type": "newsletter-sarah",
+      "settings": {
+        "script": "rejoins-nous",
+        "heading": "Rejoins l'univers Sarah Robe",
+        "description": "Découvre nos nouveautés, offres privées et inspirations d'été.",
+        "wave_color": "#F7E6E0"
+      }
     }
   },
   "order": [
-    "main-product-sarah"
+    "main-product-sarah",
+    "promo-offer",
+    "reviews-sarah",
+    "contact-sarah",
+    "newsletter-sarah"
   ]
 }
