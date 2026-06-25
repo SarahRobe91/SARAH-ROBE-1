@@ -127,6 +127,7 @@
         {%- for link in linklists.main-menu.links -%}
           {%- assign _mob_url = link.url -%}
           {%- if _mob_url == '/collections/all' -%}{%- assign _mob_url = '/collections' -%}{%- endif -%}
+          {%- if _mob_url == '/pages/contact' or _mob_url == '/contact' -%}{%- assign _mob_url = '/#contact' -%}{%- endif -%}
           <a href="{{ _mob_url }}" {% if link.active %}style="color:#C28B7C"{% endif %}>{{ link.title }}</a>
         {%- else -%}
           <a href="/">Accueil</a>

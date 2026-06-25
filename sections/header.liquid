@@ -24,6 +24,7 @@
         {%- for link in linklists[section.settings.menu].links -%}
           {%- assign _link_url = link.url -%}
           {%- if _link_url == '/collections/all' -%}{%- assign _link_url = '/collections' -%}{%- endif -%}
+          {%- if _link_url == '/pages/contact' or _link_url == '/contact' -%}{%- assign _link_url = '/#contact' -%}{%- endif -%}
           <a href="{{ _link_url }}"
              {% if link.active and link.url != '/' %}class="is-active"{% endif %}>
             {{ link.title }}
@@ -35,7 +36,7 @@
         <a href="/collections/tenues-ete">Tenues d'été</a>
         <a href="/collections/parfums">Parfums</a>
         <a href="/collections/nouveautes">Nouveautés</a>
-        <a href="/pages/contact">Contact</a>
+        <a href="/#contact">Contact</a>
       {%- endif -%}
     </nav>
   </div>

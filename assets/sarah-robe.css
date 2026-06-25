@@ -60,11 +60,51 @@ input, textarea { font-family: var(--sr-font-sans); }
    HEADER
    ============================================================ */
 .sr-header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background: var(--sr-bg);
   border-bottom: 1px solid var(--sr-border);
   padding: 12px 0 10px;
   z-index: 100;
+  transition:
+    transform 0.35s ease,
+    background-color 0.35s ease,
+    box-shadow 0.35s ease,
+    border-bottom-color 0.35s ease;
+}
+
+/* --- Header states ------------------------------------------ */
+.sr-header--transparent {
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+}
+.sr-header--solid {
+  background: var(--sr-bg) !important;
+  border-bottom-color: var(--sr-border) !important;
+}
+.sr-header--hidden {
+  transform: translateY(-110%);
+}
+
+/* --- Main content offset for fixed header ------------------- */
+#main-content {
+  padding-top: var(--sr-header-h, 110px);
+}
+/* Homepage hero goes behind the transparent header */
+[data-template="index"] #main-content {
+  padding-top: 0;
+}
+/* Hero text clears the fixed header on desktop */
+@media (min-width: 769px) {
+  [data-template="index"] .sr-hero__content {
+    padding-top: 120px;
+  }
+}
+@media (max-width: 768px) {
+  #main-content { padding-top: var(--sr-header-h, 62px); }
 }
 .sr-header__inner {
   display: flex;

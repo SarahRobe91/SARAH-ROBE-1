@@ -581,3 +581,71 @@ document.addEventListener('DOMContentLoaded', () => SRAnimations.init());
 window.addEventListener('scroll', () => SRAnimations.updateParallax(), { passive: true });
 // Shopify Theme Editor: re-init after section reload
 document.addEventListener('shopify:section:load', () => setTimeout(() => SRAnimations.init(), 100));
+
+/* ============================================================
+   SR HEADER BEHAVIOR — Transparent hero + scroll hide/show
+   ============================================================ */
+const SRHeaderBehavior = (() => {
+  'use strict';
+
+  const headers = document.querySelectorAll('.sr-header');
+  const isIndex = document.body.dataset.template === 'index';
+  const HIDE_AFTER = 80;
+  let lastY = 0;
+  let ticking = false;
+
+  function isMobileNavOpen() {
+    return document.querySelector('.sr-mobile-nav.is-open') !== null;
+  }
+  function isDrawerOpen() {
+    return document.body.style.overflow === 'hidden';
+  }
+
+  function setHeaderH() {
+    const h = (window.innerWidth > 768
+      ? document.querySelector('.sr-header--desktop')
+      : document.querySelector('.sr-header--mobile')
+    )?.getBoundingClientRect().height || 0;
+    if (h) document.documentElement.style.setProperty('--sr-header-h', h + 'px');
+  }
+
+  function update() {
+    const y = window.scrollY;
+    const atTop = y < 20;
+    const goingDown = y > lastY;
+
+    headers.forEach(header => {
+      if (isIndex && atTop) {
+        header.classList.add('sr-header--transparent');
+        header.classList.remove('sr-header--solid', 'sr-header--hidden');
+      } else {
+        header.classList.remove('sr-header--transparent');
+        header.classList.add('sr-header--solid');
+
+        if (!isMobileNavOpen() && !isDrawerOpen()) {
+          if (goingDown && y > HIDE_AFTER) {
+            header.classList.add('sr-header--hidden');
+          } else {
+            header.classList.remove('sr-header--hidden');
+          }
+        }
+      }
+    });
+
+    lastY = y;
+    ticking = false;
+  }
+
+  function init() {
+    setHeaderH();
+    update();
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener('resize', setHeaderH, { passive: true });
+  }
+
+  return { init };
+})();
+
+document.addEventListener('DOMContentLoaded', () => SRHeaderBehavior.init());
