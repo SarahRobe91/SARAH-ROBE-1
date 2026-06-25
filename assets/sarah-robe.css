@@ -1009,7 +1009,7 @@ input, textarea { font-family: var(--sr-font-sans); }
 }
 .sr-newsletter__deco {
   position: absolute;
-  bottom: -70px; left: 80px;
+  bottom: -200px; left: 80px;
   width: 200px; height: 200px;
   border-radius: 50%;
   background: rgba(255,255,255,.4);
