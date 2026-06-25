@@ -63,14 +63,14 @@ input, textarea { font-family: var(--sr-font-sans); }
   position: relative;
   background: var(--sr-bg);
   border-bottom: 1px solid var(--sr-border);
-  padding: 20px 0 16px;
+  padding: 12px 0 10px;
   z-index: 100;
 }
 .sr-header__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 13px;
+  gap: 8px;
 }
 .sr-header__logo {
   display: flex;
@@ -80,20 +80,20 @@ input, textarea { font-family: var(--sr-font-sans); }
   text-decoration: none;
 }
 .sr-header__logo-img {
-  width: 74px; height: 74px;
+  width: 54px; height: 54px;
   border-radius: 50%;
   object-fit: cover;
 }
 .sr-header__logo-name {
   font-family: var(--sr-font-script);
-  font-size: 42px;
+  font-size: 32px;
   color: var(--sr-rose);
   display: block;
   line-height: 1;
 }
 .sr-header__logo-sub {
   font-family: var(--sr-font-serif);
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: .52em;
   text-transform: uppercase;
   color: var(--sr-dark);
@@ -156,7 +156,7 @@ input, textarea { font-family: var(--sr-font-sans); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
+  padding: 8px 18px;
 }
 .sr-header__hamburger {
   display: flex;
@@ -184,7 +184,7 @@ input, textarea { font-family: var(--sr-font-sans); }
 }
 .sr-header__logo-m-name {
   font-family: var(--sr-font-script);
-  font-size: 27px;
+  font-size: 21px;
   color: var(--sr-rose);
 }
 .sr-header__logo-m-sub {
@@ -269,6 +269,9 @@ input, textarea { font-family: var(--sr-font-sans); }
   height: 600px;
   overflow: hidden;
   background: linear-gradient(120deg,#F2DCD6 0%,#EFE0D2 42%,#CFE2EC 100%);
+}
+@media (min-width: 990px) {
+  .sr-hero { height: 780px; }
 }
 .sr-hero__texture {
   position: absolute;
@@ -1893,7 +1896,6 @@ input, textarea { font-family: var(--sr-font-sans); }
 .sr-hero__h1     { animation: srRevealUp .85s cubic-bezier(.22,1,.36,1) .18s both; }
 .sr-hero__desc   { animation: srRevealUp .7s  cubic-bezier(.22,1,.36,1) .34s both; }
 .sr-hero__ctas   { animation: srRevealUp .7s  cubic-bezier(.22,1,.36,1) .50s both; }
-.sr-hero__img    { animation: srKenBurns 15s ease-in-out alternate infinite; transform-origin: center center; }
 
 /* --- Product page: above-fold CSS animations --------------- */
 [data-template="product"] .sr-product-gallery { animation: srRevealLeft  .75s cubic-bezier(.22,1,.36,1) .06s both; }
@@ -1915,7 +1917,6 @@ input, textarea { font-family: var(--sr-font-sans); }
   .sr-parallax { transform: none !important; will-change: auto; }
   [data-template="product"] .sr-product-gallery,
   [data-template="product"] .sr-product-info { animation-name: srRevealUp; }
-  .sr-hero__img { animation-duration: 20s; }
 }
 
 /* --- prefers-reduced-motion -------------------------------- */
@@ -1935,7 +1936,7 @@ input, textarea { font-family: var(--sr-font-sans); }
     transform: none !important;
   }
   .sr-hero__script, .sr-hero__h1, .sr-hero__desc,
-  .sr-hero__ctas, .sr-hero__img,
+  .sr-hero__ctas,
   [data-template="product"] .sr-product-gallery,
   [data-template="product"] .sr-product-info,
   [data-template="collection"] .sr-collection-hero__content,
