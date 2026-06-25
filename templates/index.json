@@ -95,7 +95,7 @@
         "script": "best-sellers",
         "heading": "Les indispensables de l'été",
         "description": "Nos pièces les plus aimées pour une saison lumineuse.",
-        "collection": "",
+        "collection": "best-sellers",
         "products_count": 6,
         "cta_label": "Voir tous les produits",
         "cta_url": ""
