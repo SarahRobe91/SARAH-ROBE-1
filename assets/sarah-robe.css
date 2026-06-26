@@ -1314,6 +1314,7 @@ input, textarea { font-family: var(--sr-font-sans); }
 .sr-collection-hero {
   position: relative;
   overflow: hidden;
+  min-height: 420px;
   background: linear-gradient(120deg,#F2DCD6 0%,#EFE0D2 46%,#CFE2EC 100%);
 }
 .sr-collection-hero__texture {
@@ -1323,8 +1324,8 @@ input, textarea { font-family: var(--sr-font-sans); }
 }
 .sr-collection-hero__deco1 {
   position: absolute;
-  top: 44px; right: 96px;
-  width: 118px; height: 118px;
+  top: 56px; right: 112px;
+  width: 148px; height: 148px;
   border-radius: 50%;
   background: radial-gradient(circle at 32% 30%,#F8ECDC,#E7C99B);
   box-shadow: 0 22px 50px -22px rgba(180,140,90,.65);
@@ -1332,7 +1333,7 @@ input, textarea { font-family: var(--sr-font-sans); }
 }
 .sr-collection-hero__deco2 {
   position: absolute;
-  bottom: 60px; right: 230px;
+  bottom: 90px; right: 248px;
   width: 54px; height: 54px;
   border-radius: 50%;
   background: rgba(255,255,255,.45);
@@ -1341,7 +1342,7 @@ input, textarea { font-family: var(--sr-font-sans); }
 .sr-collection-hero__content {
   position: relative;
   z-index: 2;
-  padding: 42px 80px 78px;
+  padding: 72px 80px 114px;
 }
 .sr-breadcrumb {
   font-size: 12px;
@@ -1355,7 +1356,7 @@ input, textarea { font-family: var(--sr-font-sans); }
 .sr-breadcrumb__sep { margin: 0 9px; color: rgba(58,51,48,.3); }
 .sr-collection-hero__script {
   font-family: var(--sr-font-script);
-  font-size: 38px;
+  font-size: 44px;
   color: var(--sr-rose);
   display: block;
   line-height: 1;
@@ -1363,7 +1364,7 @@ input, textarea { font-family: var(--sr-font-sans); }
 .sr-collection-hero__h1 {
   font-family: var(--sr-font-serif);
   font-weight: 500;
-  font-size: 56px;
+  font-size: 62px;
   line-height: 1.02;
   color: var(--sr-dark);
   margin: 4px 0 0;
@@ -2036,9 +2037,11 @@ input, textarea { font-family: var(--sr-font-sans); }
   .sr-drawer.is-open { transform: translateY(0); }
 
   /* Collection page */
-  .sr-collection-hero__content { padding: 28px 24px 56px; }
-  .sr-collection-hero__h1 { font-size: 38px; }
-  .sr-collection-hero__deco1 { top: 22px; right: 24px; width: 64px; height: 64px; }
+  .sr-collection-hero { min-height: 300px; }
+  .sr-collection-hero__content { padding: 40px 24px 80px; }
+  .sr-collection-hero__h1 { font-size: 40px; }
+  .sr-collection-hero__script { font-size: 34px; }
+  .sr-collection-hero__deco1 { top: 22px; right: 24px; width: 72px; height: 72px; }
   .sr-collection-hero__deco2 { display: none; }
   .sr-filter-bar { padding: 8px 16px 0; }
   .sr-filter-bar__inner { display: none; } /* replaced by mobile scroll pills */
