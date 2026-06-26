@@ -1,0 +1,182 @@
+{% comment %} SARAH ROBE — Détail d'une commande {% endcomment %}
+
+{%- unless customer -%}
+  <script>window.location.href = '{{ routes.account_login_url }}';</script>
+{%- endunless -%}
+
+<!-- Hero commande -->
+<div class="sr-collection-hero">
+  <div class="sr-collection-hero__texture"></div>
+  <div class="sr-collection-hero__deco1"></div>
+  <div class="sr-collection-hero__content">
+    <nav class="sr-breadcrumb">
+      <a href="/">Accueil</a>
+      <span class="sr-breadcrumb__sep">/</span>
+      <a href="{{ routes.account_url }}">Mon Compte</a>
+      <span class="sr-breadcrumb__sep">/</span>
+      <span style="color:#3A3330">Commande {{ order.name }}</span>
+    </nav>
+    <span class="sr-collection-hero__script">{{ section.settings.hero_script | default: "ma commande" }}</span>
+    <h1 class="sr-collection-hero__h1">Commande {{ order.name }}</h1>
+    <p class="sr-collection-hero__desc">Passée le {{ order.created_at | date: "%d %B %Y" }}</p>
+  </div>
+  <svg style="position:absolute;bottom:-1px;left:0;width:100%;height:74px;display:block" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,52 C300,108 620,4 920,40 C1140,67 1300,78 1440,44 L1440,90 L0,90 Z" fill="#FBF7F1"/>
+  </svg>
+</div>
+
+<div class="sr-order-detail-page">
+
+  <!-- En-tête statut -->
+  <div class="sr-order-detail-header">
+    <div>
+      <h2 class="sr-order-detail-num">Commande {{ order.name }}</h2>
+      <p class="sr-order-detail-date">{{ order.created_at | date: "%d %B %Y à %H:%M" }}</p>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      {%- case order.financial_status -%}
+        {%- when 'paid' -%}
+          <span class="sr-order-badge sr-order-badge--paid">Payée</span>
+        {%- when 'pending' -%}
+          <span class="sr-order-badge sr-order-badge--pending">En attente de paiement</span>
+        {%- when 'refunded' -%}
+          <span class="sr-order-badge sr-order-badge--refunded">Remboursée</span>
+        {%- else -%}
+          <span class="sr-order-badge sr-order-badge--pending">{{ order.financial_status_label }}</span>
+      {%- endcase -%}
+      {%- if order.fulfillment_status == 'fulfilled' -%}
+        <span class="sr-order-badge sr-order-badge--fulfilled">Expédiée</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="sr-order-detail-body">
+
+    <!-- Articles commandés -->
+    <div>
+      <div class="sr-order-items-card">
+        <h3 class="sr-order-items-title">Articles commandés</h3>
+        <div>
+          {%- for line_item in order.line_items -%}
+            <div class="sr-order-item">
+              <div class="sr-order-item__img">
+                {%- if line_item.image -%}
+                  <img src="{{ line_item.image | image_url: width: 160 }}"
+                       alt="{{ line_item.image.alt | escape }}"
+                       loading="lazy"
+                       width="80" height="100">
+                {%- endif -%}
+              </div>
+              <div>
+                <p class="sr-order-item__title">{{ line_item.product.title | default: line_item.title }}</p>
+                {%- unless line_item.product.has_only_default_variant -%}
+                  <p class="sr-order-item__variant">{{ line_item.variant.title }}</p>
+                {%- endunless -%}
+                <p class="sr-order-item__qty">Qté : {{ line_item.quantity }}</p>
+              </div>
+              <div class="sr-order-item__price">
+                {%- if line_item.original_price != line_item.final_price -%}
+                  <span style="font-size:13px;color:var(--sr-muted);text-decoration:line-through;display:block">
+                    {{ line_item.original_price | times: line_item.quantity | money }}
+                  </span>
+                {%- endif -%}
+                {{ line_item.final_price | times: line_item.quantity | money }}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- Totaux -->
+      <div class="sr-order-items-card sr-order-totals" style="margin-top:16px">
+        <div class="sr-order-totals__row">
+          <span>Sous-total</span>
+          <span>{{ order.line_items_subtotal_price | money }}</span>
+        </div>
+        {%- for discount in order.cart_level_discount_applications -%}
+          <div class="sr-order-totals__row" style="color:var(--sr-green-dk)">
+            <span>Remise : {{ discount.title }}</span>
+            <span>- {{ discount.total_allocated_amount | money }}</span>
+          </div>
+        {%- endfor -%}
+        {%- for shipping_method in order.shipping_methods -%}
+          <div class="sr-order-totals__row">
+            <span>Livraison : {{ shipping_method.title }}</span>
+            <span>{{ shipping_method.price | money }}</span>
+          </div>
+        {%- endfor -%}
+        {%- for tax_line in order.tax_lines -%}
+          <div class="sr-order-totals__row" style="color:var(--sr-muted)">
+            <span>{{ tax_line.title }} ({{ tax_line.rate | times: 100 | round }}%)</span>
+            <span>{{ tax_line.price | money }}</span>
+          </div>
+        {%- endfor -%}
+        <div class="sr-order-totals__row sr-order-totals__row--total">
+          <span>Total</span>
+          <span>{{ order.total_price | money }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Infos adresses et paiement -->
+    <div class="sr-order-info-cards">
+
+      {%- if order.shipping_address -%}
+        <div class="sr-order-info-card">
+          <p class="sr-order-info-card__title">Adresse de livraison</p>
+          <div class="sr-order-info-card__val">
+            {{ order.shipping_address.name }}<br>
+            {{ order.shipping_address.address1 }}<br>
+            {%- if order.shipping_address.address2 != blank -%}{{ order.shipping_address.address2 }}<br>{%- endif -%}
+            {{ order.shipping_address.zip }} {{ order.shipping_address.city }}<br>
+            {{ order.shipping_address.country }}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if order.billing_address -%}
+        <div class="sr-order-info-card">
+          <p class="sr-order-info-card__title">Adresse de facturation</p>
+          <div class="sr-order-info-card__val">
+            {{ order.billing_address.name }}<br>
+            {{ order.billing_address.address1 }}<br>
+            {%- if order.billing_address.address2 != blank -%}{{ order.billing_address.address2 }}<br>{%- endif -%}
+            {{ order.billing_address.zip }} {{ order.billing_address.city }}<br>
+            {{ order.billing_address.country }}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if order.transactions.size > 0 -%}
+        <div class="sr-order-info-card">
+          <p class="sr-order-info-card__title">Paiement</p>
+          <div class="sr-order-info-card__val">
+            {%- for transaction in order.transactions -%}
+              {%- if transaction.status == 'success' and transaction.kind == 'authorization' or transaction.kind == 'sale' or transaction.kind == 'capture' -%}
+                {{ transaction.payment_details.credit_card_company | default: "Carte bancaire" }}
+                {%- if transaction.payment_details.credit_card_last_four_digits -%}
+                  se terminant par {{ transaction.payment_details.credit_card_last_four_digits }}
+                {%- endif -%}
+                — {{ transaction.amount | money }}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <a href="{{ routes.account_url }}" class="sr-btn sr-btn--ghost sr-btn--full" style="text-align:center">
+        ← Retour à mon compte
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Détail commande",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "hero_script", "label": "Label cursive hero", "default": "ma commande" }
+  ]
+}
+{% endschema %}

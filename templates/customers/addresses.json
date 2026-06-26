@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "sr-addresses",
+      "settings": {
+        "hero_script": "mes adresses",
+        "hero_heading": "Carnet d'adresses",
+        "new_address_title": "Nouvelle adresse"
+      }
+    }
+  },
+  "order": ["main"]
+}

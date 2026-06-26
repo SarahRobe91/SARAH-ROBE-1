@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "sr-order",
+      "settings": {
+        "hero_script": "ma commande"
+      }
+    }
+  },
+  "order": ["main"]
+}

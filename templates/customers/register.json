@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "sr-register",
+      "settings": {
+        "editorial_script": "rejoignez-nous",
+        "editorial_title": "Rejoignez l'univers Sarah Robe",
+        "editorial_desc": "Créez votre compte pour profiter d'une expérience personnalisée, suivre vos commandes et accéder à vos avantages exclusifs.",
+        "form_script": "nouveau compte",
+        "form_title": "Créer mon compte",
+        "form_cta": "Créer mon compte"
+      }
+    }
+  },
+  "order": ["main"]
+}

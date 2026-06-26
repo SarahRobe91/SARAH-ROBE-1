@@ -1,0 +1,232 @@
+{% comment %} SARAH ROBE — Page Gestion des Adresses {% endcomment %}
+
+{%- unless customer -%}
+  <script>window.location.href = '{{ routes.account_login_url }}';</script>
+{%- endunless -%}
+
+<!-- Hero adresses -->
+<div class="sr-collection-hero">
+  <div class="sr-collection-hero__texture"></div>
+  <div class="sr-collection-hero__deco1"></div>
+  <div class="sr-collection-hero__content">
+    <nav class="sr-breadcrumb">
+      <a href="/">Accueil</a>
+      <span class="sr-breadcrumb__sep">/</span>
+      <a href="{{ routes.account_url }}">Mon Compte</a>
+      <span class="sr-breadcrumb__sep">/</span>
+      <span style="color:#3A3330">Mes Adresses</span>
+    </nav>
+    <span class="sr-collection-hero__script">{{ section.settings.hero_script | default: "mes adresses" }}</span>
+    <h1 class="sr-collection-hero__h1">{{ section.settings.hero_heading | default: "Carnet d'adresses" }}</h1>
+  </div>
+  <svg style="position:absolute;bottom:-1px;left:0;width:100%;height:74px;display:block" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,52 C300,108 620,4 920,40 C1140,67 1300,78 1440,44 L1440,90 L0,90 Z" fill="#FBF7F1"/>
+  </svg>
+</div>
+
+<div class="sr-addresses-page">
+
+  <!-- Retour + CTA ajouter -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;gap:12px">
+    <a href="{{ routes.account_url }}" class="sr-auth__link" style="font-size:13px">← Retour au compte</a>
+    <button type="button"
+            class="sr-btn sr-btn--primary sr-btn--small"
+            onclick="srToggleAddressForm('new', true)">
+      + Ajouter une adresse
+    </button>
+  </div>
+
+  <!-- Adresses existantes -->
+  {%- if customer.addresses.size > 0 -%}
+    <div class="sr-addresses-grid">
+      {%- for address in customer.addresses -%}
+        <div class="sr-address-card {%- if address == customer.default_address -%} sr-address-card--default{%- endif -%}">
+          {%- if address == customer.default_address -%}
+            <span class="sr-address-card__default-badge">Par défaut</span>
+          {%- endif -%}
+          <p class="sr-address-card__name">{{ address.first_name }} {{ address.last_name }}</p>
+          <div class="sr-address-card__line">
+            {%- if address.company != blank -%}<span>{{ address.company }}<br></span>{%- endif -%}
+            {{ address.address1 }}{%- if address.address2 != blank -%}, {{ address.address2 }}{%- endif -%}<br>
+            {{ address.zip }} {{ address.city }}<br>
+            {{ address.country }}<br>
+            {%- if address.phone != blank -%}{{ address.phone }}{%- endif -%}
+          </div>
+          <div class="sr-address-card__actions">
+            <button type="button"
+                    class="sr-btn sr-btn--ghost sr-btn--xs"
+                    onclick="srToggleAddressForm('edit-{{ address.id }}', true)">
+              Modifier
+            </button>
+            {%- form 'customer_address', address -%}
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="sr-btn sr-btn--xs" style="background:#FFF0EE;color:var(--sr-rose-dk);border:none"
+                      onclick="return confirm('Supprimer cette adresse ?')">
+                Supprimer
+              </button>
+              {%- unless address == customer.default_address -%}
+                <button type="button"
+                        name="address[default]"
+                        value="true"
+                        class="sr-btn sr-btn--xs"
+                        style="background:var(--sr-rose-xl);color:var(--sr-rose-dk);border:none"
+                        onclick="this.form.submit()">
+                  Définir par défaut
+                </button>
+              {%- endunless -%}
+            {%- endform -%}
+          </div>
+        </div>
+
+        <!-- Formulaire de modification inline -->
+        <div id="sr-address-form-edit-{{ address.id }}"
+             class="sr-address-new"
+             style="display:none;grid-column:1/-1">
+          <h3 class="sr-address-new__title">Modifier l'adresse</h3>
+          {%- form 'customer_address', address -%}
+            {%- if form.errors -%}
+              <div class="sr-auth__errors" role="alert">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+            <div class="sr-address-grid" style="margin-bottom:14px">
+              <div class="sr-field">
+                <label class="sr-field__label">Prénom</label>
+                <input class="sr-field__input" type="text" name="address[first_name]" value="{{ address.first_name }}" autocomplete="given-name">
+              </div>
+              <div class="sr-field">
+                <label class="sr-field__label">Nom</label>
+                <input class="sr-field__input" type="text" name="address[last_name]" value="{{ address.last_name }}" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="sr-field" style="margin-bottom:14px">
+              <label class="sr-field__label">Adresse</label>
+              <input class="sr-field__input" type="text" name="address[address1]" value="{{ address.address1 }}" autocomplete="address-line1" required>
+            </div>
+            <div class="sr-field" style="margin-bottom:14px">
+              <label class="sr-field__label">Complément (optionnel)</label>
+              <input class="sr-field__input" type="text" name="address[address2]" value="{{ address.address2 }}" autocomplete="address-line2">
+            </div>
+            <div class="sr-address-grid" style="margin-bottom:14px">
+              <div class="sr-field">
+                <label class="sr-field__label">Code postal</label>
+                <input class="sr-field__input" type="text" name="address[zip]" value="{{ address.zip }}" autocomplete="postal-code">
+              </div>
+              <div class="sr-field">
+                <label class="sr-field__label">Ville</label>
+                <input class="sr-field__input" type="text" name="address[city]" value="{{ address.city }}" autocomplete="address-level2" required>
+              </div>
+            </div>
+            <div class="sr-field" style="margin-bottom:14px">
+              <label class="sr-field__label">Pays</label>
+              <select class="sr-field__input" name="address[country]" autocomplete="country">{{ all_country_option_tags }}</select>
+            </div>
+            <div class="sr-field" style="margin-bottom:20px">
+              <label class="sr-field__label">Téléphone (optionnel)</label>
+              <input class="sr-field__input" type="tel" name="address[phone]" value="{{ address.phone }}" autocomplete="tel">
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button type="submit" class="sr-btn sr-btn--primary">Enregistrer</button>
+              <button type="button"
+                      class="sr-btn sr-btn--ghost"
+                      onclick="srToggleAddressForm('edit-{{ address.id }}', false)">
+                Annuler
+              </button>
+            </div>
+          {%- endform -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <div class="sr-account-empty" style="margin-bottom:40px">
+      <span class="sr-account-empty__script">aucune</span>
+      <p class="sr-account-empty__desc">Vous n'avez pas encore d'adresse enregistrée.</p>
+    </div>
+  {%- endif -%}
+
+  <!-- Formulaire nouvelle adresse -->
+  <div id="sr-address-form-new"
+       class="sr-address-new"
+       style="display:none">
+    <h2 class="sr-address-new__title">{{ section.settings.new_address_title | default: "Nouvelle adresse" }}</h2>
+    {%- form 'customer_address', customer.new_address -%}
+      {%- if form.errors -%}
+        <div class="sr-auth__errors" role="alert">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+
+      <div class="sr-address-grid" style="margin-bottom:14px">
+        <div class="sr-field">
+          <label class="sr-field__label" for="sr-addr-new-fn">Prénom</label>
+          <input class="sr-field__input" type="text" name="address[first_name]" id="sr-addr-new-fn" autocomplete="given-name" value="{{ form.first_name }}">
+        </div>
+        <div class="sr-field">
+          <label class="sr-field__label" for="sr-addr-new-ln">Nom</label>
+          <input class="sr-field__input" type="text" name="address[last_name]" id="sr-addr-new-ln" autocomplete="family-name" value="{{ form.last_name }}">
+        </div>
+      </div>
+      <div class="sr-field" style="margin-bottom:14px">
+        <label class="sr-field__label" for="sr-addr-new-co">Entreprise (optionnel)</label>
+        <input class="sr-field__input" type="text" name="address[company]" id="sr-addr-new-co" autocomplete="organization" value="{{ form.company }}">
+      </div>
+      <div class="sr-field" style="margin-bottom:14px">
+        <label class="sr-field__label" for="sr-addr-new-a1">Adresse</label>
+        <input class="sr-field__input" type="text" name="address[address1]" id="sr-addr-new-a1" autocomplete="address-line1" value="{{ form.address1 }}" required>
+      </div>
+      <div class="sr-field" style="margin-bottom:14px">
+        <label class="sr-field__label" for="sr-addr-new-a2">Complément d'adresse (optionnel)</label>
+        <input class="sr-field__input" type="text" name="address[address2]" id="sr-addr-new-a2" autocomplete="address-line2" value="{{ form.address2 }}">
+      </div>
+      <div class="sr-address-grid" style="margin-bottom:14px">
+        <div class="sr-field">
+          <label class="sr-field__label" for="sr-addr-new-zip">Code postal</label>
+          <input class="sr-field__input" type="text" name="address[zip]" id="sr-addr-new-zip" autocomplete="postal-code" value="{{ form.zip }}">
+        </div>
+        <div class="sr-field">
+          <label class="sr-field__label" for="sr-addr-new-city">Ville</label>
+          <input class="sr-field__input" type="text" name="address[city]" id="sr-addr-new-city" autocomplete="address-level2" value="{{ form.city }}" required>
+        </div>
+      </div>
+      <div class="sr-field" style="margin-bottom:14px">
+        <label class="sr-field__label" for="sr-addr-new-country">Pays</label>
+        <select class="sr-field__input" name="address[country]" id="sr-addr-new-country" autocomplete="country">
+          {{ all_country_option_tags }}
+        </select>
+      </div>
+      <div class="sr-field" style="margin-bottom:14px">
+        <label class="sr-field__label" for="sr-addr-new-phone">Téléphone (optionnel)</label>
+        <input class="sr-field__input" type="tel" name="address[phone]" id="sr-addr-new-phone" autocomplete="tel" value="{{ form.phone }}">
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+        <input type="checkbox" id="sr-addr-new-default" name="address[default]" value="true" style="width:16px;height:16px;accent-color:var(--sr-rose)">
+        <label for="sr-addr-new-default" style="font-size:13px;color:#6a605a">Définir comme adresse par défaut</label>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button type="submit" class="sr-btn sr-btn--primary">Enregistrer l'adresse</button>
+        <button type="button"
+                class="sr-btn sr-btn--ghost"
+                onclick="srToggleAddressForm('new', false)">
+          Annuler
+        </button>
+      </div>
+    {%- endform -%}
+  </div>
+
+</div>
+
+<script>
+function srToggleAddressForm(id, show) {
+  const el = document.getElementById('sr-address-form-' + id);
+  if (el) el.style.display = show ? '' : 'none';
+}
+{%- if form.errors -%}srToggleAddressForm('new', true);{%- endif -%}
+</script>
+
+{% schema %}
+{
+  "name": "Page Adresses",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "hero_script",       "label": "Label cursive hero",          "default": "mes adresses" },
+    { "type": "text", "id": "hero_heading",      "label": "Titre hero",                  "default": "Carnet d'adresses" },
+    { "type": "text", "id": "new_address_title", "label": "Titre formulaire nouvelle adresse", "default": "Nouvelle adresse" }
+  ]
+}
+{% endschema %}

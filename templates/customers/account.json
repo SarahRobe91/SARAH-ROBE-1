@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "sr-account",
+      "settings": {
+        "hero_script": "mon espace",
+        "hero_desc": "Retrouvez vos commandes, adresses et informations personnelles.",
+        "orders_script": "historique",
+        "address_script": "adresse"
+      }
+    }
+  },
+  "order": ["main"]
+}
