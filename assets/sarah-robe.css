@@ -1533,19 +1533,13 @@ input, textarea { font-family: var(--sr-font-sans); }
 /* Collection grid */
 .sr-collection-grid-section {
   padding: 40px 80px 90px;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
   position: relative;
   z-index: 1;
 }
 .sr-collection-grid-header { text-align: center; margin-bottom: 42px; }
 .sr-collection-grid-script { font-family: var(--sr-font-script); font-size: 30px; color: var(--sr-rose); }
 .sr-collection-grid-sub { font-size: 14px; letter-spacing: .04em; color: var(--sr-muted-dk); margin-top: 4px; }
-.sr-collection-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 22px; text-align: left; }
-.sr-collection-grid .sr-card { padding: 11px; gap: 10px; }
-.sr-collection-grid .sr-card__title { font-size: 18px; }
-.sr-collection-grid .sr-card__atc { padding: 11px; font-size: 10px; }
+.sr-collection-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 30px; text-align: left; }
 .sr-load-more {
   display: flex;
   flex-direction: column;
@@ -2066,9 +2060,6 @@ input, textarea { font-family: var(--sr-font-sans); }
   .sr-filter-pill-m { flex: 0 0 auto; padding: 10px 15px; font-size: 10px; }
   .sr-collection-grid-section { padding: 22px 16px 40px; }
   .sr-collection-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
-  .sr-collection-grid .sr-card { padding: 9px; gap: 0; }
-  .sr-collection-grid .sr-card__title { font-size: 16px; }
-  .sr-collection-grid .sr-card__atc { padding: 10px; font-size: 9px; }
   .sr-editorial__inner { flex-direction: column; padding: 62px 24px; text-align: center; }
   .sr-editorial__blob { width: 100%; height: 230px; }
   .sr-editorial__desc { max-width: none; font-size: 13px; }
@@ -2236,9 +2227,11 @@ input, textarea { font-family: var(--sr-font-sans); }
   }
 }
 
-/* --- Desktop : Best sellers = 4 colonnes (comme les parfums) --- */
+/* --- Desktop : toutes les grilles produits uniformisées sur la référence Best Sellers --- */
 @media (min-width: 990px) {
-  .sr-products-section .sr-products-grid {
+  .sr-products-grid,
+  .sr-products-grid--4col,
+  .sr-collection-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
   }
