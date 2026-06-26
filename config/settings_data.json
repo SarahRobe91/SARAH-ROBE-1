@@ -20,6 +20,7 @@
       "footer": {
         "type": "footer",
         "settings": {
+          "logo": "shopify://shop_images/Image_c5073c38-19e8-43f9-8070-2416ef5f8488.png",
           "tagline": "Vêtements d'été de marque et parfums solaires. L'élégance accessible, toute la saison.",
           "menu_shop": "",
           "menu_help": "",

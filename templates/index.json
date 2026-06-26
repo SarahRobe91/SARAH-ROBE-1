@@ -96,7 +96,7 @@
         "script": "best-sellers",
         "heading": "Les indispensables de l'été",
         "description": "Nos pièces les plus aimées pour une saison lumineuse.",
-        "collection": "collection-dete",
+        "collection": "robes-caftans-elegance",
         "products_count": 6,
         "cta_label": "Voir tous les produits",
         "cta_url": ""
@@ -125,13 +125,13 @@
     "promo-offer": {
       "type": "promo-offer",
       "settings": {
-        "script": "offre spéciale chocolat",
-        "heading": "1 acheté =",
-        "discount": "le deuxième à -50%",
-        "heading_suffix": "De Dubai",
+        "script": "offre spéciale Parfum",
+        "heading": "2 achetés =",
+        "discount": "le troisième à 10 €",
+        "heading_suffix": "sur toute la collection",
         "cta_label": "Voir les offres",
         "cta_url": "shopify://collections/chocolat-de-dubai",
-        "promo_image": "shopify://shop_images/ChatGPT_Image_26_juin_2026_12_05_42.png"
+        "promo_image": "shopify://shop_images/ChatGPT_Image_26_juin_2026_15_39_22.png"
       }
     },
     "reviews-sarah": {
