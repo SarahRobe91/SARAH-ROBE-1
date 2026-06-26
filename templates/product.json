@@ -11,39 +11,11 @@
   "sections": {
     "main-product-sarah": {
       "type": "main-product-sarah",
-      "blocks": {
-        "why-1": {
-          "type": "why_item",
-          "settings": {
-            "name": "Matière légère",
-            "desc": "Un voile fluide et respirant, pensé pour les fortes chaleurs.",
-            "icon": "fabric",
-            "icon_color": "rose"
-          }
-        },
-        "why-2": {
-          "type": "why_item",
-          "settings": {
-            "name": "Coupe flatteuse",
-            "desc": "Une silhouette ajustée qui sublime toutes les morphologies.",
-            "icon": "silhouette",
-            "icon_color": "blue"
-          }
-        },
-        "why-3": {
-          "type": "why_item",
-          "settings": {
-            "name": "Parfait pour l'été",
-            "desc": "De la plage aux soirées douces, elle accompagne chaque instant.",
-            "icon": "sun",
-            "icon_color": "gold"
-          }
-        }
-      },
       "settings": {
         "default_tagline": "Summer Essential",
         "default_social_proof": "Notre robe la plus vendue cet été",
-        "default_review_count": "128"
+        "default_review_count": "128",
+        "related_collection": "parfums"
       }
     },
     "promo-offer": {
@@ -53,7 +25,8 @@
         "heading": "Jusqu'à",
         "discount": "-30%",
         "heading_suffix": "sur une sélection de robes & parfums",
-        "cta_label": "Voir les offres"
+        "cta_label": "Voir les offres",
+        "cta_url": ""
       }
     },
     "contact-sarah": {
@@ -64,7 +37,11 @@
         "intro": "Besoin d'un conseil sur une robe, un parfum ou une commande ? Écrivez-nous, notre équipe vous répond avec plaisir.",
         "phone": "06 00 00 00 00",
         "email": "contact@sarahrobe.fr",
-        "availability": "Réponse sous 24h à 48h"
+        "availability": "Réponse sous 24h à 48h",
+        "whatsapp_url": "",
+        "instagram_url": "",
+        "tiktok_url": "",
+        "snapchat_url": ""
       }
     },
     "newsletter-sarah": {
@@ -73,7 +50,9 @@
         "script": "rejoins-nous",
         "heading": "Rejoins l'univers Sarah Robe",
         "description": "Découvre nos nouveautés, offres privées et inspirations d'été.",
-        "wave_color": "#F7E6E0"
+        "placeholder": "Votre adresse e-mail",
+        "button": "S'inscrire",
+        "wave_color": "#f7e6e0"
       }
     }
   },
