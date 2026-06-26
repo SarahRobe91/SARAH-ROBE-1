@@ -36,7 +36,7 @@
         "category_WyxVJU": {
           "type": "category",
           "settings": {
-            "collection": "accessoires-solaires",
+            "collection": "nos-chaussures",
             "title": "",
             "subtitle": "",
             "color": "rose",
@@ -50,6 +50,7 @@
             "collection": "grand-sac-de-plage-cabas-en-paille-tressee-grande-capacite",
             "title": "",
             "subtitle": "",
+            "image": "shopify://shop_images/ChatGPT_Image_26_juin_2026_13_10_18.png",
             "color": "rose",
             "url": "",
             "name": ""
@@ -95,7 +96,7 @@
         "script": "best-sellers",
         "heading": "Les indispensables de l'été",
         "description": "Nos pièces les plus aimées pour une saison lumineuse.",
-        "collection": "best-sellers",
+        "collection": "collection-dete",
         "products_count": 6,
         "cta_label": "Voir tous les produits",
         "cta_url": ""
@@ -108,7 +109,8 @@
         "heading": "Des pièces pensées pour les journées ensoleillées",
         "description": "Entre élégance légère, matières fluides et parfums délicats, Sarah Robe accompagne vos plus beaux moments d'été.",
         "cta_label": "Découvrir l'univers",
-        "cta_url": ""
+        "cta_url": "",
+        "mood_image": "shopify://shop_images/ChatGPT_Image_26_juin_2026_13_15_06.png"
       }
     },
     "perfume-section": {
@@ -117,18 +119,19 @@
         "script": "parfum",
         "heading": "Les parfums d'été",
         "description": "Des senteurs fraîches, solaires et élégantes.",
-        "collection": "parfum"
+        "collection": "parfums"
       }
     },
     "promo-offer": {
       "type": "promo-offer",
       "settings": {
-        "script": "offre spéciale été",
-        "heading": "Jusqu'à",
-        "discount": "-30%",
-        "heading_suffix": "sur une sélection de robes & parfums",
+        "script": "offre spéciale chocolat",
+        "heading": "1 acheté =",
+        "discount": "le deuxième à -50%",
+        "heading_suffix": "De Dubai",
         "cta_label": "Voir les offres",
-        "cta_url": ""
+        "cta_url": "shopify://collections/chocolat-de-dubai",
+        "promo_image": "shopify://shop_images/ChatGPT_Image_26_juin_2026_12_05_42.png"
       }
     },
     "reviews-sarah": {
