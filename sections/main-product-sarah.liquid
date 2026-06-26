@@ -54,10 +54,10 @@
       {%- endif -%}
     </div>
 
-    <!-- Thumbnails -->
+    <!-- Thumbnails — uniquement les vraies images du produit -->
     {%- if product.images.size > 1 -%}
       <div class="sr-product-gallery__thumbs">
-        {%- for image in product.images limit: 4 -%}
+        {%- for image in product.images -%}
           <div class="sr-product-gallery__thumb {% if forloop.first %}is-active{% endif %}"
                data-full="{{ image | image_url: width: 800 }}"
                data-index="{{ forloop.index0 }}">
@@ -65,21 +65,6 @@
                  alt="{{ image.alt | escape }}"
                  loading="lazy">
           </div>
-        {%- endfor -%}
-        {%- if product.images.size < 4 -%}
-          {%- assign grads = "repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 10px,#DEEBF1 10px,#DEEBF1 20px)|repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 10px,#F4E9D5 10px,#F4E9D5 20px)|repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 10px,#E6F0EA 10px,#E6F0EA 20px)" | split: "|" -%}
-          {%- for i in (product.images.size..3) -%}
-            <div class="sr-product-gallery__thumb" style="background:{{ grads[forloop.index0] }}"></div>
-          {%- endfor -%}
-        {%- endif -%}
-      </div>
-    {%- else -%}
-      <!-- 4 placeholders si pas assez d'images -->
-      <div class="sr-product-gallery__thumbs">
-        {%- assign gradients = "repeating-linear-gradient(135deg,#F2DCD6,#F2DCD6 10px,#F8E7E2 10px,#F8E7E2 20px)|repeating-linear-gradient(135deg,#CFE2EC,#CFE2EC 10px,#DEEBF1 10px,#DEEBF1 20px)|repeating-linear-gradient(135deg,#EBDCC2,#EBDCC2 10px,#F4E9D5 10px,#F4E9D5 20px)|repeating-linear-gradient(135deg,#D8E9DF,#D8E9DF 10px,#E6F0EA 10px,#E6F0EA 20px)" | split: "|" -%}
-        {%- for grad in gradients -%}
-          <div class="sr-product-gallery__thumb {% if forloop.first %}is-active{% endif %}"
-               style="background:{{ grad }}"></div>
         {%- endfor -%}
       </div>
     {%- endif -%}
