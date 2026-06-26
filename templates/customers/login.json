@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "sr-login",
+      "settings": {
+        "editorial_script": "bienvenue",
+        "editorial_title": "Retrouvez l'univers Sarah Robe",
+        "editorial_desc": "Connectez-vous pour accéder à votre espace personnel, suivre vos commandes et découvrir vos avantages.",
+        "login_script": "connexion",
+        "login_title": "Se connecter",
+        "recover_script": "récupération",
+        "recover_title": "Mot de passe oublié"
+      }
+    }
+  },
+  "order": ["main"]
+}

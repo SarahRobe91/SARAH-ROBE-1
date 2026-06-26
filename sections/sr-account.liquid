@@ -1,0 +1,157 @@
+{% comment %} SARAH ROBE — Dashboard Compte Client {% endcomment %}
+
+{%- unless customer -%}
+  <script>window.location.href = '{{ routes.account_login_url }}';</script>
+{%- endunless -%}
+
+<!-- Hero compte -->
+<div class="sr-collection-hero">
+  <div class="sr-collection-hero__texture"></div>
+  <div class="sr-collection-hero__deco1"></div>
+  <div class="sr-collection-hero__deco2"></div>
+  <div class="sr-collection-hero__content">
+    <nav class="sr-breadcrumb">
+      <a href="/">Accueil</a>
+      <span class="sr-breadcrumb__sep">/</span>
+      <span style="color:#3A3330">Mon Compte</span>
+    </nav>
+    <span class="sr-collection-hero__script">{{ section.settings.hero_script | default: "mon espace" }}</span>
+    <h1 class="sr-collection-hero__h1">
+      Bonjour{%- if customer.first_name != blank -%}, {{ customer.first_name }}{%- endif -%} ✨
+    </h1>
+    <p class="sr-collection-hero__desc">{{ section.settings.hero_desc | default: "Retrouvez vos commandes, adresses et informations personnelles." }}</p>
+  </div>
+  <svg style="position:absolute;bottom:-1px;left:0;width:100%;height:74px;display:block" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,52 C300,108 620,4 920,40 C1140,67 1300,78 1440,44 L1440,90 L0,90 Z" fill="#FBF7F1"/>
+  </svg>
+</div>
+
+<div class="sr-account-page">
+  <div class="sr-account-dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sr-account-sidebar">
+      <div class="sr-account-card">
+        <div class="sr-account-avatar" aria-hidden="true">
+          {%- if customer.first_name != blank -%}
+            {{ customer.first_name | slice: 0 | upcase }}
+          {%- else -%}
+            ✦
+          {%- endif -%}
+        </div>
+        <p class="sr-account-name">{{ customer.first_name }} {{ customer.last_name }}</p>
+        <p class="sr-account-email-text">{{ customer.email }}</p>
+        <nav class="sr-account-nav" aria-label="Navigation compte">
+          <a href="{{ routes.account_url }}" class="sr-account-nav__item is-active">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Tableau de bord
+          </a>
+          <a href="{{ routes.account_addresses_url }}" class="sr-account-nav__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Mes adresses
+          </a>
+          <a href="/collections" class="sr-account-nav__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Boutique
+          </a>
+          <a href="{{ routes.account_logout_url }}" class="sr-account-nav__item sr-account-nav__item--logout">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            Se déconnecter
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Contenu principal -->
+    <main class="sr-account-main">
+
+      <!-- Commandes récentes -->
+      <section>
+        <span class="sr-account-section-script">{{ section.settings.orders_script | default: "historique" }}</span>
+        <h2 class="sr-account-section-title">Mes commandes</h2>
+
+        {%- paginate customer.orders by 10 -%}
+          {%- if customer.orders.size > 0 -%}
+            <div style="display:flex;flex-direction:column;gap:10px">
+              {%- for order in customer.orders -%}
+                <a href="{{ order.customer_url }}" class="sr-order-row" style="text-decoration:none">
+                  <div>
+                    <span class="sr-order-row__num">Commande {{ order.name }}</span>
+                    <p class="sr-order-row__meta">
+                      {{ order.created_at | date: "%d %B %Y" }}
+                      · {{ order.line_items.size }} article{%- if order.line_items.size > 1 -%}s{%- endif -%}
+                    </p>
+                  </div>
+                  <div class="sr-order-row__right">
+                    <span class="sr-order-row__price">{{ order.total_price | money }}</span>
+                    {%- case order.financial_status -%}
+                      {%- when 'paid' -%}
+                        <span class="sr-order-badge sr-order-badge--paid">Payée</span>
+                      {%- when 'pending' -%}
+                        <span class="sr-order-badge sr-order-badge--pending">En attente</span>
+                      {%- when 'refunded', 'partially_refunded' -%}
+                        <span class="sr-order-badge sr-order-badge--refunded">Remboursée</span>
+                      {%- else -%}
+                        <span class="sr-order-badge sr-order-badge--pending">{{ order.financial_status_label }}</span>
+                    {%- endcase -%}
+                  </div>
+                </a>
+              {%- endfor -%}
+            </div>
+
+            {%- if paginate.pages > 1 -%}
+              <div style="text-align:center;margin-top:30px">
+                {{ paginate | default_pagination }}
+              </div>
+            {%- endif -%}
+
+          {%- else -%}
+            <div class="sr-account-empty">
+              <span class="sr-account-empty__script">bientôt</span>
+              <p class="sr-account-empty__desc">Vous n'avez pas encore passé de commande.</p>
+              <a href="/collections" class="sr-btn sr-btn--primary">
+                Découvrir nos collections
+              </a>
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </section>
+
+      <!-- Adresse principale -->
+      {%- if customer.default_address -%}
+        <section>
+          <span class="sr-account-section-script">{{ section.settings.address_script | default: "adresse" }}</span>
+          <h2 class="sr-account-section-title">Adresse principale</h2>
+          <div class="sr-address-card sr-address-card--default" style="max-width:380px">
+            <span class="sr-address-card__default-badge">Par défaut</span>
+            <p class="sr-address-card__name">{{ customer.default_address.name }}</p>
+            <p class="sr-address-card__line">
+              {{ customer.default_address.address1 }}{%- if customer.default_address.address2 != blank -%}, {{ customer.default_address.address2 }}{%- endif -%}<br>
+              {{ customer.default_address.zip }} {{ customer.default_address.city }}<br>
+              {{ customer.default_address.country }}
+            </p>
+            <div class="sr-address-card__actions">
+              <a href="{{ routes.account_addresses_url }}" class="sr-btn sr-btn--ghost sr-btn--small">
+                Gérer mes adresses
+              </a>
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+
+    </main>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tableau de bord compte",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "hero_script",    "label": "Label cursive hero",       "default": "mon espace" },
+    { "type": "text", "id": "hero_desc",      "label": "Description hero",         "default": "Retrouvez vos commandes, adresses et informations personnelles." },
+    { "type": "text", "id": "orders_script",  "label": "Label cursive commandes",  "default": "historique" },
+    { "type": "text", "id": "address_script", "label": "Label cursive adresses",   "default": "adresse" }
+  ]
+}
+{% endschema %}

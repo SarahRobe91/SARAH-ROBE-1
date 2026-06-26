@@ -1,0 +1,154 @@
+{% comment %} SARAH ROBE — Page Connexion & Récupération mot de passe {% endcomment %}
+
+{%- if customer -%}
+  <script>window.location.href = '{{ routes.account_url }}';</script>
+{%- endif -%}
+
+<div class="sr-auth" data-template="login">
+
+  <!-- Colonne éditoriale gauche -->
+  <div class="sr-auth__editorial">
+    <div class="sr-auth__editorial-deco1" aria-hidden="true"></div>
+    <div class="sr-auth__editorial-deco2" aria-hidden="true"></div>
+    <span class="sr-auth__editorial-script">{{ section.settings.editorial_script | default: "bienvenue" }}</span>
+    <h1 class="sr-auth__editorial-title">{{ section.settings.editorial_title | default: "Retrouvez l'univers Sarah Robe" }}</h1>
+    <p class="sr-auth__editorial-desc">{{ section.settings.editorial_desc | default: "Connectez-vous pour accéder à votre espace personnel, suivre vos commandes et découvrir vos avantages." }}</p>
+    <div class="sr-auth__editorial-badges">
+      <span class="sr-auth__badge">✦ Commandes suivies</span>
+      <span class="sr-auth__badge">✦ Adresses sauvegardées</span>
+      <span class="sr-auth__badge">✦ Accès rapide</span>
+    </div>
+  </div>
+
+  <!-- Colonne formulaire droite -->
+  <div class="sr-auth__form-col">
+    <div class="sr-auth__card">
+
+      <!-- Formulaire de connexion -->
+      <div id="sr-login-block">
+        <span class="sr-auth__card-script">{{ section.settings.login_script | default: "connexion" }}</span>
+        <h2 class="sr-auth__card-title">{{ section.settings.login_title | default: "Se connecter" }}</h2>
+
+        {%- form 'customer_login' -%}
+          {%- if form.errors -%}
+            <div class="sr-auth__errors" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="sr-auth__form">
+            <div class="sr-field">
+              <label class="sr-field__label" for="sr-login-email">E-mail</label>
+              <input class="sr-field__input"
+                     type="email"
+                     name="customer[email]"
+                     id="sr-login-email"
+                     autocomplete="email"
+                     autocorrect="off"
+                     autocapitalize="off"
+                     required
+                     placeholder="votre@email.com">
+            </div>
+            <div class="sr-field">
+              <label class="sr-field__label" for="sr-login-password">Mot de passe</label>
+              <input class="sr-field__input"
+                     type="password"
+                     name="customer[password]"
+                     id="sr-login-password"
+                     autocomplete="current-password"
+                     required
+                     placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="sr-btn sr-btn--primary sr-auth__submit">
+              Se connecter
+            </button>
+          </div>
+
+          <div class="sr-auth__links">
+            <button type="button"
+                    class="sr-auth__link"
+                    id="sr-show-recover"
+                    onclick="srToggleRecover(true)">
+              Mot de passe oublié ?
+            </button>
+            <a href="{{ routes.account_register_url }}" class="sr-auth__link">
+              Créer un compte
+            </a>
+          </div>
+        {%- endform -%}
+      </div>
+
+      <!-- Formulaire de récupération de mot de passe -->
+      <div id="sr-recover-block" style="display:none">
+        <span class="sr-auth__card-script">{{ section.settings.recover_script | default: "récupération" }}</span>
+        <h2 class="sr-auth__card-title">{{ section.settings.recover_title | default: "Mot de passe oublié" }}</h2>
+
+        {%- form 'recover_customer_password' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="sr-auth__success" role="status">
+              Un e-mail de réinitialisation vous a été envoyé. Vérifiez votre boîte de réception.
+            </div>
+          {%- else -%}
+            {%- if form.errors -%}
+              <div class="sr-auth__errors" role="alert">
+                {{ form.errors | default_errors }}
+              </div>
+            {%- endif -%}
+            <p style="font-size:14px;color:#6a605a;line-height:1.6;margin-bottom:20px">
+              Saisissez l'adresse e-mail associée à votre compte. Vous recevrez un lien pour réinitialiser votre mot de passe.
+            </p>
+            <div class="sr-auth__form">
+              <div class="sr-field">
+                <label class="sr-field__label" for="sr-recover-email">E-mail</label>
+                <input class="sr-field__input"
+                       type="email"
+                       name="email"
+                       id="sr-recover-email"
+                       autocomplete="email"
+                       required
+                       placeholder="votre@email.com">
+              </div>
+              <button type="submit" class="sr-btn sr-btn--primary sr-auth__submit">
+                Envoyer le lien
+              </button>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+
+        <div class="sr-auth__links" style="justify-content:center;margin-top:16px">
+          <button type="button"
+                  class="sr-auth__link"
+                  onclick="srToggleRecover(false)">
+            ← Retour à la connexion
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function srToggleRecover(show) {
+  document.getElementById('sr-login-block').style.display  = show ? 'none'  : '';
+  document.getElementById('sr-recover-block').style.display = show ? ''      : 'none';
+}
+{%- if form.posted_successfully? -%}srToggleRecover(true);{%- endif -%}
+</script>
+
+{% schema %}
+{
+  "name": "Page Connexion",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "editorial_script", "label": "Label cursive éditorial", "default": "bienvenue" },
+    { "type": "text", "id": "editorial_title",  "label": "Titre éditorial",         "default": "Retrouvez l'univers Sarah Robe" },
+    { "type": "textarea", "id": "editorial_desc","label": "Description éditoriale", "default": "Connectez-vous pour accéder à votre espace personnel, suivre vos commandes et découvrir vos avantages." },
+    { "type": "text", "id": "login_script",      "label": "Label cursive formulaire", "default": "connexion" },
+    { "type": "text", "id": "login_title",       "label": "Titre formulaire",         "default": "Se connecter" },
+    { "type": "text", "id": "recover_script",    "label": "Label cursive récupération", "default": "récupération" },
+    { "type": "text", "id": "recover_title",     "label": "Titre récupération",         "default": "Mot de passe oublié" }
+  ]
+}
+{% endschema %}

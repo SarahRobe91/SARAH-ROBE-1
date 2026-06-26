@@ -34,22 +34,37 @@
   <div id="sr-cart-overlay" class="sr-overlay" aria-hidden="true"></div>
   <div id="sr-cart-drawer" class="sr-drawer" aria-hidden="true" role="dialog" aria-label="Votre panier">
     <div class="sr-drawer__header">
-      <span class="sr-drawer__title">Votre panier</span>
-      <button class="sr-drawer__close" id="sr-cart-close" aria-label="Fermer">×</button>
+      <span class="sr-drawer__title">
+        Panier
+        <span id="sr-cart-title-count" class="sr-drawer__title-count"></span>
+      </span>
+      <button class="sr-drawer__close" id="sr-cart-close" aria-label="Fermer le panier">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
     </div>
     <div class="sr-drawer__body" id="sr-cart-body">
-      <div class="sr-cart-empty">
-        Votre panier est vide.<br>
-        <span style="font-size:13px">Ajoutez vos pièces d'été préférées ✦</span>
+      <div class="sr-cart-empty-state">
+        <div class="sr-cart-empty-state__icon">✦</div>
+        <p class="sr-cart-empty-state__title">Votre panier est vide</p>
+        <p class="sr-cart-empty-state__desc">Explorez nos collections et laissez-vous inspirer ✦</p>
+        <a href="/collections" class="sr-btn sr-btn--primary sr-btn--small" style="margin-top:8px">Découvrir les collections</a>
       </div>
     </div>
     <div class="sr-drawer__footer" id="sr-cart-footer" style="display:none">
       <div class="sr-cart-total">
-        <span class="sr-cart-total__label">Total</span>
+        <span class="sr-cart-total__label">Sous-total</span>
         <span class="sr-cart-total__value" id="sr-cart-total-value">0 €</span>
       </div>
-      <a href="/cart" class="sr-btn sr-btn--primary sr-btn--full">Passer la commande</a>
-      <p class="sr-cart-reassurance">Livraison offerte dès 69€ ✦ Paiement sécurisé</p>
+      <div class="sr-cart-footer-btns">
+        <a href="/checkout" class="sr-btn sr-btn--primary sr-btn--full sr-cart-footer-cta">
+          Passer au paiement →
+        </a>
+        <a href="/cart" class="sr-cart-footer-link">Voir le panier complet</a>
+      </div>
+      <p class="sr-cart-reassurance">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:4px" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Paiement 100 % sécurisé · Livraison offerte dès 69€
+      </p>
     </div>
   </div>
 

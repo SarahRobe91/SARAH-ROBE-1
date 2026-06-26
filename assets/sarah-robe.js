@@ -64,7 +64,7 @@ const SRCart = (() => {
   let cartData = null;
 
   async function fetchCart() {
-    const res = await fetch('/cart.js');
+    const res = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
     cartData = await res.json();
     return cartData;
   }
@@ -74,7 +74,7 @@ const SRCart = (() => {
     if (properties) body.properties = properties;
     const res = await fetch('/cart/add.js', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(body)
     });
     if (!res.ok) throw new Error('Erreur ajout panier');
@@ -83,34 +83,44 @@ const SRCart = (() => {
     return cartData;
   }
 
-  async function removeItem(lineIndex) {
-    const updates = {};
-    updates[lineIndex] = 0;
-    await fetch('/cart/update.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ updates })
-    });
-    await fetchCart();
-    updateCartCount();
-    renderCartDrawer();
+  // Suppression / mise a jour par item.key via /cart/change.js
+  // Plus fiable que l'index de ligne qui peut changer entre renders
+  async function changeByKey(key, qty) {
+    const el = document.querySelector(`[data-sr-item-key="${key}"]`);
+    if (el) el.classList.add('sr-ditem--loading');
+    try {
+      const res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: key, quantity: qty })
+      });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        console.warn('Cart change error:', errData);
+      }
+      await fetchCart();
+      updateCartCount();
+      renderCartDrawer();
+    } catch (err) {
+      console.warn('Cart error:', err);
+      if (el) el.classList.remove('sr-ditem--loading');
+    }
   }
 
+  // Compatibilite descendante - utilise changeByKey en interne
+  async function removeItem(lineIndex) {
+    if (!cartData || !cartData.items) return;
+    const item = cartData.items[lineIndex - 1];
+    if (item) await changeByKey(item.key, 0);
+  }
   async function updateItem(lineIndex, qty) {
-    const updates = {};
-    updates[lineIndex] = qty;
-    await fetch('/cart/update.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ updates })
-    });
-    await fetchCart();
-    updateCartCount();
-    renderCartDrawer();
+    if (!cartData || !cartData.items) return;
+    const item = cartData.items[lineIndex - 1];
+    if (item) await changeByKey(item.key, qty);
   }
 
   function formatMoney(cents) {
-    return (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' €';
+    return (cents / 100).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' €';
   }
 
   function updateCartCount() {
@@ -120,6 +130,8 @@ const SRCart = (() => {
       el.textContent = count;
       el.style.display = count > 0 ? '' : 'none';
     });
+    const titleCount = document.getElementById('sr-cart-title-count');
+    if (titleCount) titleCount.textContent = count > 0 ? `(${count})` : '';
   }
 
   function renderCartDrawer() {
@@ -129,33 +141,91 @@ const SRCart = (() => {
     if (!body || !cartData) return;
 
     if (cartData.item_count === 0) {
-      body.innerHTML = `<div class="sr-cart-empty">Votre panier est vide.<br><span style="font-size:13px">Ajoutez vos pièces d'été préférées ✦</span></div>`;
+      body.innerHTML = `
+        <div class="sr-cart-empty-state">
+          <div class="sr-cart-empty-state__icon">✦</div>
+          <p class="sr-cart-empty-state__title">Votre panier est vide</p>
+          <p class="sr-cart-empty-state__desc">Explorez nos collections et laissez-vous inspirer ✦</p>
+          <a href="/collections" class="sr-btn sr-btn--primary sr-btn--small" style="margin-top:8px">
+            Découvrir les collections
+          </a>
+        </div>`;
       if (footer) footer.style.display = 'none';
       return;
     }
 
     if (footer) footer.style.display = '';
-    if (total) total.textContent = formatMoney(cartData.total_price);
+    if (total)  total.textContent = formatMoney(cartData.total_price);
 
-    body.innerHTML = cartData.items.map((item, i) => `
-      <div class="sr-cart-item">
-        <div class="sr-cart-item__thumb">
-          ${item.image ? `<img src="${item.image}" alt="${item.product_title}">` : ''}
-        </div>
-        <div class="sr-cart-item__info">
-          <div class="sr-cart-item__name">${item.product_title}</div>
-          <div class="sr-cart-item__meta">Qté ${item.quantity} · ${formatMoney(item.price)}</div>
-        </div>
-        <div class="sr-cart-item__right">
-          <div class="sr-cart-item__price">${formatMoney(item.line_price)}</div>
-          <button class="sr-cart-item__remove" data-line="${i + 1}">retirer</button>
-        </div>
-      </div>
-    `).join('');
+    body.innerHTML = cartData.items.map(item => {
+      const hasVariant = item.variant_title && item.variant_title !== 'Default Title';
+      // Normalise l'URL image Shopify et redimensionne a 200px
+      let imgUrl = '';
+      if (item.image) {
+        imgUrl = item.image.startsWith('//') ? 'https:' + item.image : item.image;
+        imgUrl = imgUrl.replace(/(\.[a-z]+)(\?|$)/i, '_200x$1$2');
+      }
+      const safeTitle = item.product_title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
-    body.querySelectorAll('.sr-cart-item__remove').forEach(btn => {
+      return `
+        <div class="sr-ditem" data-sr-item-key="${item.key}">
+          <a href="${item.url}" class="sr-ditem__img-link" tabindex="-1" aria-hidden="true">
+            <div class="sr-ditem__img-wrap">
+              ${imgUrl ? `<img src="${imgUrl}" alt="${safeTitle}" loading="lazy" width="90" height="112">` : ''}
+            </div>
+          </a>
+          <div class="sr-ditem__body">
+            <div class="sr-ditem__head">
+              <div style="min-width:0;flex:1">
+                <a href="${item.url}" class="sr-ditem__name">${safeTitle}</a>
+                ${hasVariant ? `<p class="sr-ditem__variant">${item.variant_title}</p>` : ''}
+              </div>
+              <button class="sr-ditem__remove"
+                      data-sr-remove="${item.key}"
+                      aria-label="Retirer ${safeTitle} du panier"
+                      type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <div class="sr-ditem__foot">
+              <div class="sr-ditem__qty" role="group" aria-label="Quantité de ${safeTitle}">
+                <button class="sr-ditem__qty-btn"
+                        data-sr-qty="${item.key}"
+                        data-action="minus"
+                        type="button"
+                        aria-label="Diminuer la quantité">&#x2212;</button>
+                <span class="sr-ditem__qty-val" aria-live="polite">${item.quantity}</span>
+                <button class="sr-ditem__qty-btn"
+                        data-sr-qty="${item.key}"
+                        data-action="plus"
+                        type="button"
+                        aria-label="Augmenter la quantité">+</button>
+              </div>
+              <span class="sr-ditem__price">${formatMoney(item.line_price)}</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // Boutons Retirer
+    body.querySelectorAll('[data-sr-remove]').forEach(btn => {
       btn.addEventListener('click', () => {
-        removeItem(parseInt(btn.dataset.line));
+        changeByKey(btn.dataset.srRemove, 0);
+      });
+    });
+
+    // Boutons Quantite +/-
+    body.querySelectorAll('[data-sr-qty]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key    = btn.dataset.srQty;
+        const action = btn.dataset.action;
+        const wrap   = btn.closest('.sr-ditem');
+        const qtyEl  = wrap ? wrap.querySelector('.sr-ditem__qty-val') : null;
+        let qty = parseInt(qtyEl ? qtyEl.textContent : '1', 10) || 1;
+        qty = action === 'minus' ? Math.max(0, qty - 1) : qty + 1;
+        changeByKey(key, qty);
       });
     });
   }
@@ -165,7 +235,7 @@ const SRCart = (() => {
     updateCartCount();
   }
 
-  return { addItem, removeItem, updateItem, fetchCart, refresh, renderCartDrawer, updateCartCount };
+  return { addItem, removeItem, updateItem, changeByKey, fetchCart, refresh, renderCartDrawer, updateCartCount, formatMoney };
 })();
 
 async function refreshCartDrawer() {
@@ -209,7 +279,7 @@ function initProductPage() {
   const variantsData = JSON.parse(document.getElementById('sr-variants-json')?.textContent || '[]');
 
   // Gallery thumbnails
-  document.querySelectorAll('.sr-product-gallery__thumb').forEach((thumb, idx) => {
+  document.querySelectorAll('.sr-product-gallery__thumb').forEach(thumb => {
     thumb.addEventListener('click', () => {
       document.querySelectorAll('.sr-product-gallery__thumb').forEach(t => t.classList.remove('is-active'));
       thumb.classList.add('is-active');
@@ -258,18 +328,18 @@ function initProductPage() {
   }
 
   // Quantity
-  const qtyVal = document.getElementById('sr-qty-val');
+  const qtyVal   = document.getElementById('sr-qty-val');
   const qtyInput = document.getElementById('sr-qty-input');
   document.getElementById('sr-qty-dec')?.addEventListener('click', () => {
-    const cur = parseInt(qtyVal?.textContent || 1);
+    const cur  = parseInt(qtyVal?.textContent || 1);
     const next = Math.max(1, cur - 1);
-    if (qtyVal) qtyVal.textContent = next;
+    if (qtyVal)   qtyVal.textContent = next;
     if (qtyInput) qtyInput.value = next;
   });
   document.getElementById('sr-qty-inc')?.addEventListener('click', () => {
-    const cur = parseInt(qtyVal?.textContent || 1);
+    const cur  = parseInt(qtyVal?.textContent || 1);
     const next = cur + 1;
-    if (qtyVal) qtyVal.textContent = next;
+    if (qtyVal)   qtyVal.textContent = next;
     if (qtyInput) qtyInput.value = next;
   });
 
@@ -310,9 +380,9 @@ function initProductPage() {
   // Accordion
   document.querySelectorAll('.sr-accordion__trigger').forEach(trigger => {
     trigger.addEventListener('click', () => {
-      const item = trigger.closest('.sr-accordion__item');
-      const body = item.querySelector('.sr-accordion__body');
-      const icon = item.querySelector('.sr-accordion__icon');
+      const item   = trigger.closest('.sr-accordion__item');
+      const body   = item.querySelector('.sr-accordion__body');
+      const icon   = item.querySelector('.sr-accordion__icon');
       const isOpen = body.classList.contains('is-open');
       document.querySelectorAll('.sr-accordion__body').forEach(b => b.classList.remove('is-open'));
       document.querySelectorAll('.sr-accordion__icon').forEach(ic => ic.textContent = '+');
@@ -335,7 +405,7 @@ function initCollectionFilters() {
   filterBar.querySelectorAll('[data-sr-filter-toggle]').forEach(pill => {
     pill.addEventListener('click', (e) => {
       e.stopPropagation();
-      const target = pill.dataset.srFilterToggle;
+      const target   = pill.dataset.srFilterToggle;
       const dropdown = document.getElementById(target);
       if (!dropdown) return;
       const isOpen = dropdown.classList.contains('is-open');
@@ -379,7 +449,7 @@ function initCollectionFilters() {
   // Size filter
   filterBar.querySelectorAll('[data-sr-size]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const url = new URL(window.location.href);
+      const url  = new URL(window.location.href);
       const size = btn.dataset.srSize;
       const current = url.searchParams.getAll('filter.p.m.custom.taille');
       if (current.includes(size)) {
@@ -401,8 +471,8 @@ function initMobileNav() {
   const nav      = document.getElementById('sr-mobile-nav');
   const overlay  = document.getElementById('sr-mobile-nav-overlay');
   if (!nav) return;
-  const open  = () => { nav.classList.add('is-open'); document.body.style.overflow = 'hidden'; };
-  const close = () => { nav.classList.remove('is-open'); document.body.style.overflow = ''; };
+  const open  = () => { nav.classList.add('is-open');    document.body.style.overflow = 'hidden'; };
+  const close = () => { nav.classList.remove('is-open'); document.body.style.overflow = '';       };
   openBtn?.addEventListener('click', open);
   closeBtn?.addEventListener('click', close);
   overlay?.addEventListener('click', close);
@@ -416,21 +486,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductPage();
   initCollectionFilters();
   initMobileNav();
-
-  // Cart link in drawer footer clicks
-  document.querySelector('#sr-cart-footer a')?.addEventListener('click', () => {});
 });
 
 /* ============================================================
    SR ANIMATIONS ENGINE
-   Scroll reveals · stagger · parallax · Shopify editor support
    ============================================================ */
 const SRAnimations = (() => {
   'use strict';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* --- IntersectionObserver -------------------------------- */
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -451,13 +516,11 @@ const SRAnimations = (() => {
     watch(el);
   }
 
-  /* --- Stagger setup --------------------------------------- */
   function stagger(container) {
     if (!container || container.dataset.srW) return;
     container.classList.add('sr-stagger');
     [...container.children].forEach((child, i) => {
       child.style.setProperty('--sr-i', i);
-      // Remove stagger delay after reveal so hover is instant
       child.addEventListener('transitionend', e => {
         if (e.propertyName === 'opacity') child.style.transitionDelay = '0s';
       }, { once: true });
@@ -465,7 +528,6 @@ const SRAnimations = (() => {
     watch(container);
   }
 
-  /* --- Section headers (auto-detect by class) -------------- */
   function initHeaders() {
     const sel = [
       '.sr-section-script', '.sr-section-h2', '.sr-section-desc',
@@ -480,34 +542,25 @@ const SRAnimations = (() => {
     document.querySelectorAll(sel).forEach(el => reveal(el, 'sr-reveal-up'));
   }
 
-  /* --- Grids & cards (stagger cascade) --------------------- */
   function initGrids() {
-    // Homepage best-sellers + parfums
     document.querySelectorAll('.sr-products-grid').forEach(g => stagger(g));
-    // Categories circles
     stagger(document.querySelector('.sr-categories__grid'));
-    // Homepage reviews
     stagger(document.querySelector('.sr-reviews .sr-reviews__grid'));
-    // Collection product grid
     stagger(document.querySelector('.sr-collection-grid'));
-    // Product page reviews & related
     document.querySelectorAll('.sr-product-reviews .sr-reviews__grid').forEach(g => stagger(g));
     document.querySelectorAll('.sr-recommended .sr-products-grid, .sr-related .sr-products-grid').forEach(g => stagger(g));
   }
 
-  /* --- Summer Mood ----------------------------------------- */
   function initSummerMood() {
     reveal(document.querySelector('.sr-summer-mood__text'),   'sr-reveal-left');
     reveal(document.querySelector('.sr-summer-mood__visual'), 'sr-reveal-right');
   }
 
-  /* --- Promo ----------------------------------------------- */
   function initPromo() {
     reveal(document.querySelector('.sr-promo__text'),   'sr-reveal-left');
     reveal(document.querySelector('.sr-promo__visual'), 'sr-reveal-right');
   }
 
-  /* --- Contact --------------------------------------------- */
   function initContact() {
     reveal(document.querySelector('.sr-contact__info'),      'sr-reveal-left');
     reveal(document.querySelector('.sr-contact__form-wrap'), 'sr-reveal-right');
@@ -515,26 +568,21 @@ const SRAnimations = (() => {
     stagger(document.querySelector('.sr-contact__checks'));
   }
 
-  /* --- Newsletter ------------------------------------------ */
   function initNewsletter() {
     reveal(document.querySelector('.sr-newsletter__inner'), 'sr-reveal-scale');
   }
 
-  /* --- Collection page ------------------------------------- */
   function initCollection() {
-    reveal(document.querySelector('.sr-filter-bar'),          'sr-reveal-up');
-    reveal(document.querySelector('.sr-editorial__visual'),   'sr-reveal-left');
-    reveal(document.querySelector('.sr-editorial__text'),     'sr-reveal-right');
+    reveal(document.querySelector('.sr-filter-bar'),        'sr-reveal-up');
+    reveal(document.querySelector('.sr-editorial__visual'), 'sr-reveal-left');
+    reveal(document.querySelector('.sr-editorial__text'),   'sr-reveal-right');
   }
 
-  /* --- Product page ---------------------------------------- */
   function initProduct() {
-    // Gallery & info handled by CSS [data-template="product"] rules
     stagger(document.querySelector('.sr-why-love__grid'));
     stagger(document.querySelector('.sr-reassurance'));
   }
 
-  /* --- Parallax (desktop only) ----------------------------- */
   let pEls = [];
 
   function initParallax() {
@@ -559,7 +607,6 @@ const SRAnimations = (() => {
     });
   }
 
-  /* --- Master init ----------------------------------------- */
   function init() {
     if (reduced) return;
     initHeaders();
@@ -576,23 +623,21 @@ const SRAnimations = (() => {
   return { init, updateParallax };
 })();
 
-/* --- Bootstrap -------------------------------------------- */
 document.addEventListener('DOMContentLoaded', () => SRAnimations.init());
 window.addEventListener('scroll', () => SRAnimations.updateParallax(), { passive: true });
-// Shopify Theme Editor: re-init after section reload
 document.addEventListener('shopify:section:load', () => setTimeout(() => SRAnimations.init(), 100));
 
 /* ============================================================
-   SR HEADER BEHAVIOR — Transparent hero + scroll hide/show
+   SR HEADER BEHAVIOR
    ============================================================ */
 const SRHeaderBehavior = (() => {
   'use strict';
 
-  const headers = document.querySelectorAll('.sr-header');
-  const isIndex = document.body.dataset.template === 'index';
+  const headers  = document.querySelectorAll('.sr-header');
+  const isIndex  = document.body.dataset.template === 'index';
   const HIDE_AFTER = 80;
-  let lastY = 0;
-  let ticking = false;
+  let lastY    = 0;
+  let ticking  = false;
 
   function isMobileNavOpen() {
     return document.querySelector('.sr-mobile-nav.is-open') !== null;
@@ -610,8 +655,8 @@ const SRHeaderBehavior = (() => {
   }
 
   function update() {
-    const y = window.scrollY;
-    const atTop = y < 20;
+    const y        = window.scrollY;
+    const atTop    = y < 20;
     const goingDown = y > lastY;
 
     headers.forEach(header => {
@@ -621,7 +666,6 @@ const SRHeaderBehavior = (() => {
       } else {
         header.classList.remove('sr-header--transparent');
         header.classList.add('sr-header--solid');
-
         if (!isMobileNavOpen() && !isDrawerOpen()) {
           if (goingDown && y > HIDE_AFTER) {
             header.classList.add('sr-header--hidden');
@@ -632,7 +676,7 @@ const SRHeaderBehavior = (() => {
       }
     });
 
-    lastY = y;
+    lastY   = y;
     ticking = false;
   }
 

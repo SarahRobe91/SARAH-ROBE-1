@@ -1,0 +1,119 @@
+{% comment %} SARAH ROBE — Page Création de compte {% endcomment %}
+
+{%- if customer -%}
+  <script>window.location.href = '{{ routes.account_url }}';</script>
+{%- endif -%}
+
+<div class="sr-auth" data-template="register">
+
+  <!-- Colonne éditoriale gauche -->
+  <div class="sr-auth__editorial">
+    <div class="sr-auth__editorial-deco1" aria-hidden="true"></div>
+    <div class="sr-auth__editorial-deco2" aria-hidden="true"></div>
+    <span class="sr-auth__editorial-script">{{ section.settings.editorial_script | default: "rejoignez-nous" }}</span>
+    <h1 class="sr-auth__editorial-title">{{ section.settings.editorial_title | default: "Rejoignez l'univers Sarah Robe" }}</h1>
+    <p class="sr-auth__editorial-desc">{{ section.settings.editorial_desc | default: "Créez votre compte pour profiter d'une expérience personnalisée, suivre vos commandes et accéder à vos avantages exclusifs." }}</p>
+    <div class="sr-auth__editorial-badges">
+      <span class="sr-auth__badge">✦ Suivi de commandes</span>
+      <span class="sr-auth__badge">✦ Adresses sauvegardées</span>
+      <span class="sr-auth__badge">✦ Expérience sur-mesure</span>
+    </div>
+  </div>
+
+  <!-- Colonne formulaire droite -->
+  <div class="sr-auth__form-col">
+    <div class="sr-auth__card">
+      <span class="sr-auth__card-script">{{ section.settings.form_script | default: "nouveau compte" }}</span>
+      <h2 class="sr-auth__card-title">{{ section.settings.form_title | default: "Créer mon compte" }}</h2>
+
+      {%- form 'create_customer' -%}
+        {%- if form.errors -%}
+          <div class="sr-auth__errors" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="sr-auth__form">
+          <div class="sr-auth__row">
+            <div class="sr-field">
+              <label class="sr-field__label" for="sr-reg-firstname">Prénom</label>
+              <input class="sr-field__input"
+                     type="text"
+                     name="customer[first_name]"
+                     id="sr-reg-firstname"
+                     autocomplete="given-name"
+                     autocapitalize="words"
+                     placeholder="Léa">
+            </div>
+            <div class="sr-field">
+              <label class="sr-field__label" for="sr-reg-lastname">Nom</label>
+              <input class="sr-field__input"
+                     type="text"
+                     name="customer[last_name]"
+                     id="sr-reg-lastname"
+                     autocomplete="family-name"
+                     autocapitalize="words"
+                     placeholder="Dupont">
+            </div>
+          </div>
+
+          <div class="sr-field">
+            <label class="sr-field__label" for="sr-reg-email">E-mail</label>
+            <input class="sr-field__input"
+                   type="email"
+                   name="customer[email]"
+                   id="sr-reg-email"
+                   autocomplete="email"
+                   autocorrect="off"
+                   autocapitalize="off"
+                   required
+                   placeholder="votre@email.com">
+          </div>
+
+          <div class="sr-field">
+            <label class="sr-field__label" for="sr-reg-password">Mot de passe</label>
+            <input class="sr-field__input"
+                   type="password"
+                   name="customer[password]"
+                   id="sr-reg-password"
+                   autocomplete="new-password"
+                   required
+                   minlength="5"
+                   placeholder="Au moins 5 caractères">
+          </div>
+
+          <p style="font-size:12px;color:#9a8f86;line-height:1.5;margin-top:-4px">
+            En créant un compte, vous acceptez nos <a href="/pages/cgv" style="color:var(--sr-rose-dk);text-decoration:underline;text-underline-offset:3px">conditions générales</a>.
+          </p>
+
+          <button type="submit" class="sr-btn sr-btn--primary sr-auth__submit">
+            {{ section.settings.form_cta | default: "Créer mon compte" }}
+          </button>
+        </div>
+
+        <div class="sr-auth__divider">ou</div>
+
+        <div class="sr-auth__links" style="justify-content:center">
+          <a href="{{ routes.account_login_url }}" class="sr-auth__link">
+            Déjà un compte ? Se connecter
+          </a>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page Création de compte",
+  "tag": "div",
+  "settings": [
+    { "type": "text",     "id": "editorial_script", "label": "Label cursive éditorial",  "default": "rejoignez-nous" },
+    { "type": "text",     "id": "editorial_title",  "label": "Titre éditorial",          "default": "Rejoignez l'univers Sarah Robe" },
+    { "type": "textarea", "id": "editorial_desc",   "label": "Description éditoriale",   "default": "Créez votre compte pour profiter d'une expérience personnalisée, suivre vos commandes et accéder à vos avantages exclusifs." },
+    { "type": "text",     "id": "form_script",      "label": "Label cursive formulaire", "default": "nouveau compte" },
+    { "type": "text",     "id": "form_title",       "label": "Titre formulaire",         "default": "Créer mon compte" },
+    { "type": "text",     "id": "form_cta",         "label": "Texte bouton",             "default": "Créer mon compte" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "sr-cart-page",
+      "settings": {
+        "hero_script": "ma sélection",
+        "hero_heading": "Votre sélection d'été",
+        "editorial_text": "Une sélection pensée pour vos journées ensoleillées — des pièces légères, des matières douces, un style qui traverse la saison.",
+        "reassurance_1": "Livraison soignée & emballage premium",
+        "reassurance_2": "Retours acceptés sous 14 jours",
+        "reassurance_3": "Service client disponible pour vous"
+      }
+    }
+  },
+  "order": ["main"]
+}
