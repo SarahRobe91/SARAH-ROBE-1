@@ -30,11 +30,11 @@
         "category_WyxVJU": {
           "type": "category",
           "settings": {
-            "collection": "nos-chaussures",
-            "title": "",
+            "collection": "nos-caftans",
+            "title": "Caftan",
             "subtitle": "",
             "color": "rose",
-            "url": "",
+            "url": "shopify://collections/nos-caftans",
             "name": ""
           }
         },
