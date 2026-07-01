@@ -41,11 +41,11 @@
         "category_xwLccx": {
           "type": "category",
           "settings": {
-            "collection": "nos-caftans",
-            "title": "caftans",
+            "collection": "robes-caftans-elegance",
+            "title": "Abayas",
             "subtitle": "",
             "color": "rose",
-            "url": "shopify://collections/nos-caftans",
+            "url": "shopify://collections/robes-caftans-elegance",
             "name": ""
           }
         },
