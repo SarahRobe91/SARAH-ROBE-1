@@ -63,11 +63,11 @@
         "category_MDDtfW": {
           "type": "category",
           "settings": {
-            "collection": "parfums",
-            "title": "",
+            "collection": "nos-envies-sucre",
+            "title": "Nos envies sucrées",
             "subtitle": "",
             "color": "rose",
-            "url": "",
+            "url": "shopify://collections/nos-envies-sucre",
             "name": ""
           }
         }
