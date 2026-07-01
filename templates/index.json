@@ -52,11 +52,11 @@
         "category_PLJYhT": {
           "type": "category",
           "settings": {
-            "collection": "robes-caftans-elegance",
-            "title": "",
+            "collection": "parfums",
+            "title": "Nos parfums",
             "subtitle": "",
             "color": "rose",
-            "url": "",
+            "url": "shopify://collections/parfums",
             "name": ""
           }
         },
