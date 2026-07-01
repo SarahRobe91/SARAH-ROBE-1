@@ -24,12 +24,6 @@
         "cta2_url": "/collections/all"
       }
     },
-    "announcement-wave": {
-      "type": "announcement-wave",
-      "settings": {
-        "text": "LIVRAISON OFFERTE DÈS 69€ ✦ PAIEMENT SÉCURISÉ ✦ EXPÉDITION INTERNATIONALE ✦ NOUVEAUTÉS"
-      }
-    },
     "categories-summer": {
       "type": "categories-summer",
       "blocks": {
@@ -47,11 +41,11 @@
         "category_xwLccx": {
           "type": "category",
           "settings": {
-            "collection": "grand-sac-de-plage-cabas-en-paille-tressee-grande-capacite",
-            "title": "",
+            "collection": "nos-caftans",
+            "title": "caftans",
             "subtitle": "",
             "color": "rose",
-            "url": "",
+            "url": "shopify://collections/nos-caftans",
             "name": ""
           }
         },
@@ -169,7 +163,6 @@
   },
   "order": [
     "hero-sarah",
-    "announcement-wave",
     "categories-summer",
     "featured-products-sarah",
     "summer-mood",
