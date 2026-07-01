@@ -12,7 +12,7 @@
     "hero-sarah": {
       "type": "hero-sarah",
       "settings": {
-        "hero_image": "shopify://shop_images/ChatGPT_Image_25_juin_2026_13_58_04_1.png",
+        "hero_image": "shopify://shop_images/Image_c5073c38-19e8-43f9-8070-2416ef5f8488.png",
         "hero_image_mobile": "shopify://shop_images/ChatGPT_Image_25_juin_2026_13_58_57.png",
         "script_label": "summer",
         "heading": "L'été commence avec",
@@ -95,16 +95,6 @@
         "cta_url": ""
       }
     },
-    "summer-mood": {
-      "type": "summer-mood",
-      "settings": {
-        "script": "summer mood",
-        "heading": "Des pièces pensées pour les journées ensoleillées",
-        "description": "Entre élégance légère, matières fluides et parfums délicats, Sarah Robe accompagne vos plus beaux moments d'été.",
-        "cta_label": "Découvrir l'univers",
-        "cta_url": ""
-      }
-    },
     "perfume-section": {
       "type": "perfume-section",
       "settings": {
@@ -112,18 +102,6 @@
         "heading": "Les parfums d'été",
         "description": "Des senteurs fraîches, solaires et élégantes.",
         "collection": "parfums"
-      }
-    },
-    "promo-offer": {
-      "type": "promo-offer",
-      "settings": {
-        "script": "offre spéciale Parfum",
-        "heading": "2 achetés =",
-        "discount": "le troisième à 10 €",
-        "heading_suffix": "sur toute la collection",
-        "cta_label": "Voir les offres",
-        "cta_url": "shopify://collections/chocolat-de-dubai",
-        "promo_image": "shopify://shop_images/ChatGPT_Image_26_juin_2026_15_39_22.png"
       }
     },
     "reviews-sarah": {
@@ -165,9 +143,7 @@
     "hero-sarah",
     "categories-summer",
     "featured-products-sarah",
-    "summer-mood",
     "perfume-section",
-    "promo-offer",
     "reviews-sarah",
     "contact-sarah",
     "newsletter-sarah"
