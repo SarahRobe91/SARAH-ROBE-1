@@ -31,9 +31,9 @@
           "type": "category",
           "settings": {
             "collection": "nos-caftans",
-            "title": "Capes et robe de soirée",
+            "title": "Robes",
             "subtitle": "",
-            "color": "rose",
+            "color": "dore",
             "url": "shopify://collections/nos-caftans",
             "name": ""
           }
@@ -87,8 +87,8 @@
       "type": "featured-products-sarah",
       "settings": {
         "script": "best-sellers",
-        "heading": "Les indispensables de l'été",
-        "description": "Nos pièces les plus aimées pour une saison lumineuse.",
+        "heading": "Les indispensables",
+        "description": "Nos pièces les plus appréciées, sélectionnées pour leur élégance et leur raffinement.",
         "collection": "robes-caftans-elegance",
         "products_count": 6,
         "cta_label": "Voir tous les produits",
