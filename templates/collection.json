@@ -12,10 +12,11 @@
     "main-collection-sarah": {
       "type": "main-collection-sarah",
       "settings": {
-        "script_title": "Collection Été 2026",
+        "script_title": "Collection  2026",
         "products_per_page": 12,
+        "editorial_image": "shopify://shop_images/22B23869-F3CC-4A79-A19C-443D37DF06CC.png",
         "editorial_script": "l'esprit collection",
-        "editorial_heading": "L'élégance solaire, pensée pour durer tout l'été",
+        "editorial_heading": "L'élégance",
         "editorial_desc": "Matières fluides, teintes douces et coupes ajustées : chaque pièce de la collection est imaginée pour accompagner vos journées lumineuses et vos soirées tièdes avec une grâce naturelle.",
         "editorial_cta": "Découvrir l'histoire",
         "editorial_url": "",
@@ -36,13 +37,13 @@
         "script": "une question ?",
         "heading": "Contactez Sarah Robe",
         "intro": "Besoin d'un conseil sur une robe, un parfum ou une commande ? Écrivez-nous, notre équipe vous répond avec plaisir.",
-        "phone": "06 00 00 00 00",
-        "email": "contact@sarahrobe.fr",
+        "phone": "0751402684",
+        "email": "Sarah.robe91@gmail.com",
         "availability": "Réponse sous 24h à 48h",
-        "whatsapp_url": "",
-        "instagram_url": "",
-        "tiktok_url": "",
-        "snapchat_url": ""
+        "whatsapp_url": "https://wa.me/33751402684",
+        "instagram_url": "https://www.instagram.com/sarah.robe?igsh=Nmh0ZG00NXFwbTVo",
+        "tiktok_url": "https://www.tiktok.com/@sarah_robe?_r=1&_t=ZN-98MgmEeyXJO",
+        "snapchat_url": "https://www.tiktok.com/@sarah_robe?_r=1&_t=ZN-98MgmEeyXJO"
       }
     },
     "newsletter-sarah": {
