@@ -117,64 +117,71 @@
         {{ product.variants | json }}
       </script>
 
-      <!-- Size options -->
-      {%- assign size_option = nil -%}
-      {%- for option in product.options_with_values -%}
-        {%- if option.name == 'Taille' or option.name == 'Size' or option.name == 'taille' -%}
-          {%- assign size_option = option -%}
-        {%- endif -%}
-      {%- endfor -%}
+      {%- assign color_map = "Rose poudré:#E7C4BC,Bleu pastel:#CFE2EC,Vert doux:#D8E9DF,Beige clair:#EBDCC2,Rose:#F2DCD6,Bleu:#CFE2EC,Vert:#D8E9DF,Beige:#EBDCC2" | split: "," -%}
 
-      {%- if size_option -%}
-        <div class="sr-size-selector">
-          <div class="sr-size-selector__header">
-            <span class="sr-size-selector__label">Taille</span>
-            <span class="sr-size-selector__guide">Guide des tailles</span>
-          </div>
-          <div class="sr-size-selector__options">
-            {%- for value in size_option.values -%}
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+        {%- assign option_position = forloop.index0 -%}
+        {%- assign option_name_normalized = option.name | downcase -%}
+        {%- assign is_color_option = false -%}
+        {%- assign is_size_option = false -%}
+        {%- if option_name_normalized contains 'couleur' or option_name_normalized == 'color' or option_name_normalized == 'colour' -%}
+          {%- assign is_color_option = true -%}
+        {%- endif -%}
+        {%- if option_name_normalized contains 'taille' or option_name_normalized == 'size' -%}
+          {%- assign is_size_option = true -%}
+        {%- endif -%}
+        {%- assign selected_value = option.selected_value -%}
+        {%- assign option_label_id = 'sr-option-label-' | append: section.id | append: '-' | append: option_position -%}
+
+        <div class="sr-product-option {% if is_color_option %}sr-color-selector{% else %}sr-size-selector{% endif %}"
+             data-sr-option-group
+             data-option-position="{{ option_position }}"
+             data-option-name="{{ option.name | escape }}">
+          {%- if is_size_option -%}
+            <div class="sr-size-selector__header">
+              <span class="sr-size-selector__label" id="{{ option_label_id }}">{{ option.name }}</span>
+              <span class="sr-size-selector__guide">Guide des tailles</span>
+            </div>
+          {%- elsif is_color_option -%}
+            <div class="sr-color-selector__label" id="{{ option_label_id }}">
+              {{ option.name }} · <span data-sr-option-label-value>{{ selected_value }}</span>
+            </div>
+          {%- else -%}
+            <div class="sr-size-selector__header">
+              <span class="sr-size-selector__label" id="{{ option_label_id }}">{{ option.name }}</span>
+            </div>
+          {%- endif -%}
+
+          <div class="{% if is_color_option %}sr-color-selector__swatches{% else %}sr-size-selector__options{% endif %}"
+               role="group"
+               aria-labelledby="{{ option_label_id }}">
+            {%- for value in option.values -%}
+              {%- assign value_name = value.name -%}
+              {%- if is_color_option -%}
+                {%- assign hex = '#E7C4BC' -%}
+                {%- for pair in color_map -%}
+                  {%- assign p = pair | split: ":" -%}
+                  {%- if p[0] == value_name -%}{%- assign hex = p[1] -%}{%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
               <button type="button"
-                      class="sr-size-btn {% if forloop.first %}is-selected{% endif %}"
-                      data-size="{{ value | escape }}">
-                {{ value }}
+                      class="sr-option-value {% if is_color_option %}sr-color-swatch{% else %}sr-size-btn{% endif %} {% if value.selected and value.available %}is-selected{% endif %} {% unless value.available %}is-unavailable{% endunless %}"
+                      {% if is_color_option %}style="background:{{ hex }}"{% endif %}
+                      data-option-position="{{ option_position }}"
+                      data-option-value="{{ value_name | escape }}"
+                      data-option-name="{{ option.name | escape }}"
+                      data-base-label="{{ option.name | escape }} {{ value_name | escape }}"
+                      aria-label="{{ option.name | escape }} {{ value_name | escape }}{% unless value.available %} indisponible{% endunless %}"
+                      aria-pressed="{% if value.selected and value.available %}true{% else %}false{% endif %}"
+                      {% unless value.available %}disabled aria-disabled="true"{% endunless %}>
+                {%- unless is_color_option -%}{{ value_name }}{%- endunless -%}
               </button>
             {%- endfor -%}
           </div>
-        </div>
-      {%- endif -%}
-
-      <!-- Color options -->
-      {%- assign color_option = nil -%}
-      {%- for option in product.options_with_values -%}
-        {%- if option.name == 'Couleur' or option.name == 'Color' or option.name == 'couleur' -%}
-          {%- assign color_option = option -%}
-        {%- endif -%}
-      {%- endfor -%}
-
-      {%- if color_option -%}
-        {%- assign color_map = "Rose poudré:#E7C4BC,Bleu pastel:#CFE2EC,Vert doux:#D8E9DF,Beige clair:#EBDCC2,Rose:#F2DCD6,Bleu:#CFE2EC,Vert:#D8E9DF,Beige:#EBDCC2" | split: "," -%}
-        <div class="sr-color-selector">
-          <div class="sr-color-selector__label">
-            Couleur · <span id="sr-color-label">{{ color_option.values.first }}</span>
           </div>
-          <div class="sr-color-selector__swatches">
-            {%- for value in color_option.values -%}
-              {%- assign hex = '#E7C4BC' -%}
-              {%- for pair in color_map -%}
-                {%- assign p = pair | split: ":" -%}
-                {%- if p[0] == value -%}{%- assign hex = p[1] -%}{%- endif -%}
-              {%- endfor -%}
-              <button type="button"
-                      class="sr-color-swatch {% if forloop.first %}is-selected{% endif %}"
-                      style="background:{{ hex }}"
-                      data-color-value="{{ value | escape }}"
-                      data-color-name="{{ value | escape }}"
-                      aria-label="{{ value }}">
-              </button>
-            {%- endfor -%}
-          </div>
-        </div>
-      {%- endif -%}
+        {%- endfor -%}
+      {%- endunless -%}
 
       <!-- Quantity + Add to cart -->
       <div class="sr-product-atc-row">
@@ -183,7 +190,10 @@
           <span class="sr-quantity__val" id="sr-qty-val">1</span>
           <button type="button" class="sr-quantity__btn" id="sr-qty-inc" aria-label="Augmenter">+</button>
         </div>
-        <button type="button" class="sr-product-atc" id="sr-atc-btn">
+        <button type="button"
+                class="sr-product-atc"
+                id="sr-atc-btn"
+                {% unless product.available %}disabled aria-disabled="true"{% endunless %}>
           {%- if product.available -%}
             Ajouter au panier
           {%- else -%}
