@@ -14,7 +14,7 @@
         "type": "header",
         "settings": {
           "logo": "shopify://shop_images/Image.png",
-          "menu": "main-menu"
+          "menu": ""
         }
       },
       "footer": {
