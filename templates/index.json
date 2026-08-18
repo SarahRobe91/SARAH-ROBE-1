@@ -87,7 +87,7 @@
     "perfume-section": {
       "type": "perfume-section",
       "settings": {
-        "script": "parfum",
+        "script": "",
         "heading": "Nos parfums",
         "description": "Des senteurs fraîches et élégantes.",
         "collection": "parfums"
