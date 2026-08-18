@@ -31,7 +31,7 @@
           "type": "category",
           "settings": {
             "collection": "caftans",
-            "title": "Robes",
+            "title": "Nos caftans",
             "subtitle": "",
             "color": "dore",
             "url": "shopify://collections/nos-caftans",
@@ -42,7 +42,7 @@
           "type": "category",
           "settings": {
             "collection": "robes-caftans-elegance",
-            "title": "Abayas",
+            "title": "Nos abayas",
             "subtitle": "",
             "color": "rose",
             "url": "shopify://collections/robes-caftans-elegance",
@@ -64,7 +64,7 @@
           "type": "category",
           "settings": {
             "collection": "nos-caftans",
-            "title": "Nos envies sucrées",
+            "title": "Nos robes",
             "subtitle": "",
             "color": "rose",
             "url": "shopify://collections/nos-envies-sucre",
