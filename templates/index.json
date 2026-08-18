@@ -30,7 +30,7 @@
         "category_WyxVJU": {
           "type": "category",
           "settings": {
-            "collection": "nos-caftans",
+            "collection": "caftans",
             "title": "Robes",
             "subtitle": "",
             "color": "dore",
@@ -52,8 +52,8 @@
         "category_PLJYhT": {
           "type": "category",
           "settings": {
-            "collection": "parfums",
-            "title": "Nos parfums",
+            "collection": "robes-a-10",
+            "title": "Nos robes de maison",
             "subtitle": "",
             "color": "rose",
             "url": "shopify://collections/parfums",
@@ -63,7 +63,7 @@
         "category_MDDtfW": {
           "type": "category",
           "settings": {
-            "collection": "nos-envies-sucre",
+            "collection": "nos-caftans",
             "title": "Nos envies sucrées",
             "subtitle": "",
             "color": "rose",
