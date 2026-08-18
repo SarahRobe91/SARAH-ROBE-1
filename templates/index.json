@@ -63,6 +63,9 @@
         "category_PLJYhT",
         "category_MDDtfW"
       ],
+      "custom_css": [
+        "h2 {display: none;}"
+      ],
       "settings": {
         "script": "",
         "heading": ""
