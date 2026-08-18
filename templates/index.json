@@ -9,21 +9,6 @@
  */
 {
   "sections": {
-    "hero-sarah": {
-      "type": "hero-sarah",
-      "settings": {
-        "hero_image": "shopify://shop_images/Image_c5073c38-19e8-43f9-8070-2416ef5f8488.png",
-        "hero_image_mobile": "shopify://shop_images/ChatGPT_Image_25_juin_2026_13_58_57.png",
-        "script_label": "autumn 🍂 ",
-        "heading": "L’automne commence avec",
-        "brand_em": "Sarah Robe",
-        "description": "Découvrez notre collection d’automne : robes élégantes, abayas raffinées et parfums envoûtants pour sublimer chaque instant",
-        "cta1_label": "Nos collections",
-        "cta1_url": "/collections",
-        "cta2_label": "Tous nos produits",
-        "cta2_url": "/collections/all"
-      }
-    },
     "categories-summer": {
       "type": "categories-summer",
       "blocks": {
@@ -140,7 +125,6 @@
     }
   },
   "order": [
-    "hero-sarah",
     "categories-summer",
     "featured-products-sarah",
     "perfume-section",
