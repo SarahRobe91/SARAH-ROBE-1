@@ -64,7 +64,8 @@
         "category_MDDtfW"
       ],
       "custom_css": [
-        "h2 {display: none;}"
+        "h2 {display: none;}",
+        ".section-label {display: none;}"
       ],
       "settings": {
         "script": "",
