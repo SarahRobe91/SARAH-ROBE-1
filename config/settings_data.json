@@ -30,6 +30,17 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "17199618326705557208": {
+        "type": "shopify://apps/sparrow-upsell/blocks/cart-drawer-upsell/019b7a29-716c-790b-8bf1-9f1ee5af65d3",
+        "disabled": false,
+        "settings": {
+          "enable_drawer": true,
+          "custom_drawer_selector": "",
+          "custom_insert_selector": ""
+        }
+      }
+    }
   }
 }
