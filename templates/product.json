@@ -12,9 +12,9 @@
     "main-product-sarah": {
       "type": "main-product-sarah",
       "settings": {
-        "default_tagline": "Summer Essential",
+        "default_tagline": "",
         "default_social_proof": "",
-        "default_review_count": "20",
+        "default_review_count": "17",
         "related_collection": "robes-caftans-elegance"
       }
     },
