@@ -13,8 +13,8 @@
       "type": "main-product-sarah",
       "settings": {
         "default_tagline": "Summer Essential",
-        "default_social_proof": "Notre robe la plus vendue cet été",
-        "default_review_count": "80",
+        "default_social_proof": "",
+        "default_review_count": "20",
         "related_collection": "robes-caftans-elegance"
       }
     },
