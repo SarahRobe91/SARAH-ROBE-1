@@ -12,6 +12,17 @@
     "categories-summer": {
       "type": "categories-summer",
       "blocks": {
+        "category_PLJYhT": {
+          "type": "category",
+          "settings": {
+            "collection": "robes-a-10",
+            "title": "Nos robes de maison",
+            "subtitle": "",
+            "color": "rose",
+            "url": "shopify://collections/parfums",
+            "name": ""
+          }
+        },
         "category_WyxVJU": {
           "type": "category",
           "settings": {
@@ -34,17 +45,6 @@
             "name": ""
           }
         },
-        "category_PLJYhT": {
-          "type": "category",
-          "settings": {
-            "collection": "robes-a-10",
-            "title": "Nos robes de maison",
-            "subtitle": "",
-            "color": "rose",
-            "url": "shopify://collections/parfums",
-            "name": ""
-          }
-        },
         "category_MDDtfW": {
           "type": "category",
           "settings": {
@@ -58,9 +58,9 @@
         }
       },
       "block_order": [
+        "category_PLJYhT",
         "category_WyxVJU",
         "category_xwLccx",
-        "category_PLJYhT",
         "category_MDDtfW"
       ],
       "custom_css": [
