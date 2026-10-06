@@ -9,6 +9,20 @@
  */
 {
   "sections": {
+    "hero_sarah_j8DDdh": {
+      "type": "hero-sarah",
+      "name": "Hero Sarah Robe",
+      "settings": {
+        "script_label": "",
+        "heading": "votre histoire commance",
+        "brand_em": "Sarah Robe",
+        "description": "Des pièces élégantes et raffinées, pensées pour sublimer chaque occasion.",
+        "cta1_label": "Nos collections",
+        "cta1_url": "",
+        "cta2_label": "Tous nos produits",
+        "cta2_url": ""
+      }
+    },
     "categories-summer": {
       "type": "categories-summer",
       "blocks": {
@@ -129,6 +143,7 @@
     }
   },
   "order": [
+    "hero_sarah_j8DDdh",
     "categories-summer",
     "featured-products-sarah",
     "perfume-section",
