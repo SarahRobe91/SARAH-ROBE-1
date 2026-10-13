@@ -1859,20 +1859,20 @@ input, textarea { font-family: var(--sr-font-sans); }
 .sr-color-swatch {
   position: relative;
   overflow: hidden;
-  width: 34px; height: 34px;
-  border-radius: 50%;
+  width: 44px; height: 44px;
+  flex: 0 0 44px;
+  border-radius: 6px;
   cursor: pointer;
   box-shadow: 0 0 0 2px var(--sr-bg);
   transition: box-shadow .2s;
-  border: none;
+  border: 1px solid rgba(58,51,48,.2);
   padding: 0;
 }
 .sr-color-swatch.is-selected { box-shadow: 0 0 0 2px var(--sr-bg), 0 0 0 4px var(--sr-rose); }
 .sr-color-swatch.is-unavailable,
 .sr-color-swatch.is-unavailable:hover {
   cursor: not-allowed;
-  filter: grayscale(1) saturate(.15);
-  opacity: .5;
+  opacity: .7;
   box-shadow: 0 0 0 2px var(--sr-bg), 0 0 0 3px #b8afa8;
 }
 .sr-option-value.is-unavailable::after {
