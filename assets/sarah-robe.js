@@ -33,6 +33,13 @@ const SRDrawers = (() => {
   }
 
   function init() {
+    const reassurance = document.querySelector('.sr-cart-reassurance');
+    if (reassurance) {
+      const icon = reassurance.querySelector('svg');
+      const paymentText = document.createTextNode(' ' + reassurance.textContent.split('·')[0].trim());
+      reassurance.replaceChildren(...[icon, paymentText].filter(Boolean));
+    }
+
     ['cart', 'search', 'account'].forEach(name => {
       drawers[name].drawer  = document.getElementById(`sr-${name}-drawer`);
       drawers[name].overlay = document.getElementById(`sr-${name}-overlay`);
