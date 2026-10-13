@@ -117,7 +117,7 @@
         {{ product.variants | json }}
       </script>
 
-      {%- assign color_map = "Rose poudré:#E7C4BC,Bleu pastel:#CFE2EC,Vert doux:#D8E9DF,Beige clair:#EBDCC2,Rose:#F2DCD6,Bleu:#CFE2EC,Vert:#D8E9DF,Beige:#EBDCC2" | split: "," -%}
+      {%- assign color_map = "rose poudré:#E7C4BC,bleu pastel:#CFE2EC,vert doux:#D8E9DF,beige clair:#EBDCC2,rose:#E8A5B7,bleu:#245BA8,vert:#397352,beige:#EBDCC2,bleue turquoise:#2BAFC0,bleu turquoise:#2BAFC0,bordeaux:#7B1E3C,bronze:#A87843,jaune:#F2CB46,marine:#172B4D,noir:#181818,orange:#E98136,rouge:#C9323A,vert turquoise:#27998F,vert à fines rayures:#397352,violet:#78529A,blanc:#FFFFFF,gris:#929292" | split: "," -%}
 
       {%- unless product.has_only_default_variant -%}
         {%- for option in product.options_with_values -%}
@@ -159,15 +159,19 @@
             {%- for value in option.values -%}
               {%- assign value_name = value.name -%}
               {%- if is_color_option -%}
-                {%- assign hex = '#E7C4BC' -%}
+                {%- assign hex = '#D9D9D9' -%}
+                {%- assign color_name = value_name | downcase | strip -%}
                 {%- for pair in color_map -%}
                   {%- assign p = pair | split: ":" -%}
-                  {%- if p[0] == value_name -%}{%- assign hex = p[1] -%}{%- endif -%}
+                  {%- if p[0] == color_name -%}{%- assign hex = p[1] -%}{%- endif -%}
                 {%- endfor -%}
+                {%- if value.swatch.color != blank -%}
+                  {%- assign hex = value.swatch.color -%}
+                {%- endif -%}
               {%- endif -%}
               <button type="button"
                       class="sr-option-value {% if is_color_option %}sr-color-swatch{% else %}sr-size-btn{% endif %} {% if value.selected and value.available %}is-selected{% endif %} {% unless value.available %}is-unavailable{% endunless %}"
-                      {% if is_color_option %}style="background:{{ hex }}"{% endif %}
+                      {% if is_color_option %}style="background-color:{{ hex }}" title="{{ value_name | escape }}"{% endif %}
                       data-option-position="{{ option_position }}"
                       data-option-value="{{ value_name | escape }}"
                       data-option-name="{{ option.name | escape }}"
@@ -212,16 +216,8 @@
     <!-- Reassurance -->
     <div class="sr-reassurance">
       <div class="sr-reassurance-item">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C28B7C" stroke-width="1.5"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
-        Livraison offerte dès 69€
-      </div>
-      <div class="sr-reassurance-item">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C28B7C" stroke-width="1.5"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
         Paiement 100% sécurisé
-      </div>
-      <div class="sr-reassurance-item">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C28B7C" stroke-width="1.5"><path d="M3 11a9 9 0 0 1 15-6l3 3"/><path d="M21 5v4h-4"/><path d="M21 13a9 9 0 0 1-15 6l-3-3"/><path d="M3 19v-4h4"/></svg>
-        Retour possible sous 30 jours
       </div>
     </div>
 
@@ -255,7 +251,7 @@
                   Lavage à 30°C sur l'envers, programme délicat. Ne pas utiliser de sèche-linge. Repassage doux. Éviter le séchage en plein soleil pour préserver les couleurs.
                 {%- endif -%}
               {%- when 'Livraison & retours' -%}
-                Livraison offerte dès 69€ d'achat, expédition sous 24-48h. Retours gratuits sous 30 jours. Paiement 100% sécurisé.
+                Expédition sous 24-48h. Paiement 100% sécurisé.
             {%- endcase -%}
           </div>
         </div>

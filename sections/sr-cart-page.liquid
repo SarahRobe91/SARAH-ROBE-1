@@ -1,8 +1,5 @@
 {% comment %} SARAH ROBE — Page Panier Premium {% endcomment %}
 
-{%- assign threshold_str = settings.free_shipping_threshold | default: "69" -%}
-{%- assign threshold_cents = threshold_str | times: 100 -%}
-
 <!-- Hero panier -->
 <div class="sr-collection-hero">
   <div class="sr-collection-hero__texture"></div>
@@ -125,19 +122,6 @@
     <aside class="sr-cart-summary" aria-label="Résumé de la commande">
       <div class="sr-cart-summary__inner">
         <h2 class="sr-cart-summary__title">Résumé</h2>
-
-        {%- assign cart_total_cents = cart.total_price -%}
-        {%- if cart_total_cents >= threshold_cents -%}
-          <div class="sr-cart-shipping-banner sr-cart-shipping-banner--free">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            Livraison offerte !
-          </div>
-        {%- else -%}
-          {%- assign remaining_cents = threshold_cents | minus: cart_total_cents -%}
-          <div class="sr-cart-shipping-banner">
-            Plus que <strong>{{ remaining_cents | money }}</strong> pour la livraison offerte
-          </div>
-        {%- endif -%}
 
         <div class="sr-cart-summary__lines">
           <div class="sr-cart-summary__line">
