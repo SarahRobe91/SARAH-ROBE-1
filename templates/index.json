@@ -13,7 +13,7 @@
       "type": "hero-sarah",
       "name": "Hero Sarah Robe",
       "settings": {
-        "hero_image": "shopify://shop_images/WhatsApp_Image_2026-10-06_at_09.35.30.jpg",
+        "hero_image": "shopify://shop_images/WhatsApp_Image_2026-10-20_at_15.24.16.jpg",
         "script_label": "",
         "heading": "votre histoire commance avec",
         "brand_em": "Sarah Robe",
@@ -64,7 +64,7 @@
           "type": "category",
           "settings": {
             "collection": "destockage",
-            "title": "déstockage",
+            "title": "nos robes de maison",
             "subtitle": "",
             "color": "rose",
             "url": "shopify://collections/parfums",
