@@ -13,14 +13,15 @@
       "type": "hero-sarah",
       "name": "Hero Sarah Robe",
       "settings": {
-        "hero_image": "shopify://shop_images/WhatsApp_Image_2026-10-20_at_15.24.16.jpg",
+        "hero_image": "shopify://shop_images/Cinq_femmes_en_robes_brodees_au_salon_luxueux-1.png",
+        "hero_image_mobile": "shopify://shop_images/Cinq_elegantes_en_velours_brode-2.png",
         "script_label": "",
         "heading": "votre histoire commance avec",
         "brand_em": "Sarah Robe",
-        "description": "Des pièces élégantes et raffinées, pensées pour sublimer chaque occasion.",
-        "cta1_label": "Nos collections",
-        "cta1_url": "",
-        "cta2_label": "Tous nos produits",
+        "description": "Découvrez notre collection d'Hiver.",
+        "cta1_label": "Collection d'hiver",
+        "cta1_url": "shopify://collections/destockage",
+        "cta2_label": "",
         "cta2_url": ""
       }
     },
@@ -40,6 +41,7 @@
         },
         "category_WyxVJU": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "collection": "caftans",
             "title": "Nos caftans",
