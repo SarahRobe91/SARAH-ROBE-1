@@ -28,6 +28,17 @@
     "categories-summer": {
       "type": "categories-summer",
       "blocks": {
+        "category_PLJYhT": {
+          "type": "category",
+          "settings": {
+            "collection": "destockage",
+            "title": "Nos robes de maison",
+            "subtitle": "",
+            "color": "rose",
+            "url": "shopify://collections/parfums",
+            "name": ""
+          }
+        },
         "category_xwLccx": {
           "type": "category",
           "settings": {
@@ -36,18 +47,6 @@
             "subtitle": "",
             "color": "rose",
             "url": "shopify://collections/robes-caftans-elegance",
-            "name": ""
-          }
-        },
-        "category_WyxVJU": {
-          "type": "category",
-          "disabled": true,
-          "settings": {
-            "collection": "caftans",
-            "title": "Nos caftans",
-            "subtitle": "",
-            "color": "dore",
-            "url": "shopify://collections/nos-caftans",
             "name": ""
           }
         },
@@ -61,24 +60,12 @@
             "url": "shopify://collections/nos-envies-sucre",
             "name": ""
           }
-        },
-        "category_PLJYhT": {
-          "type": "category",
-          "settings": {
-            "collection": "destockage",
-            "title": "Nos robes de maison",
-            "subtitle": "",
-            "color": "rose",
-            "url": "shopify://collections/parfums",
-            "name": ""
-          }
         }
       },
       "block_order": [
+        "category_PLJYhT",
         "category_xwLccx",
-        "category_WyxVJU",
-        "category_MDDtfW",
-        "category_PLJYhT"
+        "category_MDDtfW"
       ],
       "custom_css": [
         "h2 {display: none;}",
