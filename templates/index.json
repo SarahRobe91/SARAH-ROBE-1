@@ -76,8 +76,18 @@
         "heading": ""
       }
     },
+    "perfume-section": {
+      "type": "perfume-section",
+      "settings": {
+        "script": "",
+        "heading": "Nos parfums",
+        "description": "Des senteurs fraîches et élégantes.",
+        "collection": "parfums"
+      }
+    },
     "featured-products-sarah": {
       "type": "featured-products-sarah",
+      "disabled": true,
       "settings": {
         "script": "best-sellers",
         "heading": "Les indispensables",
@@ -86,15 +96,6 @@
         "products_count": 6,
         "cta_label": "Voir tous les produits",
         "cta_url": ""
-      }
-    },
-    "perfume-section": {
-      "type": "perfume-section",
-      "settings": {
-        "script": "",
-        "heading": "Nos parfums",
-        "description": "Des senteurs fraîches et élégantes.",
-        "collection": "parfums"
       }
     },
     "reviews-sarah": {
@@ -135,8 +136,8 @@
   "order": [
     "hero_sarah_j8DDdh",
     "categories-summer",
-    "featured-products-sarah",
     "perfume-section",
+    "featured-products-sarah",
     "reviews-sarah",
     "contact-sarah",
     "newsletter-sarah"
