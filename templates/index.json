@@ -30,6 +30,7 @@
       "blocks": {
         "category_PLJYhT": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "collection": "destockage",
             "title": "Nos robes de maison",
@@ -41,6 +42,7 @@
         },
         "category_xwLccx": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "collection": "abayas",
             "title": "Nos abayas",
@@ -52,6 +54,7 @@
         },
         "category_MDDtfW": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "collection": "nos-caftans",
             "title": "Nos robes",
@@ -63,6 +66,7 @@
         },
         "category_8ACgJN": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "collection": "pyjama",
             "title": "pyjamas",
