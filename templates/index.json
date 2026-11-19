@@ -64,11 +64,11 @@
         "category_8ACgJN": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "pyjama",
             "title": "pyjamas",
             "subtitle": "",
             "color": "rose",
-            "url": "",
+            "url": "shopify://collections/pyjama",
             "name": ""
           }
         }
