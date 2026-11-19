@@ -94,6 +94,7 @@
     },
     "perfume-section": {
       "type": "perfume-section",
+      "disabled": true,
       "settings": {
         "script": "",
         "heading": "Nos parfums",
