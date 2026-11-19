@@ -4,8 +4,28 @@
 <section class="sr-hero">
   <div class="sr-hero__texture"></div>
 
-  {%- assign desktop_img = section.settings.hero_image -%}
-  {%- assign mobile_img  = section.settings.hero_image_mobile -%}
+  {%- liquid
+    assign desktop_img = section.settings.hero_image
+    assign mobile_img = section.settings.hero_image_mobile
+    assign script_label = section.settings.script_label | strip
+    assign heading = section.settings.heading | strip
+    assign brand_em = section.settings.brand_em | strip
+    assign description = section.settings.description | strip
+    assign cta1_label = section.settings.cta1_label | strip
+    assign cta1_url = section.settings.cta1_url
+    assign cta2_label = section.settings.cta2_label | strip
+    assign cta2_url = section.settings.cta2_url
+
+    assign show_cta1 = false
+    if cta1_label != blank and cta1_url != blank
+      assign show_cta1 = true
+    endif
+
+    assign show_cta2 = false
+    if cta2_label != blank and cta2_url != blank
+      assign show_cta2 = true
+    endif
+  -%}
 
   {%- if desktop_img != blank or mobile_img != blank -%}
     {%- assign main_img = desktop_img | default: mobile_img -%}
@@ -15,40 +35,53 @@
                 srcset="{{ mobile_img | image_url: width: 900 }}">
       {%- endif -%}
       <img src="{{ main_img | image_url: width: 2200 }}"
-           alt="{{ main_img.alt | escape | default: section.settings.heading | escape }}"
+           alt="{{ main_img.alt | default: heading | escape }}"
            class="sr-hero__img"
            width="{{ main_img.width }}"
            height="{{ main_img.height }}"
            loading="eager"
            fetchpriority="high">
     </picture>
-  {%- else -%}
+  {%- elsif request.design_mode -%}
     <span class="sr-hero__img-placeholder">[ photo lifestyle · plage soleil robe légère ]</span>
   {%- endif -%}
 
-  <div class="sr-hero__content">
-    <span class="sr-hero__script">{{ section.settings.script_label | default: "summer" }}</span>
-    <h1 class="sr-hero__h1">
-      {{ section.settings.heading | default: "L'été commence avec" }}<br>
-      <em>{{ section.settings.brand_em | default: "Sarah Robe" }}</em>
-    </h1>
-    <p class="sr-hero__desc">
-      {{ section.settings.description | default: "Robes légères, tenues solaires et parfums d'été pour sublimer chaque moment." }}
-    </p>
-    <div class="sr-hero__ctas">
-      <a href="{{ section.settings.cta1_url | default: '/collections' }}" class="sr-btn sr-btn--primary">
-        {{ section.settings.cta1_label | default: "Nos collections" }}
-      </a>
-      <a href="{{ section.settings.cta2_url | default: '/collections/all' }}" class="sr-btn sr-btn--outline">
-        {{ section.settings.cta2_label | default: "Tous nos produits" }}
-      </a>
+  {%- if script_label != blank or heading != blank or brand_em != blank or description != blank or show_cta1 or show_cta2 -%}
+    <div class="sr-hero__content">
+      {%- if script_label != blank -%}
+        <span class="sr-hero__script">{{ script_label | escape }}</span>
+      {%- endif -%}
+      {%- if heading != blank or brand_em != blank -%}
+        <h1 class="sr-hero__h1">
+          {%- if heading != blank -%}
+            {{ heading | escape }}
+          {%- endif -%}
+          {%- if brand_em != blank -%}
+            {%- if heading != blank -%}<br>{%- endif -%}
+            <em>{{ brand_em | escape }}</em>
+          {%- endif -%}
+        </h1>
+      {%- endif -%}
+      {%- if description != blank -%}
+        <p class="sr-hero__desc">{{ description | escape }}</p>
+      {%- endif -%}
+      {%- if show_cta1 or show_cta2 -%}
+        <div class="sr-hero__ctas">
+          {%- if show_cta1 -%}
+            <a href="{{ cta1_url | escape }}" class="sr-btn sr-btn--primary">{{ cta1_label | escape }}</a>
+          {%- endif -%}
+          {%- if show_cta2 -%}
+            <a href="{{ cta2_url | escape }}" class="sr-btn sr-btn--outline">{{ cta2_label | escape }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
-  </div>
+  {%- endif -%}
 </section>
 
 {% schema %}
 {
-  "name": "Hero",
+  "name": "Hero Sarah Robe",
   "tag": "section",
   "settings": [
     {
@@ -62,34 +95,39 @@
       "label": "Image hero téléphone (portrait)"
     },
     {
+      "type": "header",
+      "content": "Textes",
+      "info": "Laisse un champ vide pour masquer le texte correspondant."
+    },
+    {
       "type": "text",
       "id": "script_label",
-      "label": "Label script (cursive)",
-      "default": "summer"
+      "label": "Petit texte en cursive"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Titre principal",
-      "default": "L'été commence avec"
+      "label": "Titre principal"
     },
     {
       "type": "text",
       "id": "brand_em",
-      "label": "Nom en italique",
-      "default": "Sarah Robe"
+      "label": "Texte en italique"
     },
     {
       "type": "textarea",
       "id": "description",
-      "label": "Description",
-      "default": "Robes légères, tenues solaires et parfums d'été pour sublimer chaque moment."
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Boutons",
+      "info": "Chaque bouton s’affiche si son texte et son lien sont renseignés."
     },
     {
       "type": "text",
       "id": "cta1_label",
-      "label": "Bouton 1 – texte",
-      "default": "Nos collections"
+      "label": "Bouton 1 – texte"
     },
     {
       "type": "url",
@@ -99,8 +137,7 @@
     {
       "type": "text",
       "id": "cta2_label",
-      "label": "Bouton 2 – texte",
-      "default": "Tous nos produits"
+      "label": "Bouton 2 – texte"
     },
     {
       "type": "url",
