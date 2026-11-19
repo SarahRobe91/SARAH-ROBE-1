@@ -60,12 +60,24 @@
             "url": "shopify://collections/nos-envies-sucre",
             "name": ""
           }
+        },
+        "category_8ACgJN": {
+          "type": "category",
+          "settings": {
+            "collection": "",
+            "title": "pyjamas",
+            "subtitle": "",
+            "color": "rose",
+            "url": "",
+            "name": ""
+          }
         }
       },
       "block_order": [
         "category_PLJYhT",
         "category_xwLccx",
-        "category_MDDtfW"
+        "category_MDDtfW",
+        "category_8ACgJN"
       ],
       "custom_css": [
         "h2 {display: none;}",
@@ -83,19 +95,6 @@
         "heading": "Nos parfums",
         "description": "Des senteurs fraîches et élégantes.",
         "collection": "parfums"
-      }
-    },
-    "featured-products-sarah": {
-      "type": "featured-products-sarah",
-      "disabled": true,
-      "settings": {
-        "script": "best-sellers",
-        "heading": "Les indispensables",
-        "description": "Nos pièces les plus appréciées, sélectionnées pour leur élégance et leur raffinement.",
-        "collection": "best-seller",
-        "products_count": 6,
-        "cta_label": "Voir tous les produits",
-        "cta_url": ""
       }
     },
     "reviews-sarah": {
@@ -137,7 +136,6 @@
     "hero_sarah_j8DDdh",
     "categories-summer",
     "perfume-section",
-    "featured-products-sarah",
     "reviews-sarah",
     "contact-sarah",
     "newsletter-sarah"
